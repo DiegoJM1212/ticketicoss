@@ -1,0 +1,75 @@
+﻿@page "/EventosReservados"
+@model ticketicos.Pages.Tiquetes.EventosReservadosModel
+@{
+    ViewData["Title"] = "Eventos reservados";
+}
+<link rel="stylesheet" href="~/css/eventosreservados.css" />
+
+<div class="reservados-container">
+    <h1>Eventos reservados</h1>
+
+    <!-- Cabecera de columnas -->
+    <div class="columns-header">
+        <div>Evento</div>
+        <div>Estado</div>
+    </div>
+
+    <!-- Lista de eventos -->
+    <div class="event-list">
+        <!-- Fila 1 -->
+        <div class="event-row">
+            <div class="event-image">
+                <img src="~/images/evento_xtremo.jpg" alt="Xtremo" />
+            </div>
+            <div class="event-details">
+                <h3>Estadio Municipal de Pérez Zeledón</h3>
+                <p><strong>Evento:</strong> Xtremo</p>
+                <p><strong>Fecha:</strong> 25/02/2025 | Hora: 8:00 pm</p>
+                <p><strong>Entradas:</strong> General ₡15,000 / VIP ₡25,000</p>
+            </div>
+            <div class="event-actions">
+                <button class="btn-action">Cambiar</button>
+                <button class="btn-cancel">X</button>
+            </div>
+        </div>
+
+        <!-- Fila 2 -->
+        <div class="event-row">
+            <div class="event-image">
+                <img src="~/images/evento_sabina.jpg" alt="Sabina" />
+            </div>
+            <div class="event-details">
+                <h3>HOLA Y ADIOS - JOAQUÍN SABINA</h3>
+                <p><strong>Lugar:</strong> Estadio Nacional, San José</p>
+                <p><strong>Fecha:</strong> 05/03/2025 | Hora: 7:00 pm</p>
+                <p><strong>Entradas:</strong> General ₡20,000 / Preferencial ₡35,000</p>
+            </div>
+            <div class="event-actions">
+                <button class="btn-action">Cambiar</button>
+                <button class="btn-cancel">X</button>
+            </div>
+        </div>
+
+        <!-- Fila 3 -->
+        <div class="event-row">
+            <div class="event-image">
+                <img src="~/images/evento_camilo.jpg" alt="Camilo" />
+            </div>
+            <div class="event-details">
+                <h3>Parque Viva</h3>
+                <p><strong>Evento:</strong> Camilo - De Adentro Pa Fuera Tour</p>
+                <p><strong>Fecha:</strong> 23/02/2025 | Hora: 9:00 pm</p>
+                <p><strong>Entradas:</strong> Experiencia ₡40,000 / General ₡25,000</p>
+            </div>
+            <div class="event-actions">
+                <button class="btn-action">Cambiar</button>
+                <button class="btn-cancel">X</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botón para regresar -->
+    <div class="buttons-container">
+        <a href="/Index" class="btn-regresar">Regresar</a>
+    </div>
+</div>

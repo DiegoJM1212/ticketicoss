@@ -1,0 +1,566 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|c:\\users\\xcpc\\downloads\\ticketicos1\\ticketicos\\ticketicos\\pages\\cliente\\atencioncliente.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|solutionrelative:ticketicos\\pages\\cliente\\atencioncliente.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|c:\\users\\xcpc\\downloads\\ticketicos1\\ticketicos\\ticketicos\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|solutionrelative:ticketicos\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|c:\\users\\xcpc\\downloads\\ticketicos1\\ticketicos\\ticketicos\\pages\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|solutionrelative:ticketicos\\pages\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|c:\\users\\xcpc\\downloads\\ticketicos1\\ticketicos\\ticketicos\\pages\\cliente\\pagoentradas.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|solutionrelative:ticketicos\\pages\\cliente\\pagoentradas.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|c:\\users\\xcpc\\downloads\\ticketicos1\\ticketicos\\ticketicos\\pages\\cliente\\logout.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|solutionrelative:ticketicos\\pages\\cliente\\logout.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|c:\\users\\xcpc\\downloads\\ticketicos1\\ticketicos\\ticketicos\\pages\\cliente\\logout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|solutionrelative:ticketicos\\pages\\cliente\\logout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|c:\\users\\xcpc\\downloads\\ticketicos1\\ticketicos\\ticketicos\\pages\\cliente\\seleccionarasientos.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|solutionrelative:ticketicos\\pages\\cliente\\seleccionarasientos.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|c:\\users\\xcpc\\downloads\\ticketicos1\\ticketicos\\ticketicos\\pages\\administrativo\\adminsoporte.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|solutionrelative:ticketicos\\pages\\administrativo\\adminsoporte.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|c:\\users\\xcpc\\downloads\\ticketicos1\\ticketicos\\ticketicos\\pages\\administrativo\\adminsoporte.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|solutionrelative:ticketicos\\pages\\administrativo\\adminsoporte.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|c:\\users\\xcpc\\downloads\\ticketicos1\\ticketicos\\ticketicos\\pages\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|solutionrelative:ticketicos\\pages\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|c:\\users\\xcpc\\downloads\\ticketicos1\\ticketicos\\ticketicos\\pages\\index.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|solutionrelative:ticketicos\\pages\\index.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|c:\\users\\xcpc\\downloads\\ticketicos1\\ticketicos\\ticketicos\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|solutionrelative:ticketicos\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|c:\\users\\xcpc\\downloads\\ticketicos1\\ticketicos\\ticketicos\\pages\\cliente\\doblefactor.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|solutionrelative:ticketicos\\pages\\cliente\\doblefactor.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|c:\\users\\xcpc\\downloads\\ticketicos1\\ticketicos\\ticketicos\\pages\\cliente\\login.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|solutionrelative:ticketicos\\pages\\cliente\\login.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|c:\\users\\xcpc\\downloads\\ticketicos1\\ticketicos\\ticketicos\\pages\\cliente\\pagoentradas.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|solutionrelative:ticketicos\\pages\\cliente\\pagoentradas.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|c:\\users\\xcpc\\downloads\\ticketicos1\\ticketicos\\ticketicos\\pages\\cliente\\pagocodigos.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|solutionrelative:ticketicos\\pages\\cliente\\pagocodigos.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|c:\\users\\xcpc\\downloads\\ticketicos1\\ticketicos\\ticketicos\\pages\\cliente\\doblefactor.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|solutionrelative:ticketicos\\pages\\cliente\\doblefactor.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|c:\\users\\xcpc\\downloads\\ticketicos1\\ticketicos\\ticketicos\\pages\\administrativo\\dashboard.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|solutionrelative:ticketicos\\pages\\administrativo\\dashboard.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|c:\\users\\xcpc\\downloads\\ticketicos1\\ticketicos\\ticketicos\\pages\\administrativo\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|solutionrelative:ticketicos\\pages\\administrativo\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|c:\\users\\xcpc\\downloads\\ticketicos1\\ticketicos\\ticketicos\\pages\\tiquetes\\informacionpersonal.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|solutionrelative:ticketicos\\pages\\tiquetes\\informacionpersonal.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|c:\\users\\xcpc\\downloads\\ticketicos1\\ticketicos\\ticketicos\\pages\\tiquetes\\informacionpersonal.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|solutionrelative:ticketicos\\pages\\tiquetes\\informacionpersonal.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|c:\\users\\xcpc\\downloads\\ticketicos1\\ticketicos\\ticketicos\\wwwroot\\css\\info-personal.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|solutionrelative:ticketicos\\wwwroot\\css\\info-personal.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|c:\\users\\xcpc\\downloads\\ticketicos1\\ticketicos\\ticketicos\\wwwroot\\css\\layout-mobile.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|solutionrelative:ticketicos\\wwwroot\\css\\layout-mobile.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|c:\\users\\xcpc\\downloads\\ticketicos1\\ticketicos\\ticketicos\\pages\\comprarboletos.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|solutionrelative:ticketicos\\pages\\comprarboletos.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|c:\\users\\xcpc\\downloads\\ticketicos1\\ticketicos\\ticketicos\\models\\evento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|solutionrelative:ticketicos\\models\\evento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|c:\\users\\xcpc\\downloads\\ticketicos1\\ticketicos\\ticketicos\\wwwroot\\css\\pagoentradas.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|solutionrelative:ticketicos\\wwwroot\\css\\pagoentradas.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|c:\\users\\xcpc\\downloads\\ticketicos1\\ticketicos\\ticketicos\\wwwroot\\css\\comprarboletosf.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|solutionrelative:ticketicos\\wwwroot\\css\\comprarboletosf.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|c:\\users\\xcpc\\downloads\\ticketicos1\\ticketicos\\ticketicos\\pages\\comprarboletos.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|solutionrelative:ticketicos\\pages\\comprarboletos.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|c:\\users\\xcpc\\downloads\\ticketicos1\\ticketicos\\ticketicos\\models\\bloqueteatroms.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|solutionrelative:ticketicos\\models\\bloqueteatroms.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|c:\\users\\xcpc\\downloads\\ticketicos1\\ticketicos\\ticketicos\\models\\bloquecep.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|solutionrelative:ticketicos\\models\\bloquecep.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|c:\\users\\xcpc\\downloads\\ticketicos1\\ticketicos\\ticketicos\\hubs\\chathub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|solutionrelative:ticketicos\\hubs\\chathub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|c:\\users\\xcpc\\downloads\\ticketicos1\\ticketicos\\ticketicos\\pages\\cliente\\atencioncliente.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|solutionrelative:ticketicos\\pages\\cliente\\atencioncliente.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|c:\\users\\xcpc\\downloads\\ticketicos1\\ticketicos\\ticketicos\\pages\\cliente\\factura.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|solutionrelative:ticketicos\\pages\\cliente\\factura.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|c:\\users\\xcpc\\downloads\\ticketicos1\\ticketicos\\ticketicos\\pages\\cliente\\factura.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{336A10E6-1525-4065-A12F-C24FCCA51B18}|ticketicos\\ticketicos.csproj|solutionrelative:ticketicos\\pages\\cliente\\factura.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 30,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Logout.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\Cliente\\Logout.cshtml.cs",
+              "RelativeDocumentMoniker": "ticketicos\\Pages\\Cliente\\Logout.cshtml.cs",
+              "ToolTip": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\Cliente\\Logout.cshtml.cs",
+              "RelativeToolTip": "ticketicos\\Pages\\Cliente\\Logout.cshtml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T02:54:23.912Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Logout.cshtml",
+              "DocumentMoniker": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\Cliente\\Logout.cshtml",
+              "RelativeDocumentMoniker": "ticketicos\\Pages\\Cliente\\Logout.cshtml",
+              "ToolTip": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\Cliente\\Logout.cshtml",
+              "RelativeToolTip": "ticketicos\\Pages\\Cliente\\Logout.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-22T02:54:01.866Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "SeleccionarAsientos.cshtml",
+              "DocumentMoniker": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\Cliente\\SeleccionarAsientos.cshtml",
+              "RelativeDocumentMoniker": "ticketicos\\Pages\\Cliente\\SeleccionarAsientos.cshtml",
+              "ToolTip": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\Cliente\\SeleccionarAsientos.cshtml",
+              "RelativeToolTip": "ticketicos\\Pages\\Cliente\\SeleccionarAsientos.cshtml",
+              "ViewState": "AgIAAPMAAAAAAAAAAAAAAAgBAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-22T02:53:45.976Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Index.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\Index.cshtml.cs",
+              "RelativeDocumentMoniker": "ticketicos\\Pages\\Index.cshtml.cs",
+              "ToolTip": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\Index.cshtml.cs",
+              "RelativeToolTip": "ticketicos\\Pages\\Index.cshtml.cs",
+              "ViewState": "AgIAAA4BAAAAAAAAAAAAACMBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T02:16:01.452Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "doblefactor.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\Cliente\\doblefactor.cshtml.cs",
+              "RelativeDocumentMoniker": "ticketicos\\Pages\\Cliente\\doblefactor.cshtml.cs",
+              "ToolTip": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\Cliente\\doblefactor.cshtml.cs",
+              "RelativeToolTip": "ticketicos\\Pages\\Cliente\\doblefactor.cshtml.cs",
+              "ViewState": "AgIAAKsAAAAAAAAAAAAwwMIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T02:12:36.812Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "login.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\Cliente\\login.cshtml.cs",
+              "RelativeDocumentMoniker": "ticketicos\\Pages\\Cliente\\login.cshtml.cs",
+              "ToolTip": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\Cliente\\login.cshtml.cs",
+              "RelativeToolTip": "ticketicos\\Pages\\Cliente\\login.cshtml.cs",
+              "ViewState": "AgIAALoAAAAAAAAAAAAwwNEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T02:03:18.016Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "pagoentradas.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\Cliente\\pagoentradas.cshtml.cs",
+              "RelativeDocumentMoniker": "ticketicos\\Pages\\Cliente\\pagoentradas.cshtml.cs",
+              "ToolTip": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\Cliente\\pagoentradas.cshtml.cs",
+              "RelativeToolTip": "ticketicos\\Pages\\Cliente\\pagoentradas.cshtml.cs",
+              "ViewState": "AgIAAK8CAAAAAAAAAADwv1IDAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T01:58:45.566Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "pagocodigos.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\Cliente\\pagocodigos.cshtml.cs",
+              "RelativeDocumentMoniker": "ticketicos\\Pages\\Cliente\\pagocodigos.cshtml.cs",
+              "ToolTip": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\Cliente\\pagocodigos.cshtml.cs",
+              "RelativeToolTip": "ticketicos\\Pages\\Cliente\\pagocodigos.cshtml.cs",
+              "ViewState": "AgIAAH4CAAAAAAAAAAAwwJUCAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T01:49:33.455Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "doblefactor.cshtml",
+              "DocumentMoniker": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\Cliente\\doblefactor.cshtml",
+              "RelativeDocumentMoniker": "ticketicos\\Pages\\Cliente\\doblefactor.cshtml",
+              "ToolTip": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\Cliente\\doblefactor.cshtml",
+              "RelativeToolTip": "ticketicos\\Pages\\Cliente\\doblefactor.cshtml",
+              "ViewState": "AgIAANsAAAAAAAAAAAAuwO0AAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-22T01:43:28.402Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Dashboard.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\administrativo\\Dashboard.cshtml.cs",
+              "RelativeDocumentMoniker": "ticketicos\\Pages\\administrativo\\Dashboard.cshtml.cs",
+              "ToolTip": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\administrativo\\Dashboard.cshtml.cs",
+              "RelativeToolTip": "ticketicos\\Pages\\administrativo\\Dashboard.cshtml.cs",
+              "ViewState": "AgIAAEQAAAAAAAAAAAAwwFsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T01:38:17.917Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Dashboard.cshtml",
+              "DocumentMoniker": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\administrativo\\Dashboard.cshtml",
+              "RelativeDocumentMoniker": "ticketicos\\Pages\\administrativo\\Dashboard.cshtml",
+              "ToolTip": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\administrativo\\Dashboard.cshtml",
+              "RelativeToolTip": "ticketicos\\Pages\\administrativo\\Dashboard.cshtml",
+              "ViewState": "AgIAAFYAAAAAAAAAAAAwwG0AAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-22T01:38:46.197Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "InformacionPersonal.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\Tiquetes\\InformacionPersonal.cshtml.cs",
+              "RelativeDocumentMoniker": "ticketicos\\Pages\\Tiquetes\\InformacionPersonal.cshtml.cs",
+              "ToolTip": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\Tiquetes\\InformacionPersonal.cshtml.cs",
+              "RelativeToolTip": "ticketicos\\Pages\\Tiquetes\\InformacionPersonal.cshtml.cs",
+              "ViewState": "AgIAAMMAAAAAAAAAAAAwwOIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T00:04:37.988Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "InformacionPersonal.cshtml",
+              "DocumentMoniker": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\Tiquetes\\InformacionPersonal.cshtml",
+              "RelativeDocumentMoniker": "ticketicos\\Pages\\Tiquetes\\InformacionPersonal.cshtml",
+              "ToolTip": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\Tiquetes\\InformacionPersonal.cshtml",
+              "RelativeToolTip": "ticketicos\\Pages\\Tiquetes\\InformacionPersonal.cshtml",
+              "ViewState": "AgIAADcAAAAAAAAAAAAAAGsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-22T00:00:58.378Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "info-personal.css",
+              "DocumentMoniker": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\wwwroot\\css\\info-personal.css",
+              "RelativeDocumentMoniker": "ticketicos\\wwwroot\\css\\info-personal.css",
+              "ToolTip": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\wwwroot\\css\\info-personal.css",
+              "RelativeToolTip": "ticketicos\\wwwroot\\css\\info-personal.css",
+              "ViewState": "AgIAALoAAAAAAAAAAAAiwNIAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-04-21T23:51:25.458Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "layout-mobile.css",
+              "DocumentMoniker": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\wwwroot\\css\\layout-mobile.css",
+              "RelativeDocumentMoniker": "ticketicos\\wwwroot\\css\\layout-mobile.css",
+              "ToolTip": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\wwwroot\\css\\layout-mobile.css",
+              "RelativeToolTip": "ticketicos\\wwwroot\\css\\layout-mobile.css",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAiwCEAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-04-21T23:50:21.724Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\Index.cshtml",
+              "RelativeDocumentMoniker": "ticketicos\\Pages\\Index.cshtml",
+              "ToolTip": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\Index.cshtml",
+              "RelativeToolTip": "ticketicos\\Pages\\Index.cshtml",
+              "ViewState": "AgIAAHIBAAAAAAAAAAAAAIcBAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-21T18:41:01.889Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "ticketicos\\Pages\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "ticketicos\\Pages\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAALoAAAAAAAAAAAAwwMEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-21T22:29:22.551Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "ComprarBoletos.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\ComprarBoletos.cshtml.cs",
+              "RelativeDocumentMoniker": "ticketicos\\Pages\\ComprarBoletos.cshtml.cs",
+              "ToolTip": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\ComprarBoletos.cshtml.cs",
+              "RelativeToolTip": "ticketicos\\Pages\\ComprarBoletos.cshtml.cs",
+              "ViewState": "AgIAAOwAAAAAAAAAAAAmwBABAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-21T20:50:45.183Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Program.cs",
+              "RelativeDocumentMoniker": "ticketicos\\Program.cs",
+              "ToolTip": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Program.cs",
+              "RelativeToolTip": "ticketicos\\Program.cs",
+              "ViewState": "AgIAAEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-19T05:20:58.188Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\appsettings.json",
+              "RelativeDocumentMoniker": "ticketicos\\appsettings.json",
+              "ToolTip": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\appsettings.json",
+              "RelativeToolTip": "ticketicos\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-04-21T17:56:25.126Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "Evento.cs",
+              "DocumentMoniker": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Models\\Evento.cs",
+              "RelativeDocumentMoniker": "ticketicos\\Models\\Evento.cs",
+              "ToolTip": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Models\\Evento.cs",
+              "RelativeToolTip": "ticketicos\\Models\\Evento.cs",
+              "ViewState": "AgIAAE0AAAAAAAAAAAAkwGwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-21T21:03:39.472Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "ComprarBoletos.cshtml",
+              "DocumentMoniker": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\ComprarBoletos.cshtml",
+              "RelativeDocumentMoniker": "ticketicos\\Pages\\ComprarBoletos.cshtml",
+              "ToolTip": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\ComprarBoletos.cshtml",
+              "RelativeToolTip": "ticketicos\\Pages\\ComprarBoletos.cshtml",
+              "ViewState": "AgIAAPcBAAAAAAAAAAAiwBACAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-21T20:20:49.339Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "pagoentradas.cshtml",
+              "DocumentMoniker": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\Cliente\\pagoentradas.cshtml",
+              "RelativeDocumentMoniker": "ticketicos\\Pages\\Cliente\\pagoentradas.cshtml",
+              "ToolTip": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\Cliente\\pagoentradas.cshtml",
+              "RelativeToolTip": "ticketicos\\Pages\\Cliente\\pagoentradas.cshtml",
+              "ViewState": "AgIAAOQBAAAAAAAAAAAwwPsBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-21T22:28:08.122Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "PagoEntradas.css",
+              "DocumentMoniker": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\wwwroot\\css\\PagoEntradas.css",
+              "RelativeDocumentMoniker": "ticketicos\\wwwroot\\css\\PagoEntradas.css",
+              "ToolTip": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\wwwroot\\css\\PagoEntradas.css",
+              "RelativeToolTip": "ticketicos\\wwwroot\\css\\PagoEntradas.css",
+              "ViewState": "AgIAAG0BAAAAAAAAAAAmwI0BAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-04-21T22:31:11.73Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "BloqueCEP.cs",
+              "DocumentMoniker": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Models\\BloqueCEP.cs",
+              "RelativeDocumentMoniker": "ticketicos\\Models\\BloqueCEP.cs",
+              "ToolTip": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Models\\BloqueCEP.cs",
+              "RelativeToolTip": "ticketicos\\Models\\BloqueCEP.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAABaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-21T20:50:11.39Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "ComprarBoletosF.css",
+              "DocumentMoniker": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\wwwroot\\css\\ComprarBoletosF.css",
+              "RelativeDocumentMoniker": "ticketicos\\wwwroot\\css\\ComprarBoletosF.css",
+              "ToolTip": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\wwwroot\\css\\ComprarBoletosF.css",
+              "RelativeToolTip": "ticketicos\\wwwroot\\css\\ComprarBoletosF.css",
+              "ViewState": "AgIAAKYCAAAAAAAAAAAmwMgCAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-04-21T21:33:28.068Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "BloqueTEATROMS.cs",
+              "DocumentMoniker": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Models\\BloqueTEATROMS.cs",
+              "RelativeDocumentMoniker": "ticketicos\\Models\\BloqueTEATROMS.cs",
+              "ToolTip": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Models\\BloqueTEATROMS.cs",
+              "RelativeToolTip": "ticketicos\\Models\\BloqueTEATROMS.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-21T20:50:19.892Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "AdminSoporte.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\administrativo\\AdminSoporte.cshtml.cs",
+              "RelativeDocumentMoniker": "ticketicos\\Pages\\administrativo\\AdminSoporte.cshtml.cs",
+              "ToolTip": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\administrativo\\AdminSoporte.cshtml.cs",
+              "RelativeToolTip": "ticketicos\\Pages\\administrativo\\AdminSoporte.cshtml.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAAAB0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-19T05:16:20.681Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "ChatHub.cs",
+              "DocumentMoniker": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Hubs\\ChatHub.cs",
+              "RelativeDocumentMoniker": "ticketicos\\Hubs\\ChatHub.cs",
+              "ToolTip": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Hubs\\ChatHub.cs",
+              "RelativeToolTip": "ticketicos\\Hubs\\ChatHub.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAgwAQAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-19T05:20:22.417Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "AdminSoporte.cshtml",
+              "DocumentMoniker": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\administrativo\\AdminSoporte.cshtml",
+              "RelativeDocumentMoniker": "ticketicos\\Pages\\administrativo\\AdminSoporte.cshtml",
+              "ToolTip": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\administrativo\\AdminSoporte.cshtml",
+              "RelativeToolTip": "ticketicos\\Pages\\administrativo\\AdminSoporte.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADgAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-19T05:16:11.389Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "atencioncliente.cshtml",
+              "DocumentMoniker": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\Cliente\\atencioncliente.cshtml",
+              "RelativeDocumentMoniker": "ticketicos\\Pages\\Cliente\\atencioncliente.cshtml",
+              "ToolTip": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\Cliente\\atencioncliente.cshtml",
+              "RelativeToolTip": "ticketicos\\Pages\\Cliente\\atencioncliente.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-19T03:33:48.1Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "atencioncliente.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\Cliente\\atencioncliente.cshtml.cs",
+              "RelativeDocumentMoniker": "ticketicos\\Pages\\Cliente\\atencioncliente.cshtml.cs",
+              "ToolTip": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\Cliente\\atencioncliente.cshtml.cs",
+              "RelativeToolTip": "ticketicos\\Pages\\Cliente\\atencioncliente.cshtml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-19T03:31:59.965Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "factura.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\Cliente\\factura.cshtml.cs",
+              "RelativeDocumentMoniker": "ticketicos\\Pages\\Cliente\\factura.cshtml.cs",
+              "ToolTip": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\Cliente\\factura.cshtml.cs",
+              "RelativeToolTip": "ticketicos\\Pages\\Cliente\\factura.cshtml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-19T03:31:54.989Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "factura.cshtml",
+              "DocumentMoniker": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\Cliente\\factura.cshtml",
+              "RelativeDocumentMoniker": "ticketicos\\Pages\\Cliente\\factura.cshtml",
+              "ToolTip": "C:\\Users\\XCPC\\Downloads\\Ticketicos1\\ticketicos\\ticketicos\\Pages\\Cliente\\factura.cshtml",
+              "RelativeToolTip": "ticketicos\\Pages\\Cliente\\factura.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-19T03:31:54.205Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

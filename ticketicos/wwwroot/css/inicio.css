@@ -1,0 +1,346 @@
+﻿
+/* 
+    index.css 
+    Estilos para la página de inicio (Index.cshtml)
+*/
+
+/* Ajustes básicos */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #000;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+/* =========================================
+   Banner superior con imagen de fondo
+   ========================================= */
+.banner {
+    background: url("/images/fondo-evento.jpg") no-repeat center center;
+    background-size: cover;
+    height: 400px; /* Ajusta según tu imagen */
+    position: relative;
+}
+
+.banner-text {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px 20px;
+    border-radius: 4px;
+}
+
+    .banner-text h1 {
+        margin: 0;
+        font-size: 28px;
+    }
+
+    .banner-text p {
+        margin: 5px 0 0;
+        color: #bff747; /* Color secundario (amarillo) */
+        font-weight: bold;
+    }
+
+/* =========================================
+   Barra transversal con artistas destacados
+   ========================================= */
+.artistas-destacados {
+    background-color: #bff747; /* Cambiado a amarillo */
+    position: relative;
+    width: 100%;
+    height: 60px; /* Ajusta la altura para la franja de artistas */
+    overflow: hidden; /* Oculta lo que salga del contenedor */
+    margin-top: 0; /* Para que siga el margin-top general */
+    padding: 0; /* Eliminamos padding, controlamos en la capa interna */
+}
+
+/* Contenedor interno que se desplazará de izquierda a derecha */
+.artistas-destacados-inner {
+    display: inline-flex;
+    align-items: center;
+    height: 100%;
+    white-space: nowrap;
+    animation: moveLeftToRight 13s linear infinite;
+}
+
+/* Cada artista en la lista: centrado vertical y horizontal */
+.artista-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%; /* Ocupa la altura completa (60px) de la barra */
+    margin-right: 125px; /* Espacio aumentado entre artistas */
+    font-size: 1.2rem; /* Letra más grande */
+    font-weight: bold; /* Texto más grueso */
+    color: #000; /* Texto negro para contrastar sobre amarillo */
+}
+
+/* Animación de desplazamiento de izquierda a derecha */
+@keyframes moveLeftToRight {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* =========================================
+   Sección de eventos (actuales y próximos)
+   ========================================= */
+.eventos-section {
+    padding: 20px;
+    max-width: 1200px; /* Opcional: limita el ancho en pantallas grandes */
+    margin: 0 auto; /* Centra horizontalmente */
+}
+
+    .eventos-section h2 {
+        color: #bff747; /* Títulos en amarillo */
+        margin-bottom: 10px;
+    }
+
+/* Grid de eventos:
+   - 3 columnas fijas por fila
+   - Espacio entre tarjetas
+*/
+.eventos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+/* Tarjetas de evento más grandes */
+.evento-card {
+    background-color: #111;
+    border: 1px solid #444;
+    padding: 20px; /* Aumenta padding para tarjetas más grandes */
+    border-radius: 4px;
+    text-align: center;
+    position: relative;
+}
+
+    /* Imagen de la tarjeta */
+    .evento-card img {
+        width: 100%;
+        height: auto;
+        border-radius: 4px;
+    }
+
+    /* Texto de la tarjeta */
+    .evento-card h3 {
+        margin: 10px 0 5px;
+        color: #fff;
+    }
+
+    .evento-card p {
+        margin: 0;
+        color: #ccc;
+    }
+
+.btn-agregar {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: #9efc00; /* Verde */
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+    .btn-agregar:hover {
+        background-color: #ff6600 !important; /* Cambia a naranja al pasar el cursor */
+        transform: scale(1.05);
+    }
+
+    .btn-agregar:active {
+        background-color: #1e7e34;
+        transform: scale(0.98);
+    }
+
+/* =========================================
+   Nuevas secciones
+   ========================================= */
+
+/* Botones de acceso rápido */
+.quick-access-buttons {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 15px;
+}
+
+.quick-btn {
+    display: flex;
+    align-items: center;
+    padding: 8px 15px;
+    background-color: #333;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+    .quick-btn i {
+        margin-right: 8px;
+        font-size: 1.2rem;
+    }
+
+.wallet-btn {
+    background-color: #4a148c;
+}
+
+    .wallet-btn:hover {
+        background-color: #6a1b9a;
+    }
+
+.support-btn {
+    background-color: #0d47a1;
+}
+
+    .support-btn:hover {
+        background-color: #1565c0;
+    }
+
+/* Encabezado de sección con botón "Ver todos" */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.ver-todos {
+    color: #bff747;
+    text-decoration: none;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+    .ver-todos i {
+        margin-left: 5px;
+    }
+
+    .ver-todos:hover {
+        text-decoration: underline;
+    }
+
+/* Badges para eventos en preventa y destacados */
+.preventa-badge,
+.destacado-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #000;
+}
+
+.preventa-badge {
+    background-color: #ff9800;
+}
+
+.destacado-badge {
+    background-color: #f44336;
+}
+
+.precio-preventa {
+    color: #ff9800;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Sección de códigos promocionales */
+.codigos-section {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+    .codigos-section h2 {
+        color: #bff747;
+        margin-bottom: 10px;
+    }
+
+.codigos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.codigo-card {
+    background-color: #222;
+    border: 1px solid #444;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.codigo-content {
+    padding: 20px;
+    text-align: center;
+}
+
+.codigo-valor {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #bff747;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #333;
+    border-radius: 4px;
+}
+
+.codigo-info p {
+    margin: 5px 0;
+    color: #ccc;
+}
+
+.btn-usar-codigo {
+    display: block;
+    padding: 10px;
+    background-color: #9efc00;
+    color: #000;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+    .btn-usar-codigo:hover {
+        background-color: #ff6600;
+    }
+
+/* Estilos para tarjetas destacadas */
+.evento-card.destacado {
+    border: 2px solid #f44336;
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+    .eventos-grid,
+    .codigos-grid {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .quick-access-buttons {
+        justify-content: center;
+    }
+}
+
+/* Responsive para tablets */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .eventos-grid,
+    .codigos-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

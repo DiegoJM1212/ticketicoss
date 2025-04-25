@@ -1,0 +1,407 @@
+﻿/* Variables de colores */
+:root {
+    --color-primary: #bff747;
+    --color-primary-dark: #a6d83b;
+    --color-secondary: #ffa000;
+    --color-secondary-dark: #f57c00;
+    --color-background: #000;
+    --color-surface: #1e1e1e;
+    --color-surface-light: #2d2d2d;
+    --color-text: #fff;
+    --color-text-secondary: #b0b0b0;
+    --color-error: #ff5252;
+    --color-success: #4caf50;
+    --color-warning: #ff9800;
+    --color-info: #2196f3;
+}
+
+/* Estilos generales */
+body {
+    background-color: var(--color-background);
+    color: var(--color-text);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+.pago-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Encabezado */
+.compra-header {
+    background-color: var(--color-primary);
+    color: #000;
+    padding: 12px 15px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-volver {
+    color: #000;
+    margin-right: 15px;
+    font-size: 1.2rem;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+    .btn-volver:hover {
+        transform: translateX(-3px);
+    }
+
+/* Información de tarjetas aceptadas */
+.tarjetas-info {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    font-size: 1.5rem;
+}
+
+    .tarjetas-info i {
+        color: var(--color-text-secondary);
+        transition: color 0.3s ease;
+    }
+
+        .tarjetas-info i:hover {
+            color: var(--color-text);
+        }
+
+/* Resumen de compra */
+.resumen-compra {
+    background-color: var(--color-surface);
+    padding: 20px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .resumen-compra:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    .resumen-compra h3 {
+        margin-top: 0;
+        margin-bottom: 15px;
+        color: var(--color-primary);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.3rem;
+    }
+
+.resumen-detalles {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.resumen-item {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--color-surface-light);
+}
+
+.resumen-label {
+    color: var(--color-text-secondary);
+}
+
+.resumen-valor {
+    font-weight: bold;
+}
+
+/* Formulario */
+.form-group {
+    margin-bottom: 20px;
+}
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--color-text-secondary);
+        font-size: 0.9rem;
+    }
+
+.form-control {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-surface-light);
+    border-radius: 6px;
+    color: var(--color-text);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 2px rgba(191, 247, 71, 0.2);
+    }
+
+.text-danger {
+    color: var(--color-error);
+    font-size: 0.85rem;
+    margin-top: 5px;
+    display: block;
+}
+
+/* Precio total */
+.precio-total {
+    margin: 25px 0;
+    font-size: 1.2rem;
+    text-align: right;
+}
+
+.precio-valor {
+    color: var(--color-primary);
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin-left: 10px;
+}
+
+/* Botones */
+.btn-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.btn-confirmar,
+.btn-cancelar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.btn-confirmar {
+    background-color: var(--color-primary);
+    color: #000;
+    border: none;
+}
+
+    .btn-confirmar:hover {
+        background-color: var(--color-primary-dark);
+        transform: translateY(-3px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+.btn-cancelar {
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    border: 1px solid var(--color-surface-light);
+}
+
+    .btn-cancelar:hover {
+        background-color: var(--color-surface-light);
+        transform: translateY(-3px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+/* Tarjetas guardadas */
+.saved-cards {
+    margin-bottom: 30px;
+}
+
+.card-title {
+    color: var(--color-text-secondary);
+    margin-bottom: 15px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.card-item {
+    background: linear-gradient(135deg, #333 0%, #111 100%);
+    border-radius: 10px;
+    padding: 15px;
+    width: calc(50% - 8px);
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+    .card-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-item.selected {
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 2px rgba(191, 247, 71, 0.3);
+    }
+
+    .card-item.visa {
+        background: linear-gradient(135deg, #0c4da2 0%, #16216a 100%);
+    }
+
+    .card-item.mastercard {
+        background: linear-gradient(135deg, #ff5f00 0%, #f79e1b 100%);
+    }
+
+    .card-item.amex {
+        background: linear-gradient(135deg, #016fd0 0%, #0057a0 100%);
+    }
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.card-chip {
+    width: 30px;
+    height: 20px;
+    background: linear-gradient(135deg, #bbb 0%, #ddd 100%);
+    border-radius: 3px;
+}
+
+.card-brand {
+    color: white;
+    font-weight: bold;
+}
+
+.card-number {
+    color: white;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.card-details {
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-detail-group {
+    color: white;
+}
+
+.card-detail-label {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.card-detail-value {
+    font-size: 0.9rem;
+}
+
+/* Separador */
+.separator {
+    text-align: center;
+    color: var(--color-text-secondary);
+    margin: 25px 0;
+    position: relative;
+}
+
+    .separator::before,
+    .separator::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        width: 45%;
+        height: 1px;
+        background-color: var(--color-surface-light);
+    }
+
+    .separator::before {
+        left: 0;
+    }
+
+    .separator::after {
+        right: 0;
+    }
+
+/* Elemento de tarjeta de Stripe */
+#card-element {
+    padding: 15px;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-surface-light);
+    color: var(--color-text);
+    border-radius: 6px;
+}
+
+/* Estado de carga */
+body.loading::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body.loading::before {
+    content: "";
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    border: 6px solid var(--color-surface-light);
+    border-top: 6px solid var(--color-primary);
+    border-radius: 50%;
+    z-index: 10000;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .cards-container {
+        flex-direction: column;
+    }
+
+    .card-item {
+        width: 100%;
+    }
+
+    .btn-container {
+        flex-direction: column;
+    }
+
+    .btn-confirmar,
+    .btn-cancelar {
+        width: 100%;
+    }
+}

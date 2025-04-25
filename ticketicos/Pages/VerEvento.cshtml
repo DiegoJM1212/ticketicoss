@@ -1,0 +1,81 @@
+﻿@page "/VerEvento/{id:int}"
+@model VerEventoModel
+@{
+    ViewData["Title"] = Model.Evento?.Nombre ?? "Evento no encontrado";
+}
+
+<link rel="stylesheet" href="~/css/VerEvento.css" />
+
+<div class="evento-detalle-container">
+
+    @if (Model.Evento != null)
+    {
+        <!-- Columna Izquierda: Imagen del Evento -->
+        <div class="evento-imagen">
+            <!-- Si hay una URL de imagen en la BD, mostrarla, de lo contrario mostrar una imagen por defecto -->
+            @if (!string.IsNullOrEmpty(Model.Evento.Imagen))
+            {
+                <img src="@Model.Evento.Imagen" alt="@Model.Evento.Nombre" />
+            }
+            else
+            {
+                <img src="/images/imagen_predeterminada.png" alt="Imagen no disponible" />
+            }
+        </div>
+
+        <!-- Columna Derecha: Información del Evento -->
+        <div class="evento-info">
+            <!-- Título con el nombre del evento -->
+            <h1>@Model.Evento.Nombre</h1>
+
+            <!-- Fecha y hora formateada (ejemplo en español) -->
+            <p class="evento-fecha">
+                <strong>Fecha y hora:</strong>
+                @if (Model.Evento.Fecha != default)
+                {
+                    @Model.Evento.Fecha.ToString("dddd d 'de' MMMM 'del' yyyy 'a las' HH:mm 'hrs'")
+                }
+                else
+                {
+                    <span>Fecha no disponible</span>
+                }
+            </p>
+
+            <!-- Lugar o recinto -->
+            <p class="evento-lugar">
+                <strong>Lugar:</strong>
+                @if (Model.Evento.Lugar != null && !string.IsNullOrEmpty(Model.Evento.Lugar.Nombre))
+                {
+                    @Model.Evento.Lugar.Nombre
+                }
+                else
+                {
+                    <span>Lugar no especificado</span>
+                }
+            </p>
+
+            <!-- Descripción -->
+            <p class="evento-descripcion">
+                @if (!string.IsNullOrEmpty(Model.Evento.Descripcion))
+                {
+                    @Model.Evento.Descripcion
+                }
+                else
+                {
+                    <span>Descripción no disponible</span>
+                }
+            </p>
+
+            <!-- Botón para comprar boletos -->
+            <div class="btn-comprar-container">
+                <a asp-page="/ComprarBoletos" asp-route-id="@Model.Evento.Id" class="btn-comprar">
+                    COMPRAR BOLETOS
+                </a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <p>Evento no encontrado</p>
+    }
+</div>

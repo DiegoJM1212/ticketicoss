@@ -1,0 +1,175 @@
+﻿@page
+@model ticketicos.Pages.Cliente.LoginModel
+@{
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Iniciar Sesión";
+}
+
+<div class="fullscreen-container">
+    <div class="login-container">
+        <div class="login-form-card">
+            <div class="login-header">
+                <h2 class="text-neon">Bienvenido de nuevo</h2>
+                <p>Ingresa tus credenciales para acceder</p>
+            </div>
+
+            @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+            {
+                <div class="alert alert-danger">@Model.ErrorMessage</div>
+            }
+
+            <form method="post" class="login-form">
+                <div class="form-group">
+                    <label for="Correo">Correo electrónico</label>
+                    <div class="input-with-icon">
+                        <input type="email" class="form-control" asp-for="Correo" required>
+                        <span class="input-icon">
+                            <i class="bi bi-envelope"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="Contraseña">Contraseña</label>
+                    <div class="input-with-icon">
+                        <input type="password" class="form-control" asp-for="Contraseña" required>
+                        <span class="input-icon">
+                            <i class="bi bi-eye"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <input type="hidden" asp-for="ReturnUrl" />
+
+                <button type="submit" class="btn btn-login">Iniciar sesión</button>
+            </form>
+
+            <div class="login-footer">
+                <div class="register-link">
+                    <span>¿no tienes cuenta?</span>
+                    <a asp-page="/Cliente/Registro" class="text-neon">registrarse</a>
+                </div>
+                <div class="forgot-password">
+                    <span>¿olvidaste tu contraseña?</span>
+                    <a asp-page="/Cliente/ResetPassword" class="text-neon">recuperar contraseña</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .fullscreen-container {
+        background-color: #000;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .login-container {
+        width: 100%;
+        max-width: 450px;
+    }
+
+    .login-form-card {
+        background-color: #888;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .login-header {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+        .login-header h2 {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+    .text-neon {
+        color: #BFF747;
+        font-weight: bold;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+    .input-with-icon {
+        position: relative;
+    }
+
+        .input-with-icon .form-control {
+            padding-right: 40px;
+            background-color: #fff;
+            border: none;
+            height: 45px;
+            border-radius: 5px;
+        }
+
+    .input-icon {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #888;
+        cursor: pointer;
+    }
+
+    .btn-login {
+        width: 100%;
+        background-color: #BFF747;
+        color: #000;
+        font-weight: bold;
+        border: none;
+        padding: 12px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        transition: background-color 0.3s;
+    }
+
+        .btn-login:hover {
+            background-color: #a8e32c;
+        }
+
+    .login-footer {
+        margin-top: 25px;
+    }
+
+    .register-link, .forgot-password {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+        .register-link span, .forgot-password span {
+            color: #333;
+        }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('.bi-eye').addEventListener('click', function() {
+            const passwordInput = document.querySelector('input[type="password"]');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                this.classList.remove('bi-eye');
+                this.classList.add('bi-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                this.classList.remove('bi-eye-slash');
+                this.classList.add('bi-eye');
+            }
+        });
+    });
+</script>

@@ -1,0 +1,371 @@
+﻿@page
+@model ticketicos.Pages.Admin.NewslettersModel
+@{
+    ViewData["Title"] = "Gestión de Newsletters";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TICKETICOS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        /* Fondo negro para la página */
+        body {
+            background-color: #000000;
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .btn-home {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #666666;
+            color: #ffffff;
+            padding: 0.25rem 0.75rem;
+            text-decoration: none;
+            font-size: 0.875rem;
+            border-radius: 0.25rem;
+        }
+        /* Verde neon para elementos destacados */
+        .bg-neon {
+            background-color: #C1FF00 !important;
+        }
+
+        .text-neon {
+            color: #C1FF00 !important;
+        }
+
+        .text-black {
+            color: black !important;
+        }
+
+        /* Estilo de los paneles */
+        .panel {
+            background-color: #464646;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .panel-header {
+            background-color: #C1FF00;
+            color: black;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            position: relative;
+        }
+
+        /* Formularios y controles */
+        .form-control, .form-select {
+            background-color: #3a3a3a;
+            border: 1px solid #505050;
+            color: white;
+            border-radius: 5px;
+        }
+
+            .form-control:focus, .form-select:focus {
+                background-color: #3a3a3a;
+                color: white;
+                border-color: #C1FF00;
+                box-shadow: 0 0 0 0.25rem rgba(193, 255, 0, 0.25);
+            }
+
+        /* Botones */
+        .btn-neon {
+            background-color: #C1FF00;
+            color: black;
+            border: none;
+            font-weight: 500;
+        }
+
+            .btn-neon:hover {
+                background-color: #a8db00;
+                color: black;
+            }
+
+        /* Logo */
+        .logo-container {
+            width: 80px;
+            height: 80px;
+            background-color: #C1FF00;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            margin: 0 auto;
+            margin-bottom: 20px;
+        }
+
+        /* Enlaces */
+        .dashboard-link {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.3);
+            color: white;
+            padding: 5px 15px;
+            text-decoration: none;
+            font-size: 14px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+            .dashboard-link:hover {
+                background-color: rgba(0, 0, 0, 0.5);
+                color: white;
+            }
+
+        /* Editor de texto */
+        .editor-toolbar {
+            background-color: #2c2c2c;
+            border: 1px solid #505050;
+            border-bottom: none;
+            border-radius: 5px 5px 0 0;
+            padding: 5px;
+        }
+
+            .editor-toolbar button {
+                background-color: transparent;
+                border: none;
+                color: white;
+                padding: 5px 10px;
+                cursor: pointer;
+                border-radius: 3px;
+            }
+
+                .editor-toolbar button:hover {
+                    background-color: #444;
+                }
+
+            .editor-toolbar .separator {
+                display: inline-block;
+                width: 1px;
+                height: 20px;
+                background-color: #555;
+                margin: 0 5px;
+                vertical-align: middle;
+            }
+
+        /* Vista previa */
+        #preview-container {
+            border: 1px solid #505050;
+            border-radius: 5px;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: white;
+            color: black;
+            min-height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <!-- Logo -->
+        <div class="logo-container">
+            <img src="/images/logo.png" alt="Logo" style="width: 60%; height: 60%; object-fit: contain;" />
+        </div>
+
+        <!-- Panel Principal -->
+        <div class="panel">
+            <div class="panel-header">
+                Gestión de Newsletters
+                <a href="/administrativo/Dashboard" class="dashboard-link">
+                    <i class="bi bi-house-door me-2"></i> Dashboard
+                </a>
+            </div>
+
+            @if (!string.IsNullOrEmpty(Model.MensajeExito))
+            {
+                <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+                    <i class="bi bi-check-circle-fill me-2"></i>
+                    @Model.MensajeExito
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+            @if (!string.IsNullOrEmpty(Model.MensajeError))
+            {
+                <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    @Model.MensajeError
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+            <ul class="nav nav-tabs mb-4" id="newsletterTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="compose-tab" data-bs-toggle="tab" data-bs-target="#compose" type="button" role="tab" aria-controls="compose" aria-selected="true">
+                        <i class="bi bi-pencil-square me-2"></i>Componer Newsletter
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="preview-tab" data-bs-toggle="tab" data-bs-target="#preview" type="button" role="tab" aria-controls="preview" aria-selected="false">
+                        <i class="bi bi-eye me-2"></i>Vista Previa
+                    </button>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="newsletterTabsContent">
+                <div class="tab-pane fade show active" id="compose" role="tabpanel" aria-labelledby="compose-tab">
+                    <form method="post" asp-page-handler="EnviarNewsletter" id="newsletterForm">
+                        <div class="mb-4">
+                            <label for="Asunto" class="form-label">Asunto</label>
+                            <input type="text" asp-for="Asunto" class="form-control" required placeholder="Ingrese el asunto del newsletter" />
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="Contenido" class="form-label">Contenido del Newsletter (HTML permitido)</label>
+                            <div class="editor-toolbar">
+                                <button type="button" onclick="formatText('bold')"><i class="bi bi-type-bold"></i></button>
+                                <button type="button" onclick="formatText('italic')"><i class="bi bi-type-italic"></i></button>
+                                <button type="button" onclick="formatText('underline')"><i class="bi bi-type-underline"></i></button>
+                                <span class="separator"></span>
+                                <button type="button" onclick="formatText('h1')"><i class="bi bi-type-h1"></i></button>
+                                <button type="button" onclick="formatText('h2')"><i class="bi bi-type-h2"></i></button>
+                                <button type="button" onclick="formatText('h3')"><i class="bi bi-type-h3"></i></button>
+                                <span class="separator"></span>
+                                <button type="button" onclick="formatText('ul')"><i class="bi bi-list-ul"></i></button>
+                                <button type="button" onclick="formatText('ol')"><i class="bi bi-list-ol"></i></button>
+                                <span class="separator"></span>
+                                <button type="button" onclick="formatText('link')"><i class="bi bi-link-45deg"></i></button>
+                                <button type="button" onclick="formatText('image')"><i class="bi bi-image"></i></button>
+                            </div>
+                            <textarea asp-for="Contenido" id="editor" class="form-control" rows="15" required placeholder="Escriba el contenido del newsletter (HTML permitido)"></textarea>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <button type="button" class="btn btn-secondary" onclick="previewNewsletter()">
+                                <i class="bi bi-eye me-2"></i>Vista Previa
+                            </button>
+                            <button type="submit" class="btn btn-neon px-4">
+                                <i class="bi bi-send me-2"></i>Enviar Newsletter
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="tab-pane fade" id="preview" role="tabpanel" aria-labelledby="preview-tab">
+                    <div class="mb-3">
+                        <h5 class="text-neon">Vista Previa del Newsletter</h5>
+                        <p class="text-muted">Así es como se verá su newsletter en los clientes de correo.</p>
+                    </div>
+                    <div id="preview-container">
+                        <div id="preview-content">
+                            <p class="text-muted text-center">La vista previa aparecerá aquí...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function formatText(command) {
+            const editor = document.getElementById('editor');
+            const selStart = editor.selectionStart;
+            const selEnd = editor.selectionEnd;
+            const selectedText = editor.value.substring(selStart, selEnd);
+            let replacement = '';
+
+            switch(command) {
+                case 'bold':
+                    replacement = `<strong>${selectedText}</strong>`;
+                    break;
+                case 'italic':
+                    replacement = `<em>${selectedText}</em>`;
+                    break;
+                case 'underline':
+                    replacement = `<u>${selectedText}</u>`;
+                    break;
+                case 'h1':
+                    replacement = `<h1>${selectedText}</h1>`;
+                    break;
+                case 'h2':
+                    replacement = `<h2>${selectedText}</h2>`;
+                    break;
+                case 'h3':
+                    replacement = `<h3>${selectedText}</h3>`;
+                    break;
+                case 'ul':
+                    replacement = `<ul>\n  <li>${selectedText}</li>\n  <li>Elemento de lista</li>\n</ul>`;
+                    break;
+                case 'ol':
+                    replacement = `<ol>\n  <li>${selectedText}</li>\n  <li>Elemento de lista</li>\n</ol>`;
+                    break;
+                case 'link':
+                    const url = prompt('Ingrese la URL:', 'https://');
+                    if (url) {
+                        replacement = `<a href="${url}" target="_blank">${selectedText || url}</a>`;
+                    } else {
+                        return;
+                    }
+                    break;
+                case 'image':
+                    const imgUrl = prompt('Ingrese la URL de la imagen:', 'https://');
+                    if (imgUrl) {
+                        replacement = `<img src="${imgUrl}" alt="Imagen" style="max-width: 100%; height: auto;" />`;
+                    } else {
+                        return;
+                    }
+                    break;
+            }
+
+            editor.value = editor.value.substring(0, selStart) + replacement + editor.value.substring(selEnd);
+            editor.focus();
+            editor.selectionStart = selStart + replacement.length;
+            editor.selectionEnd = selStart + replacement.length;
+
+            // Actualizar vista previa
+            updatePreview();
+        }
+
+        function previewNewsletter() {
+            updatePreview();
+            document.getElementById('preview-tab').click();
+        }
+
+        function updatePreview() {
+            const content = document.getElementById('editor').value;
+            const subject = document.getElementById('Asunto').value || 'Vista Previa del Newsletter';
+
+            let previewHtml = `
+                <div style="max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif;">
+                    <div style="background-color: #C1FF00; padding: 20px; text-align: center;">
+                        <h2 style="margin: 0; color: #000;">${subject}</h2>
+                    </div>
+                    <div style="padding: 20px; background-color: #fff;">
+                        ${content}
+                    </div>
+                    <div style="background-color: #333; color: #fff; padding: 15px; text-align: center; font-size: 12px;">
+                        <p>© ${new Date().getFullYear()} TICKETICOS. Todos los derechos reservados.</p>
+                        <p>Si no desea recibir más correos, puede <a href="#" style="color: #C1FF00;">cancelar su suscripción</a>.</p>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('preview-content').innerHTML = previewHtml;
+        }
+
+        // Inicializar la vista previa cuando se carga la página
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('editor').addEventListener('input', updatePreview);
+            document.getElementById('Asunto').addEventListener('input', updatePreview);
+        });
+    </script>
+</body>
+</html>

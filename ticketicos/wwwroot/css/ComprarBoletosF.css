@@ -1,0 +1,720 @@
+﻿/* Variables de colores */
+:root {
+    --color-primary: #bff747;
+    --color-primary-dark: #a6d83b;
+    --color-secondary: #ffa000;
+    --color-secondary-dark: #f57c00;
+    --color-background: #121212;
+    --color-surface: #1e1e1e;
+    --color-surface-light: #2d2d2d;
+    --color-text: #ffffff;
+    --color-text-secondary: #b0b0b0;
+    --color-error: #ff5252;
+    --color-success: #4caf50;
+    --color-warning: #ff9800;
+    --color-info: #2196f3;
+}
+
+/* Estilos generales */
+body {
+    background-color: var(--color-background);
+    color: var(--color-text);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    padding-top: 200px;
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* Contenedor principal */
+.comprar-boletos-container {
+    max-width: 1200px;
+    margin: 5rem auto 2rem auto;
+    padding: 0 1.5rem;
+    animation-duration: 1s;
+}
+
+/* Título de la página */
+.page-title {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    text-shadow: 0 0 10px rgba(191, 247, 71, 0.3);
+    letter-spacing: 1px;
+}
+
+/* Información del evento */
+.evento-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    background-color: var(--color-surface);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .evento-info:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.4);
+    }
+
+.evento-media {
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.evento-imagen {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+    .evento-imagen:hover {
+        transform: scale(1.02);
+    }
+
+.lugar-mapa-container {
+    margin-top: 1rem;
+}
+
+.lugar-mapa {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+    .lugar-mapa:hover {
+        transform: scale(1.02);
+    }
+
+.evento-descripcion {
+    flex: 2;
+    min-width: 300px;
+}
+
+.evento-titulo {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: var(--color-primary);
+    border-bottom: 2px solid var(--color-primary);
+    padding-bottom: 0.5rem;
+}
+
+.evento-detalles {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.detalle-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+    .detalle-item i {
+        color: var(--color-primary);
+        font-size: 1.2rem;
+    }
+
+.evento-descripcion-texto {
+    background-color: var(--color-surface-light);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--color-primary);
+}
+
+/* Contenedor para la distribución de columnas */
+.content-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+/* Panel izquierdo para bloques y asientos */
+.left-panel {
+    flex: 1 1 65%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Panel derecho para tarjetas */
+.right-panel {
+    flex: 1 1 35%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Títulos de sección */
+.section-title,
+.card-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--color-primary);
+}
+
+    .section-title i,
+    .card-title i {
+        color: var(--color-primary);
+    }
+
+/* Estilos para la sección de bloques */
+.bloques-container {
+    background-color: var(--color-surface);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.bloques-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.bloque {
+    padding: 12px 18px;
+    background-color: var(--color-primary);
+    color: #000;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+    .bloque:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        background-color: var(--color-primary-dark);
+    }
+
+    .bloque.activo {
+        background-color: var(--color-secondary);
+        color: #fff;
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+
+.bloque-nombre {
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+}
+
+.bloque-precio {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+/* Estilos para la matriz de asientos */
+.asientos-container {
+    background-color: var(--color-surface);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.asientos-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.asientos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(30px, 1fr));
+    gap: 6px;
+    max-width: 100%;
+    overflow-x: auto;
+    padding: 1rem;
+    background-color: var(--color-surface-light);
+    border-radius: 8px;
+    min-height: 200px;
+}
+
+.asiento {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background-color: #ccc;
+    color: #000;
+    text-align: center;
+    font-size: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+    .asiento:hover {
+        background-color: #90ee90;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .asiento.seleccionado {
+        background-color: var(--color-secondary);
+        color: #fff;
+        transform: translateY(-3px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .asiento.ocupado {
+        background-color: #b0bec5;
+        cursor: not-allowed;
+        opacity: 0.7;
+    }
+
+    .asiento.vip {
+        border: 2px solid gold;
+    }
+
+/* Selector de cantidad */
+.cantidad-container {
+    padding: 1.5rem;
+    background-color: var(--color-surface-light);
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+}
+
+    .cantidad-container h4 {
+        margin-top: 0;
+        margin-bottom: 1rem;
+        color: var(--color-text);
+        font-size: 1.1rem;
+    }
+
+.cantidad-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.btn-cantidad {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--color-primary);
+    color: #000;
+    border: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+    .btn-cantidad:hover {
+        background-color: var(--color-primary-dark);
+        transform: scale(1.1);
+    }
+
+.input-cantidad {
+    width: 60px;
+    height: 40px;
+    text-align: center;
+    font-size: 1.2rem;
+    border: 2px solid var(--color-surface);
+    border-radius: 8px;
+    background-color: var(--color-surface);
+    color: var(--color-text);
+}
+
+    .input-cantidad:focus {
+        outline: none;
+        border-color: var(--color-primary);
+    }
+
+.asientos-leyenda {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.leyenda-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.asiento-ejemplo {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+}
+
+    .asiento-ejemplo.disponible {
+        background-color: #ccc;
+    }
+
+    .asiento-ejemplo.seleccionado {
+        background-color: var(--color-secondary);
+    }
+
+    .asiento-ejemplo.ocupado {
+        background-color: #b0bec5;
+    }
+
+/* Tarjetas del panel derecho */
+.promo-card,
+.resumen-card {
+    background-color: var(--color-surface);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .promo-card:hover,
+    .resumen-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    }
+
+.promo-input-container {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.promo-input {
+    flex: 1;
+    padding: 0.75rem;
+    border-radius: 4px;
+    border: 1px solid var(--color-surface-light);
+    background-color: var(--color-surface-light);
+    color: var(--color-text);
+    transition: border-color 0.3s ease;
+}
+
+    .promo-input:focus {
+        outline: none;
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 2px rgba(191, 247, 71, 0.2);
+    }
+
+.btn-aplicar {
+    padding: 0.75rem 1rem;
+    background-color: var(--color-primary);
+    color: #000;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+    .btn-aplicar:hover {
+        background-color: var(--color-primary-dark);
+    }
+
+/* Resumen de compra */
+.resumen-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.resumen-item {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-surface-light);
+}
+
+    .resumen-item.total {
+        font-weight: bold;
+        font-size: 1.2rem;
+        border-bottom: none;
+        margin-top: 0.5rem;
+        color: var(--color-primary);
+    }
+
+.btn-pagar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--color-primary);
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+    .btn-pagar:hover {
+        background-color: var(--color-primary-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+    }
+
+/* Modal de confirmación */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background-color: var(--color-surface);
+    margin: 10% auto;
+    padding: 2rem;
+    border-radius: 12px;
+    max-width: 500px;
+    color: var(--color-text);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+    .modal-content h3 {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--color-primary);
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+    }
+
+.asientos-seleccionados-resumen {
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background-color: var(--color-surface-light);
+    border-radius: 8px;
+}
+
+    .asientos-seleccionados-resumen h4 {
+        margin-top: 0;
+        margin-bottom: 1rem;
+        color: var(--color-text-secondary);
+    }
+
+.asiento-resumen {
+    display: inline-block;
+    padding: 0.5rem 0.75rem;
+    margin: 0.25rem;
+    background-color: var(--color-secondary);
+    color: #fff;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.cantidad-resumen,
+.bloque-resumen {
+    margin-bottom: 0.5rem;
+    color: var(--color-text);
+}
+
+.total-resumen {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 1.5rem 0;
+    color: var(--color-primary);
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.btn-confirm,
+.btn-cancel {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn-confirm {
+    background-color: var(--color-primary);
+    color: #000;
+}
+
+    .btn-confirm:hover {
+        background-color: var(--color-primary-dark);
+        transform: translateY(-2px);
+    }
+
+.btn-cancel {
+    background-color: var(--color-error);
+    color: #fff;
+}
+
+    .btn-cancel:hover {
+        background-color: #d32f2f;
+        transform: translateY(-2px);
+    }
+
+/* Notificaciones */
+.notificacion {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    z-index: 1100;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    max-width: 350px;
+}
+
+    .notificacion.error {
+        background-color: var(--color-error);
+        color: #fff;
+    }
+
+    .notificacion.success {
+        background-color: var(--color-success);
+        color: #fff;
+    }
+
+    .notificacion.warning {
+        background-color: var(--color-warning);
+        color: #000;
+    }
+
+    .notificacion.info {
+        background-color: var(--color-info);
+        color: #fff;
+    }
+
+/* Animación de carga */
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid var(--color-surface-light);
+    border-top: 5px solid var(--color-primary);
+    border-radius: 50%;
+    margin: 2rem auto;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Estado de carga para el body */
+body.loading::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body.loading::before {
+    content: "";
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    border: 6px solid var(--color-surface-light);
+    border-top: 6px solid var(--color-primary);
+    border-radius: 50%;
+    z-index: 10000;
+    animation: spin 1s linear infinite;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .comprar-boletos-container {
+        padding: 0 1rem;
+    }
+
+    .evento-info {
+        flex-direction: column;
+    }
+
+    .content-wrapper {
+        flex-direction: column;
+    }
+
+    .left-panel,
+    .right-panel {
+        flex: 1 1 100%;
+    }
+
+    .asientos-grid {
+        grid-template-columns: repeat(auto-fill, minmax(25px, 1fr));
+    }
+
+    .asiento {
+        width: 25px;
+        height: 25px;
+        font-size: 10px;
+    }
+
+    .modal-content {
+        width: 90%;
+        margin: 20% auto;
+    }
+}
+
+/* Estilos para el botón de perfil en el layout */
+.profile-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.3s ease;
+}
+
+    .profile-link:hover {
+        color: var(--color-primary) !important;
+    }
+
+    .profile-link i {
+        font-size: 1.2rem;
+    }

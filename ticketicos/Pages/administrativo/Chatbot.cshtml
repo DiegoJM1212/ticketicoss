@@ -1,0 +1,279 @@
+﻿@page
+@model ticketicos.Pages.Admin.ChatbotModel
+@{
+    ViewData["Title"] = "Tickicos - Gestionar Preguntas del Chatbot";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</head>
+<body>
+    <div class="container bg-black min-vh-100 py-5">
+        <!-- Logo -->
+        <div class="d-flex justify-content-center mb-4">
+            <div class="bg-neon d-flex align-items-center justify-content-center rounded" style="width: 80px; height: 80px;">
+                <span class="fw-bold text-black">TICKICOS</span>
+            </div>
+        </div>
+
+        <!-- Panel Principal -->
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8 mx-auto">
+                <div class="bg-panel rounded-4 shadow-lg overflow-hidden mb-4">
+                    <!-- Título -->
+                    <div class="bg-neon p-3 text-center">
+                        <h4 class="fw-bold text-black mb-0">Gestionar Preguntas del Chatbot</h4>
+                        <a href="/administrativo/Dashboard" class="dashboard-link">
+                            <i class="bi bi-house-door me-2"></i> Dashboard
+                        </a>
+                    </div>
+
+                    <div class="p-4">
+                        @{
+                            if (!Model.ModelState.IsValid &&
+                            Model.ModelState.TryGetValue(string.Empty, out var entry) &&
+                            entry.Errors.Count > 0)
+                            {
+                                <div class="alert alert-danger mb-4 rounded">
+                                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                                    @entry.Errors[0].ErrorMessage
+                                </div>
+                            }
+                        }
+
+
+                        <!-- Formulario para Agregar/Editar Pregunta -->
+                        <form method="post" asp-page-handler="Agregar">
+                            <div class="row mb-3">
+                                <div class="col-12 mb-3">
+                                    <label asp-for="NuevaPregunta.Pregunta" class="form-label text-white">Pregunta</label>
+                                    <input asp-for="NuevaPregunta.Pregunta" class="form-control bg-dark text-white border-secondary rounded" placeholder="Escribe la pregunta" />
+                                    <span asp-validation-for="NuevaPregunta.Pregunta" class="text-danger"></span>
+                                </div>
+                                <div class="col-12">
+                                    <label asp-for="NuevaPregunta.Respuesta" class="form-label text-white">Respuesta</label>
+                                    <textarea asp-for="NuevaPregunta.Respuesta" class="form-control bg-dark text-white border-secondary rounded" rows="4" placeholder="Escribe la respuesta"></textarea>
+                                    <span asp-validation-for="NuevaPregunta.Respuesta" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <input type="hidden" asp-for="NuevaPregunta.Id" />
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="btn btn-success rounded px-4 py-2">
+                                    <i class="bi bi-save me-2"></i>@(Model.NuevaPregunta.Id == 0 ? "Agregar Pregunta" : "Actualizar Pregunta")
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Lista de Preguntas -->
+                <div class="bg-panel rounded-4 shadow-lg overflow-hidden">
+                    <div class="bg-neon p-3 text-center">
+                        <h5 class="fw-bold text-black mb-0">Preguntas Frecuentes</h5>
+                    </div>
+                    <div class="p-4">
+                        @if (Model.Preguntas.Any())
+                        {
+                            <div class="table-responsive">
+                                <table class="table table-dark table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Pregunta</th>
+                                            <th>Respuesta</th>
+                                            <th>Estado</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var pregunta in Model.Preguntas)
+                                        {
+                                            <tr>
+                                                <td>@pregunta.Pregunta</td>
+                                                <td>@(string.IsNullOrEmpty(pregunta.Respuesta) ? "Sin respuesta" : pregunta.Respuesta)</td>
+                                                <td>
+                                                    @if (pregunta.Habilitado)
+                                                    {
+                                                        <span class="badge bg-success">Habilitada</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="badge bg-danger">Deshabilitada</span>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <a asp-page-handler="Editar" asp-route-id="@pregunta.Id" class="btn btn-sm btn-warning rounded">
+                                                        <i class="bi bi-pencil"></i>
+                                                    </a>
+                                                    @if (pregunta.Habilitado)
+                                                    {
+                                                        <a asp-page-handler="Deshabilitar" asp-route-id="@pregunta.Id" class="btn btn-sm btn-secondary rounded" onclick="return confirm('¿Deshabilitar esta pregunta?');">
+                                                            <i class="bi bi-eye-slash"></i>
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a asp-page-handler="Habilitar" asp-route-id="@pregunta.Id" class="btn btn-sm btn-success rounded" onclick="return confirm('¿Habilitar esta pregunta?');">
+                                                            <i class="bi bi-eye"></i>
+                                                        </a>
+                                                    }
+                                                    <a asp-page-handler="Eliminar" asp-route-id="@pregunta.Id" class="btn btn-sm btn-danger rounded" onclick="return confirm('¿Eliminar esta pregunta?');">
+                                                        <i class="bi bi-trash"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="text-white text-center">No hay preguntas frecuentes registradas.</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17CWba2N0h0O9mPT57VEuw==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js" integrity="sha512-xq+3B94LomNO9gP02dO21z05x4XsPf8qXbSKAB3T27WI7hr2mFMC1Q0Snq/pKbgH4eLupWvu+If6v7wnGWEq0UA==" crossorigin="anonymous"></script>
+</body>
+</html>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    .bg-black {
+        background-color: #000000 !important;
+    }
+
+    .bg-neon {
+        background-color: #C1FF00 !important;
+        color: #000 !important;
+    }
+
+    .bg-panel {
+        background-color: #1a1a1a !important;
+    }
+
+    .btn {
+        border-radius: 5px !important;
+        padding: 0.5rem 1rem !important;
+        font-weight: 500 !important;
+        text-decoration: none !important;
+    }
+
+    .btn-home {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: #666666;
+        color: #ffffff;
+        padding: 0.25rem 0.75rem;
+        text-decoration: none;
+        font-size: 0.875rem;
+        border-radius: 0.25rem;
+    }
+    .btn-success {
+        background-color: #28a745 !important;
+        border: none !important;
+        color: #fff !important;
+    }
+
+    .btn-warning {
+        background-color: #ffc107 !important;
+        border: none !important;
+        color: #000 !important;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d !important;
+        border: none !important;
+        color: #fff !important;
+    }
+
+    .btn-danger {
+        background-color: #dc3545 !important;
+        border: none !important;
+        color: #fff !important;
+    }
+
+    .form-control {
+        background-color: #1a1a1a !important;
+        border: 1px solid #444 !important;
+        color: #fff !important;
+        border-radius: 5px !important;
+        padding: 0.75rem 1rem !important;
+        font-size: 1rem !important;
+    }
+
+    .form-label {
+        color: #fff !important;
+        font-size: 1rem !important;
+    }
+
+    .table-dark {
+        background-color: #2a2a2a !important;
+        color: #fff !important;
+    }
+
+        .table-dark th,
+        .table-dark td {
+            border-color: #444 !important;
+            padding: 0.75rem !important;
+        }
+
+        .table-dark .btn-sm {
+            padding: 0.25rem 0.5rem !important;
+            font-size: 0.875rem !important;
+        }
+
+    .badge {
+        font-size: 0.9rem !important;
+        padding: 0.35em 0.65em !important;
+    }
+
+    .alert-danger {
+        background-color: #dc3545 !important;
+        color: #fff !important;
+        border: none !important;
+        border-radius: 5px !important;
+    }
+
+    .text-danger {
+        color: #dc3545 !important;
+    }
+
+    .container {
+        max-width: 100% !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+
+    .row.justify-content-center {
+        display: flex !important;
+        justify-content: center !important;
+    }
+
+    .col-12.col-md-10.col-lg-8 {
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+</style>

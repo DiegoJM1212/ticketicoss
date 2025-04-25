@@ -1,0 +1,18 @@
+﻿@model ticketicos.Pages.Cliente.AtencionClienteModel
+
+<div class="chat-box" id="chatBox">
+    @if (Model.MensajesChat != null && Model.MensajesChat.Any())
+    {
+        foreach (var mensaje in Model.MensajesChat)
+        {
+            <div class="chat-message @(mensaje.EsAdmin ? "admin" : "user")">
+                <strong>@(mensaje.EsAdmin ? "Agente" : "Tú"):</strong> @mensaje.Mensaje
+                <br /><small>@mensaje.Fecha.ToString("dd/MM/yyyy HH:mm")</small>
+            </div>
+        }
+    }
+    else
+    {
+        <p style="color: white;">Bienvenido al chat de soporte. ¿En qué podemos ayudarte?</p>
+    }
+</div>

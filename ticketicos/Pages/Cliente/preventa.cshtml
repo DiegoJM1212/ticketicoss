@@ -1,0 +1,134 @@
+﻿@page
+@model ticketicos.Pages.Cliente.PreventaModel
+@{
+    ViewData["Title"] = "Tickicos - Preventas Disponibles";
+}
+
+<div style="background-color: #000; min-height: 100vh; padding: 40px 20px; font-family: Arial, sans-serif;">
+    <div style="text-align: center; margin-bottom: 20px;">
+        <div style="background-color: #c5ff00; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); width: 80px; height: 80px;">
+            <span style="font-weight: bold; color: #000; font-size: 18px;">TICKICOS</span>
+        </div>
+    </div>
+
+    <div style="max-width: 1000px; margin: 0 auto;">
+        <div style="background-color: #1a1a1a; border-radius: 16px; box-shadow: 0 4px 16px rgba(0,0,0,0.3); overflow: hidden;">
+            <div style="background-color: #c5ff00; padding: 20px; text-align: center;">
+                <h3 style="font-weight: bold; color: #000; margin: 0;">Preventas Disponibles</h3>
+                <p style="color: #000; margin: 0;">Accede antes que nadie a los mejores eventos</p>
+            </div>
+
+            <div style="padding: 40px;">
+                <div style="background-color: @(Model.TieneAccesoPreventa ? "#d4edda" : "#fff3cd"); color: @(Model.TieneAccesoPreventa ? "#155724" : "#856404"); padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                    <i style="margin-right: 8px;" class="@(Model.TieneAccesoPreventa ? "bi bi-check-circle-fill" : "bi bi-exclamation-triangle-fill")"></i>@Model.MensajeAcceso
+                    @if (!Model.TieneAccesoPreventa)
+                    {
+                        <div style="margin-top: 12px;">
+                            <a href="/Cliente/Billetera" style="background-color: #007bff; color: #fff; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-size: 14px;">
+                                <i style="margin-right: 4px;" class="bi bi-wallet2"></i>Ir a Mi Billetera
+                            </a>
+                        </div>
+                    }
+                </div>
+
+                @if (Model.Eventos.Any())
+                {
+                    <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+                        @foreach (var evento in Model.Eventos)
+                        {
+                            <div style="background-color: #2a2a2a; color: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.2); width: 300px; transition: transform 0.3s;">
+                                <div style="position: relative;">
+                                    <img src="@evento.ImagenUrl" style="width: 100%; height: 180px; object-fit: cover; background-color: #6c757d;" alt="@evento.Nombre" onerror="this.src='/images/evento-default.jpg'" />
+                                    <div style="position: absolute; bottom: 0; left: 0; background-color: rgba(0,0,0,0.75); padding: 8px 12px; border-top-right-radius: 8px;">
+                                        <small style="color: #fff;"><i style="margin-right: 4px;" class="bi bi-calendar-event"></i>@evento.Fecha.ToString("dd/MM/yyyy")</small>
+                                    </div>
+                                    <div style="position: absolute; top: 0; right: 0; background-color: #c5ff00; color: #000; padding: 8px 12px; border-bottom-left-radius: 8px;">
+                                        <small><i style="margin-right: 4px;" class="bi bi-star-fill"></i>PREVENTA</small>
+                                    </div>
+                                </div>
+                                <div style="padding: 20px;">
+                                    <h5 style="font-weight: bold; margin-bottom: 12px;">@evento.Nombre</h5>
+                                    <p style="margin-bottom: 8px;"><i style="margin-right: 8px;" class="bi bi-clock"></i>@evento.Hora</p>
+                                    <p style="margin-bottom: 8px;"><i style="margin-right: 8px;" class="bi bi-geo-alt"></i>@evento.LugarNombre</p>
+                                    <p style="color: #28a745; margin-bottom: 8px;"><i style="margin-right: 8px;" class="bi bi-ticket-perforated"></i>Boletos disponibles</p>
+                                    <p style="color: #ffc107; margin-bottom: 16px;"><i style="margin-right: 8px;" class="bi bi-info-circle"></i>Máx. @evento.LimiteBoletos boletos por usuario</p>
+                                    <a href="/VerEvento/@evento.Id" style="background-color: #28a745; color: #fff; display: block; text-align: center; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold;">
+                                        <i style="margin-right: 8px;" class="bi bi-ticket-fill"></i>Comprar Boletos
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div style="text-align: center; padding: 40px;">
+                        <i style="font-size: 80px; color: #6c757d;" class="bi bi-calendar-x"></i>
+                        <h4 style="color: #6c757d; margin-top: 16px;">No hay eventos en preventa disponibles</h4>
+                        <p style="color: #6c757d;">Vuelve pronto para ver nuevas preventas</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .bi {
+        font-family: 'Bootstrap Icons', sans-serif;
+    }
+
+    .bi-check-circle-fill::before {
+        content: "\f26e";
+    }
+
+    .bi-exclamation-triangle-fill::before {
+        content: "\f205";
+    }
+
+    .bi-wallet2::before {
+        content: "\f615";
+    }
+
+    .bi-calendar-event::before {
+        content: "\f1e6";
+    }
+
+    .bi-star-fill::before {
+        content: "\f586";
+    }
+
+    .bi-clock::before {
+        content: "\f2f2";
+    }
+
+    .bi-geo-alt::before {
+        content: "\f3ac";
+    }
+
+    .bi-ticket-perforated::before {
+        content: "\f5f6";
+    }
+
+    .bi-info-circle::before {
+        content: "\f32f";
+    }
+
+    .bi-ticket-fill::before {
+        content: "\f5f5";
+    }
+
+    .bi-calendar-x::before {
+        content: "\f1e8";
+    }
+
+    div[style*="width: 300px"]:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(197, 255, 0, 0.2);
+    }
+
+    a[style*="background-color: #28a745"]:hover {
+        background-color: #218838;
+        transform: scale(1.05);
+    }
+</style>

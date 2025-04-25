@@ -1,0 +1,81 @@
+﻿@page
+@model ticketicos.Pages.Cliente.FeedbackModel
+@{
+    ViewData["Title"] = "Enviar Feedback";
+    Layout = null;
+}
+
+<style>
+    body {
+        background-color: #1e1e1e;
+        color: white;
+    }
+
+    .feedback-section {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .feedback-box {
+        background-color: #2b2b2b;
+        padding: 30px;
+        border-radius: 10px;
+        width: 100%;
+        max-width: 500px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+
+        .feedback-box h2 {
+            color: #C1FF00;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .feedback-box p {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+    .form-control {
+        background-color: #1e1e1e;
+        color: white;
+        border: 1px solid #444;
+        border-radius: 5px;
+    }
+
+    .btn-submit {
+        background-color: #C1FF00;
+        color: black;
+        border: none;
+        padding: 10px;
+        width: 100%;
+        border-radius: 5px;
+        margin-top: 15px;
+        font-weight: bold;
+    }
+
+        .btn-submit:hover {
+            background-color: #b0e600;
+        }
+</style>
+
+<section class="feedback-section">
+    <div class="feedback-box">
+        <h2>Envía tus sugerencias</h2>
+        <p>¿Cómo podemos mejorar Ticketicos? ¡Cuéntanos!</p>
+        <form method="post">
+            <div class="form-group">
+                <textarea asp-for="FeedbackData.Comentario" class="form-control" rows="5" required placeholder="Escribe tu sugerencia aquí..."></textarea>
+                <span asp-validation-for="FeedbackData.Comentario" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn-submit">Enviar</button>
+        </form>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

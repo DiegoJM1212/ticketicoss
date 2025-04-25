@@ -1,0 +1,50 @@
+﻿@page "{idPago:int}"
+@model ticketicos.Pages.ConfirmacionCompraModel
+@{
+    ViewData["Title"] = "Confirmación de Compra";
+}
+<link rel="stylesheet" href="~/css/confirmacion.css" />
+
+<div class="confirmacion-container">
+    <h1>¡Compra exitosa!</h1>
+
+    @if (Model.Pago != null)
+    {
+        <div class="resumen">
+            <p><strong>Fecha del pago:</strong> @Model.Pago.FechaPago.ToString("dd/MM/yyyy hh:mm tt")</p>
+            <p><strong>Método:</strong> @Model.Pago.MetodoPago</p>
+            <p><strong>Subtotal:</strong> ₡@Model.Pago.Subtotal.ToString("N2")</p>
+            <p><strong>Impuesto (13%):</strong> ₡@Model.Pago.Impuesto.ToString("N2")</p>
+            <p><strong>Cargo por servicio (3%):</strong> ₡@Model.Pago.Servicio.ToString("N2")</p>
+            <p><strong>Total pagado:</strong> ₡@Model.Pago.TotalPagado.ToString("N2")</p>
+
+            @if (Model.Pago.DescuentoAplicado > 0)
+            {
+                <p><strong>Descuento aplicado:</strong> -₡@Model.Pago.DescuentoAplicado.ToString("N2")</p>
+            }
+
+            <h3>Entradas:</h3>
+            <ul>
+                @foreach (var compra in Model.Compras)
+                {
+                    <li>
+                        Evento: @(compra.Evento?.Nombre ?? "Evento no disponible") |
+                        Asiento: @(compra.NumeroAsiento ?? "Sin asiento") |
+                        Zona: @compra.IdBloque |
+                        Precio: ₡@(compra.PrecioEntrada.HasValue ? compra.PrecioEntrada.Value.ToString("N2") : "0.00")
+
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+    else
+    {
+        <p>Error al cargar los detalles del pago.</p>
+    }
+
+    <div class="acciones">
+        <a class="btn" href="/Index">Volver al inicio</a>
+        <a class="btn" href="/Tiquetes/HistorialCompras">Ver historial de compras</a>
+    </div>
+</div>

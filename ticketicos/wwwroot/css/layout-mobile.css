@@ -1,0 +1,47 @@
+﻿/* Estilos para el menú móvil */
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+    .mobile-menu-toggle {
+        display: block;
+    }
+
+    .menu {
+        position: fixed;
+        top: 60px;
+        left: -100%;
+        width: 80%;
+        height: calc(100vh - 60px);
+        background-color: #1e1e1e;
+        flex-direction: column;
+        padding: 20px;
+        transition: left 0.3s ease;
+        z-index: 1000;
+    }
+
+        .menu.active {
+            left: 0;
+        }
+
+        .menu li {
+            margin: 10px 0;
+        }
+
+    .nav-auth-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .profile-link,
+    .auth-button {
+        width: 100%;
+        justify-content: center;
+    }
+}

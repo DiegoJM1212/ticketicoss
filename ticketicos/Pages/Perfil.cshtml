@@ -1,0 +1,36 @@
+﻿@page
+@model ticketicos.Pages.PerfilModel
+@{
+    ViewData["Title"] = "Perfil de usuario";
+}
+<link rel="stylesheet" href="~/css/perfil.css" />
+
+<div class="perfil-container">
+    <div class="header-perfil">
+        <div class="header-content">
+            <h1>Bienvenido, @Model.NombreUsuario</h1>
+            <p>Gestiona y administra tu información y eventos fácilmente</p>
+        </div>
+    </div>
+
+    <div class="action-bar">
+        Seleccione la acción que quiera realizar
+    </div>
+
+    <div class="actions-grid">
+        <a href="/Tiquetes/HistorialCompras" class="action-item">
+            <img src="~/images/HistorialCompras.JPG" alt="Historial Compras" />
+            <p>Historial de compras</p>
+        </a>
+
+        <a href="/InformacionPersonal" class="action-item">
+            <img src="~/images/informacionUsuario.JPG" alt="Información Personal" />
+            <p>Información personal</p>
+        </a>
+
+        <a href="/EventosReservados" class="action-item">
+            <img src="~/images/eventosReservados.JPG" alt="Eventos Reservados" />
+            <p>Gestión de eventos</p>
+        </a>
+    </div>
+</div>

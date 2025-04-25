@@ -1,0 +1,92 @@
+codigo para generar una matriz de 25 x 25
+
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("💡 JS Cargado correctamente");
+
+    const bloquesContainer = document.getElementById("bloques");
+    const asientosContainer = document.getElementById("asientos");
+
+    console.log("Bloques encontrados:", bloquesContainer?.children?.length ?? 0);
+
+    // Manejo de clics en bloques
+    if (bloquesContainer) {
+        bloquesContainer.querySelectorAll(".bloque").forEach(bloque => {
+            bloque.addEventListener("click", () => {
+                const bloqueId = bloque.dataset.id;
+
+                // Resaltar el bloque seleccionado
+                bloquesContainer.querySelectorAll(".bloque").forEach(b => b.classList.remove("activo"));
+                bloque.classList.add("activo");
+
+                // Cargar asientos por AJAX
+                fetch(`/ComprarBoletos?handler=CargarAsientos&bloqueId=${bloqueId}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        renderizarMatriz(bloqueId, data);
+                    });
+            });
+        });
+    }
+
+    // Renderizar matriz 25x25
+    function renderizarMatriz(bloqueId, asientosDb) {
+        let html = '';
+        const filas = 25, columnas = 25;
+        let asientoMap = {};
+
+        // Indexar asientos disponibles
+        asientosDb.forEach(a => {
+            asientoMap[a.numeroAsiento] = a;
+        });
+
+        for (let i = 0; i < filas; i++) {
+            for (let j = 0; j < columnas; j++) {
+                const asientoId = `${String.fromCharCode(65 + i)}${j + 1}`;
+                const ocupado = !asientoMap[asientoId];
+                html += `<div class="asiento ${ocupado ? 'ocupado' : ''}" 
+                            data-numero="${asientoId}" 
+                            data-bloque="${bloqueId}">
+                            ${asientoId}
+                         </div>`;
+            }
+        }
+
+        asientosContainer.innerHTML = html;
+
+        document.querySelectorAll('.asiento:not(.ocupado)').forEach(asiento => {
+            asiento.addEventListener("click", () => {
+                asiento.classList.toggle("seleccionado");
+                actualizarCarrito();
+            });
+        });
+    }
+
+    function actualizarCarrito() {
+        const asientosSeleccionados = [...document.querySelectorAll('.asiento.seleccionado')];
+        const bloqueId = asientosSeleccionados.length > 0 ? asientosSeleccionados[0].dataset.bloque : null;
+
+        if (!bloqueId || asientosSeleccionados.length === 0) return;
+
+        fetch(`/api/bloques/${bloqueId}`)
+            .then(res => res.json())
+            .then(bloque => {
+                const cantidad = asientosSeleccionados.length;
+                const precio = bloque.precio;
+                const subtotal = precio * cantidad;
+                const impuesto = subtotal * 0.13;
+                const servicio = subtotal * 0.03;
+                const total = subtotal + impuesto + servicio;
+
+                document.getElementById("subtotal").textContent = subtotal.toFixed(2);
+                document.getElementById("impuesto").textContent = impuesto.toFixed(2);
+                document.getElementById("servicio").textContent = servicio.toFixed(2);
+                document.getElementById("total").textContent = total.toFixed(2);
+
+                // También puedes mostrar los asientos seleccionados si querés
+                const lista = document.getElementById("asientosSeleccionados");
+                if (lista) {
+                    lista.innerHTML = asientosSeleccionados.map(a => `<li>${a.dataset.numero}</li>`).join('');
+                }
+            });
+    }
+});

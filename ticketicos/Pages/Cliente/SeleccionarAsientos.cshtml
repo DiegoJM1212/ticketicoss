@@ -1,0 +1,265 @@
+﻿@page
+@model ticketicos.Pages.Cliente.SeleccionarAsientosModel
+@{
+    ViewData["Title"] = "Tickicos - Seleccionar Asientos";
+}
+
+<div style="background-color: #000; min-height: 100vh; padding: 40px 20px; font-family: Arial, sans-serif;">
+    <div style="text-align: center; margin-bottom: 20px;">
+        <div style="background-color: #c5ff00; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); width: 80px; height: 80px;">
+            <span style="font-weight: bold; color: #000; font-size: 18px;">TICKICOS</span>
+        </div>
+    </div>
+
+    <div style="max-width: 1000px; margin: 0 auto;">
+        <div style="background-color: #1a1a1a; border-radius: 16px; box-shadow: 0 4px 16px rgba(0,0,0,0.3); overflow: hidden;">
+            <div style="background-color: #c5ff00; padding: 20px; text-align: center;">
+                <h3 style="font-weight: bold; color: #000; margin: 0;">Seleccionar Asientos</h3>
+                @if (Model.Evento != null && !string.IsNullOrEmpty(Model.Evento.Nombre))
+                {
+                    <p style="color: #000; margin: 0;">Evento: @Model.Evento.Nombre - @Model.Evento.Fecha.ToString("dd/MM/yyyy") @Model.Evento.Hora</p>
+                }
+                else
+                {
+                    <p style="color: #000; margin: 0;">Evento no especificado</p>
+                }
+            </div>
+
+            <div style="padding: 40px;">
+                @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+                {
+                    <div style="background-color: #f8d7da; color: #721c24; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                        <i style="margin-right: 8px;" class="bi bi-exclamation-triangle-fill"></i>@Model.ErrorMessage
+                    </div>
+                }
+
+                <div style="margin-bottom: 40px;">
+                    <h5 style="color: #fff; margin-bottom: 12px;">Cantidad de Entradas (Máx. @Model.Evento.LimiteBoletos)</h5>
+                    <form method="get" style="display: flex; align-items: center;">
+                        <input type="hidden" name="EventoId" value="@Model.EventoId" />
+                        @if (Model.BloqueId > 0)
+                        {
+                            <input type="hidden" name="BloqueId" value="@Model.BloqueId" />
+                        }
+                        <select name="Cantidad" style="padding: 8px; border-radius: 8px; border: 1px solid #ccc; margin-right: 12px;" onchange="this.form.submit()">
+                            @for (int i = 1; i <= Model.Evento.LimiteBoletos; i++)
+                            {
+                                <option value="@i" selected="@(i == Model.CantidadEntradas)">@i</option>
+                            }
+                        </select>
+                        <span style="color: #6c757d;">Selecciona cuántas entradas deseas comprar.</span>
+                    </form>
+                </div>
+
+                <div style="margin-bottom: 40px;">
+                    <h5 style="color: #fff; margin-bottom: 12px;">Selecciona una Zona</h5>
+                    @if (Model.Bloques.Any())
+                    {
+                        <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+                            @foreach (var bloque in Model.Bloques)
+                            {
+                                <a href="?EventoId=@Model.EventoId&BloqueId=@bloque.Id&Cantidad=@Model.CantidadEntradas"
+                                   style="background-color: @(Model.BloqueId == bloque.Id ? "#c5ff00" : "#2a2a2a");
+                                          color: @(Model.BloqueId == bloque.Id ? "#000" : "#fff");
+                                          border-radius: 12px; text-decoration: none; width: 300px;
+                                          transition: transform 0.3s; display: block;">
+                                    <div style="padding: 20px;">
+                                        <h6 style="margin-bottom: 8px;">@bloque.Nombre</h6>
+                                        <p style="margin-bottom: 8px;"><i style="margin-right: 8px;" class="bi bi-currency-dollar"></i>₡@bloque.Precio.ToString("N0")</p>
+                                        <p style="color: @(bloque.EsVip ? "#ffc107" : "#28a745"); margin: 0;">
+                                            @(bloque.EsVip ? "VIP" : "General")
+                                        </p>
+                                    </div>
+                                </a>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div style="background-color: #fff3cd; color: #856404; padding: 15px; border-radius: 8px;">
+                            <i style="margin-right: 8px;" class="bi bi-exclamation-triangle-fill"></i>
+                            No hay zonas disponibles para este evento. Contacta a soporte@tickicos.com.
+                        </div>
+                    }
+                </div>
+
+                @if (Model.BloqueSeleccionado != null)
+                {
+                    <div style="margin-bottom: 40px;">
+                        <h5 style="color: #fff; margin-bottom: 12px;">Asientos en @Model.BloqueSeleccionado.Nombre (Subtotal: ₡@Model.Subtotal.ToString("N0"))</h5>
+                        <form method="post" id="asientosForm">
+                            <input type="hidden" name="EventoId" value="@Model.EventoId" />
+                            <input type="hidden" name="BloqueId" value="@Model.BloqueId" />
+                            <input type="hidden" name="Cantidad" value="@Model.CantidadEntradas" />
+                            <input type="hidden" id="asientosSeleccionados" name="Asientos" value="@string.Join(",", Model.AsientosSeleccionados)" />
+
+                            @if (Model.FilasAsientos.Any())
+                            {
+                                <div style="max-height: 400px; overflow-y: auto; margin-bottom: 20px; padding: 10px; background-color: #2a2a2a; border-radius: 8px;">
+                                    @foreach (var fila in Model.FilasAsientos)
+                                    {
+                                        <div style="margin-bottom: 12px;">
+                                            <h6 style="color: #fff;">Fila @fila.Key</h6>
+                                            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                                                @foreach (var asiento in fila.Value)
+                                                {
+                                                    string bgColor = "#6c757d";
+                                                    bool isSelected = Model.AsientosSeleccionados.Contains(asiento.Numero);
+
+                                                    if (!asiento.Disponible)
+                                                    {
+                                                        bgColor = "#dc3545";
+                                                    }
+                                                    else if (isSelected)
+                                                    {
+                                                        bgColor = "#28a745";
+                                                    }
+
+                                                    <button type="button"
+                                                            style="padding: 8px 16px; border-radius: 8px; border: none; cursor: @(asiento.Disponible ? "pointer" : "not-allowed"); background-color: @bgColor; color: #fff;"
+                                                            disabled="@(!asiento.Disponible)"
+                                                            onclick="toggleAsiento('@asiento.Numero')"
+                                                            class="@(isSelected ? "asiento-seleccionado" : "")">
+                                                        @asiento.Numero @(asiento.EsVip ? "(VIP)" : "")
+                                                    </button>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+
+                                <div style="background-color: #2a2a2a; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                                    <h6 style="color: #fff; margin-bottom: 10px;">Asientos seleccionados:</h6>
+                                    <div id="asientosSeleccionadosDisplay" style="color: #fff; font-weight: bold;">
+                                        @if (Model.AsientosSeleccionados.Any())
+                                        {
+                                            @string.Join(", ", Model.AsientosSeleccionados)
+                                        }
+                                        else
+                                        {
+                                            <span style="color: #6c757d;">Ningún asiento seleccionado</span>
+                                        }
+                                    </div>
+                                </div>
+
+                                <div style="margin-top: 20px;">
+                                    <button type="submit"
+                                            id="btnContinuar"
+                                            style="background-color: #c5ff00; color: #000; padding: 12px 24px; border-radius: 8px; border: none; font-weight: bold; cursor: @(Model.AsientosSeleccionados.Count == Model.CantidadEntradas ? "pointer" : "not-allowed");"
+                                            disabled="@(Model.AsientosSeleccionados.Count != Model.CantidadEntradas)">
+                                        <i style="margin-right: 8px;" class="bi bi-credit-card"></i>Continuar al Pago
+                                    </button>
+                                </div>
+                            }
+                            else
+                            {
+                                <div style="background-color: #fff3cd; color: #856404; padding: 15px; border-radius: 8px;">
+                                    <i style="margin-right: 8px;" class="bi bi-exclamation-triangle-fill"></i>
+                                    No hay asientos disponibles para esta zona. Selecciona otra zona.
+                                </div>
+                            }
+                        </form>
+                    </div>
+                }
+
+                @if (!string.IsNullOrEmpty(Model.MapaInteractivo))
+                {
+                    <div style="margin-top: 40px;">
+                        <h5 style="color: #fff; margin-bottom: 12px;">Mapa del Lugar</h5>
+                        <div style="text-align: center;">
+                            <img src="@Model.MapaInteractivo" style="max-width: 100%; border-radius: 8px;" alt="Mapa del lugar" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleAsiento(numero) {
+        let asientos = document.getElementById('asientosSeleccionados').value.split(',').filter(x => x);
+        let max = @Model.CantidadEntradas;
+
+        if (asientos.includes(numero)) {
+            asientos = asientos.filter(x => x !== numero);
+        } else if (asientos.length < max) {
+            asientos.push(numero);
+        } else {
+            alert(`Solo puedes seleccionar ${max} asiento(s).`);
+            return;
+        }
+
+        document.getElementById('asientosSeleccionados').value = asientos.join(',');
+        document.getElementById('asientosSeleccionadosDisplay').innerHTML = asientos.length > 0
+            ? asientos.join(', ')
+            : '<span style="color: #6c757d;">Ningún asiento seleccionado</span>';
+
+        document.querySelectorAll('button[onclick^="toggleAsiento"]').forEach(button => {
+            let asientoNum = button.getAttribute('onclick').match(/'([^']+)'/)[1];
+            if (asientos.includes(asientoNum)) {
+                button.style.backgroundColor = '#28a745';
+                button.classList.add('asiento-seleccionado');
+            } else if (button.disabled) {
+                button.style.backgroundColor = '#dc3545';
+                button.classList.remove('asiento-seleccionado');
+            } else {
+                button.style.backgroundColor = '#6c757d';
+                button.classList.remove('asiento-seleccionado');
+            }
+        });
+
+        let submitButton = document.getElementById('btnContinuar');
+        submitButton.disabled = asientos.length !== max;
+        submitButton.style.cursor = asientos.length === max ? 'pointer' : 'not-allowed';
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('asientosForm');
+        if (form) {
+            form.addEventListener('submit', function (e) {
+                const asientos = document.getElementById('asientosSeleccionados').value.split(',').filter(x => x);
+                if (asientos.length !== @Model.CantidadEntradas) {
+                    e.preventDefault();
+                    alert(`Debes seleccionar exactamente ${@Model.CantidadEntradas} asiento(s).`);
+                }
+            });
+        }
+    });
+</script>
+
+<style>
+    .bi {
+        font-family: 'Bootstrap Icons', sans-serif;
+    }
+
+    .bi-exclamation-triangle-fill::before {
+        content: "\f205";
+    }
+
+    .bi-currency-dollar::before {
+        content: "\f155";
+    }
+
+    .bi-credit-card::before {
+        content: "\f1f3";
+    }
+
+    a[style*="width: 300px"]:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(197, 255, 0, 0.2);
+    }
+
+    button[type="submit"]:not([disabled]):hover {
+        background-color: #a6d600 !important;
+    }
+
+    button[onclick^="toggleAsiento"]:not([disabled]):hover {
+        opacity: 0.8;
+        transform: scale(1.05);
+    }
+
+    .asiento-seleccionado {
+        border: 2px solid white !important;
+    }
+</style>

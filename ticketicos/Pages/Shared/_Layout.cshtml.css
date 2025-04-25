@@ -1,0 +1,55 @@
+﻿/* Estilos para los botones de perfil y sesión */
+.nav-auth-buttons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.profile-link,
+.auth-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 15px;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: #fff;
+}
+
+.profile-link {
+    background-color: transparent;
+    border: 1px solid #bff747;
+}
+
+    .profile-link:hover {
+        background-color: rgba(191, 247, 71, 0.1);
+        transform: translateY(-2px);
+    }
+
+.auth-button {
+    background-color: #bff747;
+    color: #000;
+    border: none;
+}
+
+    .auth-button:hover {
+        background-color: #a6d83b;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+.profile-icon {
+    color: #bff747;
+    font-size: 18px;
+}
+
+/* Animaciones */
+.nav-item-animated {
+    transition: transform 0.3s ease;
+}
+
+    .nav-item-animated:hover {
+        transform: translateY(-3px);
+    }

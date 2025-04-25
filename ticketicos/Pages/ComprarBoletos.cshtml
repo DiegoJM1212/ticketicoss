@@ -1,0 +1,543 @@
+﻿@page "/ComprarBoletos/{id:int}"
+@model ticketicos.Pages.Cliente.ComprarBoletosModel
+@using ticketicos.Pages.Cliente
+@{
+    ViewData["Title"] = "Comprar Boletos";
+}
+
+<link rel="stylesheet" href="~/css/ComprarBoletosF.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+<div class="comprar-boletos-container animate__animated animate__fadeIn">
+    <h1 class="page-title animate__animated animate__slideInDown">Adquiera sus tiquetes</h1>
+
+    @if (Model.Evento == null)
+    {
+        <p class="error animate__animated animate__fadeIn">Evento no encontrado.</p>
+    }
+    else
+    {
+        <!-- Información del evento -->
+        <section class="evento-info animate__animated animate__fadeInUp">
+            <div class="evento-media">
+                @if (!string.IsNullOrEmpty(Model.Evento.Imagen))
+                {
+                    <img src="@Model.Evento.Imagen" alt="@Model.Evento.Nombre" class="evento-imagen" />
+                }
+                else
+                {
+                    <img src="~/images/imagen_predeterminada.png" alt="Imagen no disponible" class="evento-imagen" />
+                }
+
+                <!-- Imagen del lugar según su ID -->
+                @if (Model.Evento.Lugar != null && !string.IsNullOrEmpty(Model.Evento.Lugar.MapaInteractivo))
+                {
+                    <div class="lugar-mapa-container animate__animated animate__fadeIn animate__delay-1s">
+                        <h3>Mapa del Lugar</h3>
+                        <img src="@Model.Evento.Lugar.MapaInteractivo" alt="Mapa de @Model.Evento.Lugar.Nombre" class="lugar-mapa" />
+                    </div>
+                }
+            </div>
+
+            <div class="evento-descripcion">
+                <h2 class="evento-titulo">@Model.Evento.Nombre</h2>
+                <div class="evento-detalles">
+                    <div class="detalle-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span><strong>Fecha:</strong> @Model.Evento.Fecha.ToString("dd MMM yyyy hh:mm tt")</span>
+                    </div>
+                    <div class="detalle-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span><strong>Lugar:</strong> @(Model.Evento.Lugar?.Nombre ?? "No definido")</span>
+                    </div>
+                </div>
+                <div class="evento-descripcion-texto">
+                    <p>@Model.Evento.Descripcion</p>
+                </div>
+            </div>
+        </section>
+
+        <form method="post" id="purchaseForm" action="">
+            <input type="hidden" name="eventoId" value="@Model.Evento.Id" />
+            <div class="content-wrapper">
+                <!-- Columna Izquierda: Bloques y Asientos -->
+                <div class="left-panel animate__animated animate__fadeInLeft animate__delay-1s">
+                    <!-- Sección de bloques dinámicos -->
+                    <section class="bloques-container">
+                        <h3 class="section-title"><i class="fas fa-th-large"></i> Selecciona tu zona o bloque</h3>
+                        <div id="bloques" class="bloques-grid">
+                            @if (Model.Bloques != null && Model.Bloques.Any())
+                            {
+                                @foreach (var bloque in Model.Bloques)
+                                {
+                                    <div class="bloque" data-id="@bloque.Id" data-precio="@bloque.Precio" onclick="seleccionarBloque(this)">
+                                        <span class="bloque-nombre">@bloque.NombreBloque</span>
+                                        <span class="bloque-precio">₡@bloque.Precio.ToString("N0")</span>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <p>No hay bloques disponibles.</p>
+                            }
+                        </div>
+                    </section>
+
+                    <!-- Sección de matriz de asientos -->
+                    <section class="asientos-container">
+                        <h3 class="section-title"><i class="fas fa-chair"></i> Selecciona tus asientos</h3>
+                        <div class="asientos-wrapper">
+                            <div id="asientos" class="asientos-grid"></div>
+                            <div class="asientos-leyenda">
+                                <div class="leyenda-item">
+                                    <div class="asiento-ejemplo disponible"></div>
+                                    <span>Disponible</span>
+                                </div>
+                                <div class="leyenda-item">
+                                    <div class="asiento-ejemplo seleccionado"></div>
+                                    <span>Seleccionado</span>
+                                </div>
+                                <div class="leyenda-item">
+                                    <div class="asiento-ejemplo ocupado"></div>
+                                    <span>Ocupado</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Columna Derecha: Tarjetas de Código Promocional y Resumen -->
+                <div class="right-panel animate__animated animate__fadeInRight animate__delay-1s">
+                    <!-- Tarjeta Código Promocional -->
+                    <section class="promo-card">
+                        <h3 class="card-title"><i class="fas fa-tag"></i> Código Promocional</h3>
+                        <div class="promo-input-container">
+                            <input type="text" id="promoCode" name="PromoCode" placeholder="Ingrese código promocional" class="promo-input" />
+                            <button type="button" class="btn-aplicar">Aplicar</button>
+                        </div>
+                    </section>
+
+                    <!-- Tarjeta Resumen de Compra -->
+                    <section class="resumen-card">
+                        <h3 class="card-title"><i class="fas fa-shopping-cart"></i> Resumen de compra</h3>
+                        <div class="resumen-items">
+                            <div class="resumen-item">
+                                <span>Subtotal:</span>
+                                <span class="precio">₡<span id="subtotal">0</span></span>
+                            </div>
+                            <div class="resumen-item">
+                                <span>Impuesto (13%):</span>
+                                <span class="precio">₡<span id="impuesto">0</span></span>
+                            </div>
+                            <div class="resumen-item">
+                                <span>Servicio (3%):</span>
+                                <span class="precio">₡<span id="servicio">0</span></span>
+                            </div>
+                            <div class="resumen-item total">
+                                <span>Total:</span>
+                                <span class="precio">₡<span id="total">0</span></span>
+                            </div>
+                        </div>
+                        <input type="hidden" id="subtotalInput" name="Subtotal" value="0" />
+                        <input type="hidden" id="impuestoInput" name="Impuesto" value="0" />
+                        <input type="hidden" id="servicioInput" name="Servicio" value="0" />
+                        <input type="hidden" id="totalInput" name="Total" value="0" />
+                        <input type="hidden" id="asientosSeleccionadosInput" name="AsientosSeleccionados" value="" />
+                        <input type="hidden" id="bloqueIdInput" name="BloqueId" value="" />
+                        <button type="button" id="btnPagar" class="btn-pagar" onclick="validarYEnviar()">
+                            <i class="fas fa-credit-card"></i> Pagar Entradas
+                        </button>
+                    </section>
+                </div>
+            </div>
+        </form>
+    }
+</div>
+
+<!-- Modal de confirmación -->
+<div id="confirmModal" class="modal">
+    <div class="modal-content animate__animated animate__zoomIn">
+        <h3><i class="fas fa-check-circle"></i> Confirmar compra</h3>
+        <p>¿Estás seguro de que deseas proceder con la compra de los boletos seleccionados?</p>
+        <div class="asientos-seleccionados-resumen">
+            <h4>Asientos seleccionados:</h4>
+            <div id="asientosResumen"></div>
+        </div>
+        <div class="total-resumen">
+            <p>Total a pagar: ₡<span id="totalResumen">0</span></p>
+        </div>
+        <div class="modal-buttons">
+            <button type="button" class="btn-confirm" onclick="confirmarCompra()">Confirmar</button>
+            <button type="button" class="btn-cancel" onclick="cerrarModal()">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<script>
+    // Declaración de variable global para el ID del evento
+    var eventId = 0;
+
+    @if (Model.Evento != null)
+    {
+        <text>
+                eventId = @Model.Evento.Id;
+                console.log('eventId:', eventId);
+        </text>
+    }
+
+    // Función para seleccionar un bloque
+    function seleccionarBloque(elemento) {
+        // Verificar que el elemento exista
+        if (elemento) {
+            // Quitar selección de todos los bloques
+            var bloques = document.querySelectorAll('.bloque');
+            for (var i = 0; i < bloques.length; i++) {
+                bloques[i].classList.remove('activo');
+            }
+
+            // Seleccionar el bloque actual con animación
+            elemento.classList.add('activo');
+            elemento.classList.add('animate__animated', 'animate__pulse');
+            
+            // Quitar la animación después de que termine
+            setTimeout(function() {
+                elemento.classList.remove('animate__animated', 'animate__pulse');
+            }, 1000);
+
+            // Obtener el ID del bloque y actualizar el campo oculto
+            var bloqueId = elemento.getAttribute('data-id');
+            var bloqueIdInput = document.getElementById('bloqueIdInput');
+
+            if (bloqueId && bloqueIdInput) {
+                bloqueIdInput.value = bloqueId;
+                cargarAsientos(bloqueId);
+                actualizarResumen();
+            }
+        }
+    }
+
+    // Función para cargar los asientos de un bloque
+    function cargarAsientos(bloqueId) {
+        // Verificar que el ID del bloque y el ID del evento sean válidos
+        if (bloqueId && eventId) {
+            // Mostrar indicador de carga
+            var asientosContainer = document.getElementById('asientos');
+            if (asientosContainer) {
+                asientosContainer.innerHTML = '<div class="loading-spinner"></div>';
+            }
+            
+            // Realizar la petición AJAX
+            fetch('?handler=CargarAsientos&bloqueId=' + bloqueId + '&eventId=' + eventId)
+                .then(function(response) {
+                    if (!response.ok) {
+                        throw new Error('Error en la respuesta del servidor');
+                    }
+                    return response.json();
+                })
+                .then(function(data) {
+                    var asientosContainer = document.getElementById('asientos');
+
+                    if (asientosContainer) {
+                        // Limpiar el contenedor de asientos
+                        asientosContainer.innerHTML = '';
+
+                        // Verificar si hay un error en la respuesta
+                        if (data && data.error) {
+                            asientosContainer.innerHTML = '<p class="error animate__animated animate__fadeIn">' + data.error + '</p>';
+                            return;
+                        }
+
+                        // Verificar que data sea un array
+                        if (Array.isArray(data)) {
+                            // Crear elementos para cada asiento con animación
+                            for (var i = 0; i < data.length; i++) {
+                                var asiento = data[i];
+
+                                if (asiento) {
+                                    var asientoElement = document.createElement('div');
+                                    asientoElement.className = 'asiento animate__animated animate__fadeIn';
+                                    
+                                    // Retrasar la animación para crear efecto cascada
+                                    asientoElement.style.animationDelay = (i * 0.01) + 's';
+
+                                    // Añadir clase VIP si corresponde
+                                    if (asiento.esVip) {
+                                        asientoElement.className += ' vip';
+                                    }
+
+                                    // Establecer atributos de datos
+                                    asientoElement.setAttribute('data-id', asiento.idAsiento);
+
+                                    if (asiento.numeroAsiento) {
+                                        asientoElement.setAttribute('data-numero', asiento.numeroAsiento);
+                                        asientoElement.textContent = asiento.numeroAsiento;
+                                    }
+
+                                    // Añadir evento de clic
+                                    asientoElement.addEventListener('click', function() {
+                                        this.classList.toggle('seleccionado');
+                                        
+                                        // Añadir animación al seleccionar/deseleccionar
+                                        this.classList.add('animate__animated', 'animate__pulse');
+                                        var self = this;
+                                        setTimeout(function() {
+                                            self.classList.remove('animate__animated', 'animate__pulse');
+                                        }, 500);
+                                        
+                                        actualizarAsientosSeleccionados();
+                                        actualizarResumen();
+                                    });
+
+                                    // Añadir al contenedor
+                                    asientosContainer.appendChild(asientoElement);
+                                }
+                            }
+                        }
+                    }
+                })
+                .catch(function(error) {
+                    console.error('Error al cargar asientos:', error);
+                    var asientosContainer = document.getElementById('asientos');
+                    if (asientosContainer) {
+                        asientosContainer.innerHTML = '<p class="error animate__animated animate__fadeIn">Error al cargar asientos</p>';
+                    }
+                });
+        }
+    }
+
+    // Función para actualizar la lista de asientos seleccionados
+    function actualizarAsientosSeleccionados() {
+        var asientosSeleccionados = [];
+        var asientosElements = document.querySelectorAll('.asiento.seleccionado');
+
+        // Recorrer todos los asientos seleccionados
+        for (var i = 0; i < asientosElements.length; i++) {
+            var numero = asientosElements[i].getAttribute('data-numero');
+            if (numero) {
+                asientosSeleccionados.push(numero);
+            }
+        }
+
+        // Actualizar el campo oculto con los asientos seleccionados
+        var asientosInput = document.getElementById('asientosSeleccionadosInput');
+        if (asientosInput) {
+            asientosInput.value = asientosSeleccionados.join(',');
+            console.log('Asientos seleccionados:', asientosInput.value);
+        }
+    }
+
+    // Función para actualizar el resumen de compra
+    function actualizarResumen() {
+        var bloqueSeleccionado = document.querySelector('.bloque.activo');
+        var asientosSeleccionados = document.querySelectorAll('.asiento.seleccionado');
+
+        // Obtener elementos del DOM
+        var subtotalElement = document.getElementById('subtotal');
+        var impuestoElement = document.getElementById('impuesto');
+        var servicioElement = document.getElementById('servicio');
+        var totalElement = document.getElementById('total');
+
+        var subtotalInput = document.getElementById('subtotalInput');
+        var impuestoInput = document.getElementById('impuestoInput');
+        var servicioInput = document.getElementById('servicioInput');
+        var totalInput = document.getElementById('totalInput');
+
+        // Verificar que existan todos los elementos necesarios
+        if (!bloqueSeleccionado || asientosSeleccionados.length === 0) {
+            // Establecer valores predeterminados
+            if (subtotalElement) subtotalElement.textContent = '0';
+            if (impuestoElement) impuestoElement.textContent = '0';
+            if (servicioElement) servicioElement.textContent = '0';
+            if (totalElement) totalElement.textContent = '0';
+
+            if (subtotalInput) subtotalInput.value = '0';
+            if (impuestoInput) impuestoInput.value = '0';
+            if (servicioInput) servicioInput.value = '0';
+            if (totalInput) totalInput.value = '0';
+            return;
+        }
+
+        // Calcular valores
+        var precioPorAsiento = parseFloat(bloqueSeleccionado.getAttribute('data-precio') || '0');
+        var subtotal = precioPorAsiento * asientosSeleccionados.length;
+        var impuesto = subtotal * 0.13;
+        var servicio = subtotal * 0.03;
+        var total = subtotal + impuesto + servicio;
+
+        // Actualizar elementos visibles con animación
+        if (subtotalElement) {
+            animateValue(subtotalElement, parseFloat(subtotalElement.textContent || '0'), subtotal, 500);
+            subtotalElement.textContent = subtotal.toFixed(0);
+        }
+        if (impuestoElement) {
+            animateValue(impuestoElement, parseFloat(impuestoElement.textContent || '0'), impuesto, 500);
+            impuestoElement.textContent = impuesto.toFixed(0);
+        }
+        if (servicioElement) {
+            animateValue(servicioElement, parseFloat(servicioElement.textContent || '0'), servicio, 500);
+            servicioElement.textContent = servicio.toFixed(0);
+        }
+        if (totalElement) {
+            animateValue(totalElement, parseFloat(totalElement.textContent || '0'), total, 500);
+            totalElement.textContent = total.toFixed(0);
+        }
+
+        // Actualizar campos ocultos
+        if (subtotalInput) subtotalInput.value = subtotal.toFixed(0);
+        if (impuestoInput) impuestoInput.value = impuesto.toFixed(0);
+        if (servicioInput) servicioInput.value = servicio.toFixed(0);
+        if (totalInput) totalInput.value = total.toFixed(0);
+    }
+
+    // Función para animar el cambio de valores numéricos
+    function animateValue(element, start, end, duration) {
+        if (isNaN(start) || isNaN(end)) return;
+        
+        var range = end - start;
+        var current = start;
+        var increment = end > start ? 1 : -1;
+        var stepTime = Math.abs(Math.floor(duration / range));
+        
+        if (range === 0 || stepTime === Infinity) return;
+        
+        var timer = setInterval(function() {
+            current += increment;
+            element.textContent = current.toFixed(0);
+            if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
+                clearInterval(timer);
+                element.textContent = end.toFixed(0);
+            }
+        }, stepTime);
+    }
+
+    // Función para mostrar el modal de confirmación
+    function validarYEnviar() {
+        // Obtener elementos del formulario
+        var bloqueIdInput = document.getElementById('bloqueIdInput');
+        var asientosSeleccionadosInput = document.getElementById('asientosSeleccionadosInput');
+
+        // Verificar que se haya seleccionado un bloque
+        if (!bloqueIdInput || !bloqueIdInput.value) {
+            mostrarNotificacion('Por favor, selecciona un bloque o zona.', 'error');
+            return false;
+        }
+
+        // Verificar que se hayan seleccionado asientos
+        if (!asientosSeleccionadosInput || !asientosSeleccionadosInput.value) {
+            // Verificar directamente si hay asientos seleccionados en el DOM
+            var asientosSeleccionados = document.querySelectorAll('.asiento.seleccionado');
+            if (asientosSeleccionados.length === 0) {
+                mostrarNotificacion('Por favor, selecciona al menos un asiento.', 'error');
+                return false;
+            } else {
+                // Actualizar el campo oculto si hay asientos seleccionados pero el campo está vacío
+                actualizarAsientosSeleccionados();
+            }
+        }
+
+        // Mostrar resumen en el modal
+        var asientosResumen = document.getElementById('asientosResumen');
+        var totalResumen = document.getElementById('totalResumen');
+        var asientosSeleccionadosArray = asientosSeleccionadosInput.value.split(',');
+        
+        if (asientosResumen) {
+            asientosResumen.innerHTML = '';
+            asientosSeleccionadosArray.forEach(function(asiento) {
+                var asientoSpan = document.createElement('span');
+                asientoSpan.className = 'asiento-resumen';
+                asientoSpan.textContent = asiento;
+                asientosResumen.appendChild(asientoSpan);
+            });
+        }
+        
+        if (totalResumen) {
+            totalResumen.textContent = document.getElementById('total').textContent;
+        }
+        
+        // Mostrar el modal
+        var modal = document.getElementById('confirmModal');
+        if (modal) {
+            modal.style.display = 'block';
+        }
+        
+        return true;
+    }
+
+    // Función para cerrar el modal
+    function cerrarModal() {
+        var modal = document.getElementById('confirmModal');
+        if (modal) {
+            modal.style.display = 'none';
+        }
+    }
+
+    // Función para confirmar la compra
+    function confirmarCompra() {
+        // Construir la URL con parámetros de consulta
+        var url = '/Cliente/PagoEntradas?';
+        var params = [
+            'EventoId=' + encodeURIComponent(eventId),
+            'BloqueId=' + encodeURIComponent(document.getElementById('bloqueIdInput').value),
+            'AsientosSeleccionados=' + encodeURIComponent(document.getElementById('asientosSeleccionadosInput').value),
+            'Subtotal=' + encodeURIComponent(document.getElementById('subtotalInput').value),
+            'Impuesto=' + encodeURIComponent(document.getElementById('impuestoInput').value),
+            'Servicio=' + encodeURIComponent(document.getElementById('servicioInput').value),
+            'Total=' + encodeURIComponent(document.getElementById('totalInput').value)
+        ];
+
+        // Añadir código promocional si existe
+        var promoCode = document.getElementById('promoCode').value;
+        if (promoCode) {
+            params.push('PromoCode=' + encodeURIComponent(promoCode));
+        }
+
+        // Construir la URL final
+        url += params.join('&');
+
+        console.log('Redirigiendo a:', url);
+
+        // Mostrar animación de carga antes de redirigir
+        document.body.classList.add('loading');
+        
+        // Redirigir después de un breve retraso para mostrar la animación
+        setTimeout(function() {
+            window.location.href = url;
+        }, 800);
+        
+        return true;
+    }
+
+    // Función para mostrar notificaciones
+    function mostrarNotificacion(mensaje, tipo) {
+        // Crear elemento de notificación
+        var notificacion = document.createElement('div');
+        notificacion.className = 'notificacion ' + tipo + ' animate__animated animate__fadeInDown';
+        notificacion.innerHTML = '<div class="notificacion-contenido">' + mensaje + '</div>';
+        
+        // Añadir al DOM
+        document.body.appendChild(notificacion);
+        
+        // Eliminar después de 3 segundos
+        setTimeout(function() {
+            notificacion.classList.remove('animate__fadeInDown');
+            notificacion.classList.add('animate__fadeOutUp');
+            setTimeout(function() {
+                document.body.removeChild(notificacion);
+            }, 500);
+        }, 3000);
+    }
+
+    // Cerrar el modal si se hace clic fuera de él
+    window.onclick = function(event) {
+        var modal = document.getElementById('confirmModal');
+        if (event.target == modal) {
+            cerrarModal();
+        }
+    }
+</script>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/comprarBoletos.js"></script>
+}

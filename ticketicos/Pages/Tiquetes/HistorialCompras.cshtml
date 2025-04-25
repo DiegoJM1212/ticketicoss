@@ -1,0 +1,54 @@
+﻿@page
+@model ticketicos.Pages.Tiquetes.HistorialComprasModel
+@{
+    ViewData["Title"] = "Historial de compras";
+}
+<link rel="stylesheet" href="~/css/historial.css" />
+
+<div class="historial-container">
+    <h1>Historial de compras</h1>
+
+    <div class="columns-header">
+        <div>Evento</div>
+        <div>Detalles</div>
+    </div>
+
+    <div class="event-list">
+        @if (Model.Compras != null && Model.Compras.Any())
+        {
+            foreach (var compra in Model.Compras)
+            {
+                <div class="event-row">
+                    <div class="event-image">
+                        @if (!string.IsNullOrEmpty(compra.Evento?.Imagen))
+                        {
+                            // Aquí no necesitamos convertir a Base64, ya que la imagen es una URL
+                            var imgSrc = compra.Evento.Imagen; // Asumimos que Imagen es una URL válida
+                            <img src="@imgSrc" alt="@compra.Evento.Nombre" />
+                        }
+                        else
+                        {
+                            <img src="/images/imagen_predeterminada.png" alt="Imagen no disponible" />
+                        }
+                    </div>
+                    <div class="event-details">
+                        <h3>@(compra.Evento?.Nombre ?? "Evento no disponible")</h3>
+                        <p><strong>Lugar:</strong> @(compra.Evento?.Lugar?.Nombre ?? "Lugar no especificado")</p>
+                        <p><strong>Fecha:</strong> @(compra.Evento?.Fecha != null ? compra.Evento.Fecha.ToString("dd/MM/yyyy") : "Fecha desconocida")</p>
+                        <p><strong>Entradas:</strong> @(compra.TipoEntrada ?? "Sin tipo") - ₡@(compra.PrecioEntrada.HasValue ? compra.PrecioEntrada.Value.ToString("N2") : "0.00")</p>
+                        <p><strong>Comprado el:</strong> @(compra.FechaCompra != null ? compra.FechaCompra.Value.ToString("dd/MM/yyyy HH:mm") : "Fecha no disponible")</p>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p style="text-align:center;">No tienes compras registradas aún.</p>
+        }
+    </div>
+
+    <div class="buttons-container">
+        <a href="/Index" class="btn">Regresar</a>
+        <a href="/EventosReservados" class="btn">Reservas</a>
+    </div>
+</div>

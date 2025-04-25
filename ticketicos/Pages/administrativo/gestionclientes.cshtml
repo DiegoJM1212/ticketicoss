@@ -1,0 +1,408 @@
+﻿@page
+@model ticketicos.Pages.Admin.GestionClientesModel
+@{
+    ViewData["Title"] = "Gestión de Clientes";
+    Layout = null; // Puedes cambiar esto si usas un layout compartido
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TICKETICOS</title>
+    <!-- Incluir Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Incluir Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="min-h-screen">
+        <!-- Logo -->
+        <div class="logo-container">
+            <div class="logo-circle">
+                <img src="/images/logo.png" alt="Logo" class="logo-img" />
+            </div>
+        </div>
+
+        <!-- Panel Principal -->
+        <div class="main-container">
+            <!-- Título Principal -->
+            <div class="panel-header">
+                Panel Administrativo
+                <a href="/administrativo/Dashboard" class="btn-home">
+                    <i class="fas fa-home"></i> Inicio
+                </a>
+            </div>
+
+            <h1>@ViewData["Title"]</h1>
+
+            <!-- Mensajes de éxito o error -->
+            @if (!string.IsNullOrEmpty(Model.MensajeExito))
+            {
+                <div class="alert alert-success">
+                    <i class="fas fa-check-circle"></i> @Model.MensajeExito
+                    <span class="close-btn" onclick="this.parentElement.style.display='none';">×</span>
+                </div>
+            }
+            @if (!string.IsNullOrEmpty(Model.MensajeError))
+            {
+                <div class="alert alert-error">
+                    <i class="fas fa-exclamation-circle"></i> @Model.MensajeError
+                    <span class="close-btn" onclick="this.parentElement.style.display='none';">×</span>
+                </div>
+            }
+
+            <!-- Buscador -->
+            <div class="search-container mb-3">
+                <form method="post" asp-page-handler="Buscar" class="search-form">
+                    <input type="text" asp-for="Busqueda" class="search-input" placeholder="Buscar cliente..." />
+                    <button type="submit" class="search-button">
+                        <i class="fas fa-search"></i> Buscar
+                    </button>
+                </form>
+            </div>
+
+            <!-- Tabla de clientes -->
+            <div class="table-container">
+                <table class="full-width">
+                    <thead>
+                        <tr class="table-header">
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Estado</th>
+                            <th>Último Acceso</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var usuario in Model.Usuarios)
+                        {
+                            <tr class="table-row">
+                                <td>@usuario.Id</td>
+                                <td>@usuario.NombreCompleto</td>
+                                <td>@usuario.Correo</td>
+                                <td>
+                                    @if (usuario.Estado == "activo")
+                                    {
+                                        <span class="badge bg-success">Activo</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">Inactivo</span>
+                                    }
+                                </td>
+                                <td>@(usuario.UltimoAcceso.HasValue ? usuario.UltimoAcceso.Value.ToString("yyyy-MM-dd HH:mm") : "Nunca")</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button type="button" class="btn btn-primary btn-sm" onclick="openEditModal(@usuario.Id, '@usuario.NombreCompleto', '@usuario.Correo')">
+                                            <i class="fas fa-edit"></i> Editar
+                                        </button>
+                                        <a href="/Administrativo/HistorialdeCompras/@usuario.Id" class="btn btn-info btn-sm">
+                                            <i class="fas fa-history"></i> Historial
+                                        </a>
+                                        @if (usuario.Estado == "activo")
+                                        {
+                                            <form method="post" asp-page-handler="CambiarEstado" asp-route-id="@usuario.Id" asp-route-nuevoEstado="inactivo" class="inline">
+                                                <button type="submit" class="btn btn-warning btn-sm">
+                                                    <i class="fas fa-ban"></i> Suspender
+                                                </button>
+                                            </form>
+                                        }
+                                        else
+                                        {
+                                            <form method="post" asp-page-handler="CambiarEstado" asp-route-id="@usuario.Id" asp-route-nuevoEstado="activo" class="inline">
+                                                <button type="submit" class="btn btn-success btn-sm">
+                                                    <i class="fas fa-check-circle"></i> Activar
+                                                </button>
+                                            </form>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Editar Usuario -->
+    <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark text-white">
+                <div class="modal-header bg-neon">
+                    <h5 class="modal-title text-black" id="editUserModalLabel">Editar Usuario</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <!-- Modificar el modal para permitir editar nombre y correo -->
+                <div class="modal-body">
+                    <form method="post" asp-page-handler="EditarUsuario" id="editUserForm">
+                        <input type="hidden" id="editUserId" name="id" />
+                        <div class="mb-3">
+                            <label for="editNombre" class="form-label">Nombre Completo</label>
+                            <input type="text" class="form-control bg-dark text-white border-secondary" id="editNombre" name="nombreCompleto" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="editCorreo" class="form-label">Correo Electrónico</label>
+                            <input type="email" class="form-control bg-dark text-white border-secondary" id="editCorreo" name="correo" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="editEstado" class="form-label">Estado</label>
+                            <select class="form-select bg-dark text-white border-secondary" id="editEstado" name="estado">
+                                <option value="activo">Activo</option>
+                                <option value="inactivo">Inactivo</option>
+                            </select>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-neon">Guardar Cambios</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .min-h-screen {
+            min-height: 100vh;
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            padding: 1.5rem 0;
+        }
+
+        .logo-circle {
+            width: 6rem;
+            height: 6rem;
+            border-radius: 50%;
+            background-color: #C1FF00;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-img {
+            width: 4rem;
+            height: 4rem;
+        }
+
+        .main-container {
+            max-width: 80rem;
+            margin: 0 auto;
+            padding: 0 1rem 2rem;
+        }
+
+        .panel-header {
+            background-color: #C1FF00;
+            color: #000000;
+            padding: 0.75rem 1rem;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.25rem;
+            position: relative;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-home {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #666666;
+            color: #ffffff;
+            padding: 0.25rem 0.75rem;
+            text-decoration: none;
+            font-size: 0.875rem;
+            border-radius: 0.25rem;
+        }
+
+            .btn-home:hover {
+                background-color: #555555;
+            }
+
+            .btn-home i {
+                margin-right: 0.5rem;
+            }
+
+        h1 {
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-container {
+            margin-bottom: 1rem;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .search-input {
+            flex-grow: 1;
+            padding: 0.5rem 1rem;
+            background-color: #3a3a3a;
+            border: 1px solid #505050;
+            color: #ffffff;
+            border-radius: 0.25rem;
+        }
+
+        .search-button {
+            padding: 0.5rem 1rem;
+            background-color: #C1FF00;
+            border: none;
+            color: #000000;
+            border-radius: 0.25rem;
+            cursor: pointer;
+        }
+
+            .search-button:hover {
+                background-color: #a8db00;
+            }
+
+        .search-input:focus {
+            border-color: #C1FF00;
+            outline: none;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            background-color: #464646;
+            border-radius: 0.5rem;
+            padding: 1rem;
+        }
+
+        .full-width {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .table-header {
+            background-color: #333333;
+        }
+
+            .table-header th {
+                text-align: left;
+                padding: 0.5rem 0.75rem;
+                font-weight: 600;
+                border-bottom: 1px solid #505050;
+            }
+
+        .table-row td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #505050;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .inline {
+            display: inline;
+        }
+
+        /* Estilos para alertas */
+        .alert {
+            padding: 0.75rem 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.25rem;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+            .alert i {
+                margin-right: 0.5rem;
+            }
+
+        .alert-success {
+            background-color: rgba(0, 128, 0, 0.2);
+            border: 1px solid #008000;
+            color: #00ff00;
+        }
+
+        .alert-error {
+            background-color: rgba(255, 0, 0, 0.2);
+            border: 1px solid #ff0000;
+            color: #ff6666;
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 1.25rem;
+        }
+
+        /* Estilos para el modal */
+        .modal-content {
+            border-radius: 0.5rem;
+        }
+
+        .modal-header {
+            border-radius: 0.5rem 0.5rem 0 0;
+        }
+
+        .bg-neon {
+            background-color: #C1FF00;
+        }
+
+        .btn-neon {
+            background-color: #C1FF00;
+            color: #000000;
+        }
+
+            .btn-neon:hover {
+                background-color: #a8db00;
+                color: #000000;
+            }
+    </style>
+
+    <!-- Scripts de Bootstrap y jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <script>
+        // Función para abrir el modal de edición
+        function openEditModal(id, nombre, correo) {
+            document.getElementById('editUserId').value = id;
+            document.getElementById('editNombre').value = nombre;
+            document.getElementById('editCorreo').value = correo;
+
+            // Obtener el estado actual del usuario mediante una petición AJAX
+            fetch(`?handler=ObtenerEstadoUsuario&id=${id}`, {
+                headers: {
+                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]')?.value || ''
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('editEstado').value = data.estado;
+                var editUserModal = new bootstrap.Modal(document.getElementById('editUserModal'));
+                editUserModal.show();
+            })
+            .catch(error => {
+                console.error('Error al obtener datos del usuario:', error);
+            });
+        }
+    </script>
+</body>
+</html>

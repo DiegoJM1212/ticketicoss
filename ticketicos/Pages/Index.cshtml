@@ -1,0 +1,467 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Inicio";
+
+    bool isConcierto = Request.Query["categoria"] == "Concierto";
+    bool isTeatro = Request.Query["categoria"] == "Teatro";
+    bool isDeporte = Request.Query["categoria"] == "Deporte";
+    bool isCultura = Request.Query["categoria"] == "Cultura";
+    bool isFamilia = Request.Query["categoria"] == "Familia";
+
+    var nombreEvento = Request.Query["nombreEvento"];
+}
+
+<!-- Agregar token antifalsificación -->
+@Html.AntiForgeryToken()
+
+<link rel="stylesheet" href="~/css/inicio.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+<!-- Banner superior -->
+<section class="banner">
+    <div class="banner-text">
+        <h1>Venga que si es Pa'eso</h1>
+        <p>1 de Marzo - CIC Ande - 8pm</p>
+    </div>
+</section>
+
+<!-- Barra transversal con artistas destacados -->
+<section class="artistas-destacados">
+    <div class="artistas-destacados-inner">
+        <div class="artista-item"><p>Chayanne</p></div>
+        <div class="artista-item"><p>Xtremo</p></div>
+        <div class="artista-item"><p>Melendi</p></div>
+        <div class="artista-item"><p>Reik</p></div>
+        <div class="artista-item"><p>Romeo Santos</p></div>
+    </div>
+</section>
+
+<!-- Botones de acceso rápido -->
+<div class="quick-access-buttons">
+    <a href="~/Cliente/billetera" class="quick-btn wallet-btn">
+        <i class="bi bi-wallet2"></i>
+        <span>Mi Billetera</span>
+    </a>
+    <a href="~/Cliente/atencioncliente" class="quick-btn support-btn">
+        <i class="bi bi-headset"></i>
+        <span>Atención al Cliente</span>
+    </a>
+    <a href="~/Cliente/Feedback" class="quick-btn feedback-btn">
+        <i class="bi bi-chat-text"></i>
+        <span>Dar Feedback</span>
+    </a>
+</div>
+
+<!-- Resultados de búsqueda -->
+@if (!string.IsNullOrEmpty(Request.Query["categoria"]) || !string.IsNullOrEmpty(nombreEvento))
+{
+    <section class="eventos-section">
+        <h2>
+            @if (!string.IsNullOrEmpty(Request.Query["categoria"]))
+            {
+                <text>Eventos de @Request.Query["categoria"]</text>
+            }
+            else if (!string.IsNullOrEmpty(nombreEvento))
+            {
+                <text>Resultados para "@nombreEvento"</text>
+            }
+        </h2>
+
+        <div class="eventos-grid">
+            @if (Model.Eventos != null && Model.Eventos.Any())
+            {
+                foreach (var evento in Model.Eventos)
+                {
+                    <div class="evento-card">
+                        <img src="@evento.Imagen" alt="@evento.Nombre" />
+                        <h3>@evento.Nombre</h3>
+                        <p>Fecha: @evento.Fecha.ToString("dd MMM yyyy")</p>
+                        <a asp-page="/VerEvento" asp-route-id="@evento.Id" class="btn-agregar">Ver evento</a>
+                    </div>
+                }
+            }
+            else
+            {
+                <p>No se encontraron eventos que coincidan con los criterios de búsqueda.</p>
+            }
+        </div>
+    </section>
+}
+
+<!-- Eventos en Preventa -->
+<section class="eventos-section">
+    <div class="section-header">
+        <h2>Eventos en Preventa</h2>
+        <a href="~/Cliente/preventa" class="ver-todos">Ver todos <i class="bi bi-arrow-right"></i></a>
+    </div>
+    <div class="eventos-grid">
+        <div class="evento-card">
+            <img src="https://i.imgur.com/A4iHjTp.jpeg" alt="Chayanne" />
+            <div class="preventa-badge">Preventa</div>
+            <h3>Chayanne</h3>
+            <p>Fecha: Jul 10</p>
+            <p class="precio-preventa">Precio especial: ₡10,000</p>
+        </div>
+        <div class="evento-card">
+            <img src="https://i.imgur.com/J9oQBqn.png" alt="Verano Xtremo" />
+            <div class="preventa-badge">Preventa</div>
+            <h3>Verano Xtremo</h3>
+            <p>Fecha: Ago 15</p>
+            <p class="precio-preventa">Precio especial: ₡15,000</p>
+        </div>
+    </div>
+</section>
+
+<!-- Eventos Destacados -->
+<section class="eventos-section">
+    <div class="section-header">
+        <h2>Eventos Destacados</h2>
+        <a href="~/Cliente/eventosdestacados" class="ver-todos">Ver todos <i class="bi bi-arrow-right"></i></a>
+    </div>
+    <div class="eventos-grid">
+        <div class="evento-card destacado">
+            <img src="https://i.imgur.com/D2xPHFH.jpeg" alt="Reik" />
+            <div class="destacado-badge">Destacado</div>
+            <h3>Reik</h3>
+            <p>Fecha: Sep 05</p>
+        </div>
+        <div class="evento-card destacado">
+            <img src="https://i.imgur.com/usdcb9v.jpeg" alt="Camilo" />
+            <div class="destacado-badge">Destacado</div>
+            <h3>Camilo</h3>
+            <p>Fecha: Oct 12</p>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- Eventos Actuales -->
+<section class="eventos-section">
+    <h2>Eventos actuales</h2>
+    <div class="eventos-grid">
+        @if (Model.EventosActuales != null && Model.EventosActuales.Any())
+        {
+            foreach (var evento in Model.EventosActuales)
+            {
+                <div class="evento-card">
+                    <img src="@evento.Imagen" alt="@evento.Nombre" />
+                    <h3>@evento.Nombre</h3>
+                    <p>Fecha: @evento.Fecha.ToString("dd MMM yyyy")</p>
+                    <a asp-page="/VerEvento" asp-route-id="@evento.Id" class="btn-agregar">Ver evento</a>
+                </div>
+            }
+        }
+        else
+        {
+            <p>No hay eventos actuales disponibles.</p>
+        }
+    </div>
+</section>
+
+<!-- Eventos Próximos -->
+<section class="eventos-section">
+    <h2>Eventos próximos</h2>
+    <div class="eventos-grid">
+        @if (Model.EventosProximos != null && Model.EventosProximos.Any())
+        {
+            foreach (var evento in Model.EventosProximos)
+            {
+                <div class="evento-card">
+                    <img src="@evento.Imagen" alt="@evento.Nombre" />
+                    <h3>@evento.Nombre</h3>
+                    <p>Fecha: @evento.Fecha.ToString("dd MMM yyyy")</p>
+                    <a asp-page="/VerEvento" asp-route-id="@evento.Id" class="btn-agregar">Ver evento</a>
+                </div>
+            }
+        }
+        else
+        {
+            <p>No hay eventos próximos disponibles.</p>
+        }
+    </div>
+</section>
+
+<!-- Códigos Promocionales -->
+<section class="codigos-section">
+    <div class="section-header">
+        <h2>Códigos Promocionales</h2>
+        <a href="~/Cliente/codigospromo" class="ver-todos">Ver todos <i class="bi bi-arrow-right"></i></a>
+    </div>
+    <div class="codigos-grid">
+        <div class="codigo-card">
+            <div class="codigo-content">
+                <div class="codigo-header">
+                    <i class="bi bi-ticket-perforated-fill"></i>
+                    <h3>DESCUENTO10</h3>
+                </div>
+                <p class="codigo-descripcion">Descuento de ₡3,000 en tu próxima compra</p>
+                <div class="codigo-footer">
+                    <p class="codigo-expiracion">Válido hasta: 30/06/2025</p>
+                    <button class="btn-copiar" onclick="copiarCodigo('DESCUENTO10')">
+                        <i class="bi bi-clipboard"></i> Copiar
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="codigo-card">
+            <div class="codigo-content">
+                <div class="codigo-header">
+                    <i class="bi bi-ticket-perforated-fill"></i>
+                    <h3>2x1</h3>
+                </div>
+                <p class="codigo-descripcion">Descuento de ₡5,000 en compras de 2 o más boletos</p>
+                <div class="codigo-footer">
+                    <p class="codigo-expiracion">Válido hasta: 15/07/2025</p>
+                    <button class="btn-copiar" onclick="copiarCodigo('2x1')">
+                        <i class="bi bi-clipboard"></i> Copiar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Ícono del Chatbot -->
+<div class="chatbot-icon" onclick="toggleChatbot()">
+    <i class="bi bi-chat-dots-fill"></i>
+</div>
+
+<!-- Ventana del Chatbot -->
+<div class="chatbot-window" id="chatbotWindow" style="display: none;">
+    <div class="chatbot-header">
+        <h3>TicketicosBot</h3>
+        <button onclick="toggleChatbot()" class="chatbot-close">✖</button>
+    </div>
+    <div class="chatbot-body" id="chatbotMessages">
+        <div class="chatbot-message bot">
+            ¡Hola! Bienvenido a Ticketicos. ¿En qué te puedo ayudar?
+            <ul>
+                <li><a href="#" onclick="sendMessage('¿Cómo puedo comprar boletos?')">¿Cómo comprar boletos?</a></li>
+                <li><a href="#" onclick="sendMessage('¿Cómo uso un código promocional?')">¿Cómo usar un código promocional?</a></li>
+                <li><a href="#" onclick="sendMessage('Consultar saldo')">Consultar saldo</a></li>
+                <li><a href="#" onclick="sendMessage('Recomendar eventos')">Recomendar eventos</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="chatbot-footer">
+        <input type="text" id="chatbotInput" placeholder="Escribe tu mensaje..." onkeypress="if(event.key === 'Enter') sendMessage(this.value)">
+        <button onclick="sendMessage(document.getElementById('chatbotInput').value)">Enviar</button>
+    </div>
+</div>
+
+<style>
+    /* Estilos para el ícono del chatbot */
+    .chatbot-icon {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #007bff;
+        color: white;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        cursor: pointer;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        z-index: 1000;
+    }
+
+    /* Estilos para la ventana del chatbot */
+    .chatbot-window {
+        position: fixed;
+        bottom: 100px;
+        right: 20px;
+        width: 350px;
+        height: 500px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        display: flex;
+        flex-direction: column;
+        z-index: 1000;
+    }
+
+    .chatbot-header {
+        background-color: #007bff;
+        color: white;
+        padding: 10px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        .chatbot-header h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+    .chatbot-close {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .chatbot-body {
+        flex-grow: 1;
+        padding: 10px;
+        overflow-y: auto;
+        background-color: #f8f9fa;
+    }
+
+    .chatbot-message {
+        margin-bottom: 10px;
+        padding: 8px 12px;
+        border-radius: 8px;
+        max-width: 80%;
+    }
+
+        .chatbot-message.bot {
+            background-color: #007bff;
+            color: white;
+            margin-left: auto;
+        }
+
+        .chatbot-message.user {
+            background-color: #e9ecef;
+            color: black;
+            margin-right: auto;
+        }
+
+        .chatbot-message ul {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0 0;
+        }
+
+            .chatbot-message ul li a {
+                color: white;
+                text-decoration: underline;
+                cursor: pointer;
+            }
+
+    .chatbot-footer {
+        padding: 10px;
+        border-top: 1px solid #dee2e6;
+        display: flex;
+        gap: 10px;
+    }
+
+        .chatbot-footer input {
+            flex-grow: 1;
+            padding: 8px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+        }
+
+        .chatbot-footer button {
+            padding: 8px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            .chatbot-footer button:hover {
+                background-color: #0056b3;
+            }
+    /* Estilo para el botón de feedback */
+    .feedback-btn {
+        background-color: #007bff;
+        color: white;
+        border-radius: 5px;
+        padding: 10px 20px;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: background-color 0.3s;
+    }
+
+        .feedback-btn:hover {
+            background-color: #0056b3;
+        }
+</style>
+
+<script>
+    function copiarCodigo(codigo) {
+        navigator.clipboard.writeText(codigo)
+            .then(() => {
+                alert('Código copiado: ' + codigo);
+            })
+            .catch(err => {
+                console.error('Error al copiar: ', err);
+            });
+    }
+
+    // Mostrar/ocultar la ventana del chatbot
+    function toggleChatbot() {
+        const chatbotWindow = document.getElementById('chatbotWindow');
+        chatbotWindow.style.display = chatbotWindow.style.display === 'none' ? 'block' : 'none';
+    }
+
+    // Enviar mensaje al chatbot
+    async function sendMessage(message) {
+        if (!message.trim()) return;
+
+        const messagesDiv = document.getElementById('chatbotMessages');
+        const input = document.getElementById('chatbotInput');
+
+        // Mostrar mensaje del usuario
+        const userMessage = document.createElement('div');
+        userMessage.className = 'chatbot-message user';
+        userMessage.textContent = message;
+        messagesDiv.appendChild(userMessage);
+
+        // Llamar al handler de Razor Pages
+        try {
+            const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+            if (!token) {
+                console.error('Token antifalsificación no encontrado');
+                throw new Error('Token antifalsificación no encontrado');
+            }
+
+            const response = await fetch('/?handler=Chatbot', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': token
+                },
+                body: JSON.stringify({ Message: message }) // Asegurar que coincida con ChatbotRequest
+            });
+
+            if (!response.ok) {
+                console.error('Error en la respuesta del servidor:', response.status, response.statusText);
+                throw new Error(`Error del servidor: ${response.status} ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            console.log('Respuesta del servidor:', data);
+
+            // Mostrar respuesta del bot
+            const botMessage = document.createElement('div');
+            botMessage.className = 'chatbot-message bot';
+            botMessage.textContent = data.response || 'Lo siento, no entendí. Prueba con otra pregunta.';
+            messagesDiv.appendChild(botMessage);
+        } catch (error) {
+            console.error('Error en sendMessage:', error);
+            const botMessage = document.createElement('div');
+            botMessage.className = 'chatbot-message bot';
+            botMessage.textContent = 'Error al conectar con el servidor: ' + error.message;
+            messagesDiv.appendChild(botMessage);
+        }
+
+        // Limpiar input y desplazar el chat hacia abajo
+        input.value = '';
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+</script>

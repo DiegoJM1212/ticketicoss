@@ -1,0 +1,709 @@
+﻿@page
+@model ticketicos.Pages.Admin.GestionRolesModel
+@{
+    ViewData["Title"] = "Gestión de Roles";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TICKETICOS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="min-h-screen">
+        <!-- Logo -->
+        <div class="logo-container">
+            <div class="logo-circle">
+                <img src="/images/logo.png" alt="Logo" class="logo-img" />
+            </div>
+        </div>
+
+        <!-- Panel Principal -->
+        <div class="main-container">
+            <!-- Mensajes de éxito o error -->
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success">
+                    <i class="fas fa-check-circle"></i> @TempData["SuccessMessage"]
+                    <span class="close-btn" onclick="this.parentElement.style.display='none';">×</span>
+                    <a href="/administrativo/Dashboard" class="dashboard-link">
+                        <i class="bi bi-house-door me-2"></i> Dashboard
+                    </a>
+                </div>
+            }
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-error">
+                    <i class="fas fa-exclamation-circle"></i> @TempData["ErrorMessage"]
+                    <span class="close-btn" onclick="this.parentElement.style.display='none';">×</span>
+                </div>
+            }
+
+            <div class="grid-container">
+                <!-- Roles del Sistema -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2>Roles del Sistema</h2>
+                    </div>
+                    <div class="panel-content">
+                        <p class="panel-description">Define y gestiona los roles del sistema</p>
+
+                        <div class="new-rol-container">
+                            <button type="button" class="btn-new-rol" onclick="openNewRolModal()">
+                                <i class="fas fa-plus"></i> Nuevo Rol
+                            </button>
+                        </div>
+
+                        <div class="table-container">
+                            <table class="full-width">
+                                <thead>
+                                    <tr class="table-header">
+                                        <th>Nombre del Rol</th>
+                                        <th>Usuarios</th>
+                                        <th>Permisos</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var rol in Model.Roles)
+                                    {
+                                        <tr class="table-row">
+                                            <td>@rol.Nombre</td>
+                                            <td>@rol.Usuarios</td>
+                                            <td>@string.Join(", ", rol.Permisos)</td>
+                                            <td>
+                                                <div class="action-buttons">
+                                                    <button type="button" class="btn-edit" onclick="openEditRolModal('@rol.Id', '@rol.Nombre')">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <form method="post" asp-page-handler="EliminarRol" asp-route-nombre="@rol.Nombre" class="inline">
+                                                        <button type="submit" class="btn-delete" onclick="return confirm('¿Está seguro de que desea eliminar este rol?')">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Asignación de Roles -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2>Asignación de Roles</h2>
+                    </div>
+                    <div class="panel-content">
+                        <p class="panel-description">Asigna roles a los empleados</p>
+
+                        <!-- Barra de búsqueda -->
+                        <div class="search-container">
+                            <form method="get" class="search-form">
+                                <input type="text"
+                                       name="SearchTerm"
+                                       value="@Model.SearchTerm"
+                                       placeholder="Buscar empleado..."
+                                       class="search-input" />
+                                <button type="submit" class="search-button">
+                                    <i class="fas fa-search"></i> Buscar
+                                </button>
+                            </form>
+                        </div>
+
+                        <div class="table-container">
+                            <table class="full-width">
+                                <thead>
+                                    <tr class="table-header">
+                                        <th>Empleado</th>
+                                        <th>Rol Actual</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var empleado in Model.Empleados)
+                                    {
+                                        <tr class="table-row">
+                                            <td>@empleado.Nombre</td>
+                                            <td>@empleado.RolActual</td>
+                                            <td>
+                                                <form method="post" asp-page-handler="CambiarRol" class="action-form">
+                                                    <input type="hidden" name="idUsuario" value="@empleado.IdUsuario" />
+                                                    <select name="nuevoRol" class="select-rol">
+                                                        <option value="">Sin rol</option>
+                                                        @foreach (var rol in Model.Roles)
+                                                        {
+                                                            if (rol.Nombre == empleado.RolActual)
+                                                            {
+                                                                <option value="@rol.Nombre" selected>@rol.Nombre</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@rol.Nombre">@rol.Nombre</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                    <button type="submit" class="btn-assign">Asignar</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Nuevo Rol -->
+    <div id="newRolModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Nuevo Rol</h3>
+                <span class="close" onclick="closeNewRolModal()">×</span>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-page-handler="CrearRol" id="newRolForm">
+                    <div class="form-group">
+                        <label for="nombreRol">Nombre del Rol:</label>
+                        <input type="text" id="nombreRol" name="nombreRol" class="form-input" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Permisos:</label>
+                        <div class="checkbox-group">
+                            @foreach (var permiso in Model.TodosLosPermisos)
+                            {
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="permiso_@permiso.Id" name="permisos" value="@permiso.Id" />
+                                    <label for="permiso_@permiso.Id">@permiso.Nombre</label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-cancel" onclick="closeNewRolModal()">Cancelar</button>
+                        <button type="submit" class="btn-save">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Editar Rol -->
+    <div id="editRolModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Editar Rol</h3>
+                <span class="close" onclick="closeEditRolModal()">×</span>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-page-handler="ActualizarRol" id="editRolForm">
+                    <input type="hidden" id="editRolId" name="rolId" />
+                    <div class="form-group">
+                        <label for="editNombreRol">Nombre del Rol:</label>
+                        <input type="text" id="editNombreRol" name="nombreRol" class="form-input" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Permisos:</label>
+                        <div class="checkbox-group" id="editPermisosContainer">
+                            @foreach (var permiso in Model.TodosLosPermisos)
+                            {
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="edit_permiso_@permiso.Id" name="permisos" value="@permiso.Id" />
+                                    <label for="edit_permiso_@permiso.Id">@permiso.Nombre</label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-cancel" onclick="closeEditRolModal()">Cancelar</button>
+                        <button type="submit" class="btn-save">Actualizar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .min-h-screen {
+            min-height: 100vh;
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            padding: 1.5rem 0;
+        }
+
+        .logo-circle {
+            width: 6rem;
+            height: 6rem;
+            border-radius: 50%;
+            background-color: #C1FF00;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-img {
+            width: 4rem;
+            height: 4rem;
+        }
+
+        .btn-home {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #666666;
+            color: #ffffff;
+            padding: 0.25rem 0.75rem;
+            text-decoration: none;
+            font-size: 0.875rem;
+            border-radius: 0.25rem;
+        }
+        .main-container {
+            max-width: 80rem;
+            margin: 0 auto;
+            padding: 0 1rem 2rem;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .panel {
+            background-color: #464646;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .panel-header {
+            background-color: #C1FF00;
+            color: #000000;
+            padding: 0.75rem 1rem;
+        }
+
+            .panel-header h2 {
+                font-size: 1.25rem;
+                font-weight: bold;
+                margin: 0;
+            }
+
+        .panel-content {
+            padding: 1rem;
+        }
+
+        .panel-description {
+            margin-bottom: 1rem;
+        }
+
+        .new-rol-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 0.75rem;
+        }
+
+        .btn-new-rol {
+            background-color: #C1FF00;
+            color: #000000;
+            padding: 0.25rem 1rem;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            border: none;
+            cursor: pointer;
+        }
+
+            .btn-new-rol:hover {
+                background-color: #a8db00;
+            }
+
+            .btn-new-rol i {
+                margin-right: 0.5rem;
+            }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        .full-width {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .table-header {
+            background-color: #333333;
+        }
+
+            .table-header th {
+                text-align: left;
+                padding: 0.5rem 0.75rem;
+                font-weight: 600;
+                border-bottom: 1px solid #505050;
+            }
+
+        .table-row td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #505050;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .btn-edit {
+            color: #C1FF00;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+            .btn-edit:hover {
+                color: #a8db00;
+            }
+
+        .btn-delete {
+            color: #ff0000;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+            .btn-delete:hover {
+                color: #cc0000;
+            }
+
+        .search-container {
+            margin-bottom: 1rem;
+        }
+
+        .search-form {
+            display: flex;
+        }
+
+        .search-input {
+            flex-grow: 1;
+            padding: 0.5rem 1rem;
+            background-color: #3a3a3a;
+            border: 1px solid #505050;
+            color: #ffffff;
+            border-radius: 0.25rem 0 0 0.25rem;
+        }
+
+        .search-button {
+            padding: 0.5rem 1rem;
+            background-color: #3a3a3a;
+            border: 1px solid #505050;
+            border-left: none;
+            color: #ffffff;
+            border-radius: 0 0.25rem 0.25rem 0;
+            cursor: pointer;
+        }
+
+        .search-input:focus {
+            border-color: #C1FF00;
+            outline: none;
+        }
+
+        .action-form {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .select-rol {
+            background-color: #3a3a3a;
+            border: 1px solid #505050;
+            color: #ffffff;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+        }
+
+            .select-rol:focus {
+                border-color: #C1FF00;
+                outline: none;
+            }
+
+        .btn-assign {
+            background-color: #C1FF00;
+            color: #000000;
+            padding: 0.25rem 1rem;
+            border: none;
+            border-radius: 0.25rem;
+            cursor: pointer;
+        }
+
+            .btn-assign:hover {
+                background-color: #a8db00;
+            }
+
+        .inline {
+            display: inline;
+        }
+
+        /* Estilos para los modales */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .modal-content {
+            background-color: #464646;
+            margin: 10% auto;
+            padding: 0;
+            border-radius: 0.5rem;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            animation: modalFadeIn 0.3s;
+        }
+
+
+        
+
+        .modal-header {
+            background-color: #C1FF00;
+            color: #000000;
+            padding: 0.75rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 0.5rem 0.5rem 0 0;
+        }
+
+            .modal-header h3 {
+                margin: 0;
+                font-size: 1.25rem;
+            }
+
+        .close {
+            color: #000000;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+            .close:hover {
+                color: #333333;
+            }
+
+        .modal-body {
+            padding: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+            .form-group label {
+                display: block;
+                margin-bottom: 0.5rem;
+                font-weight: 500;
+            }
+
+        .form-input {
+            width: 100%;
+            padding: 0.5rem;
+            background-color: #3a3a3a;
+            border: 1px solid #505050;
+            color: #ffffff;
+            border-radius: 0.25rem;
+        }
+
+            .form-input:focus {
+                border-color: #C1FF00;
+                outline: none;
+            }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.5rem;
+            max-height: 200px;
+            overflow-y: auto;
+            padding: 0.5rem;
+            background-color: #3a3a3a;
+            border: 1px solid #505050;
+            border-radius: 0.25rem;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn-cancel {
+            padding: 0.5rem 1rem;
+            background-color: #666666;
+            color: #ffffff;
+            border: none;
+            border-radius: 0.25rem;
+            cursor: pointer;
+        }
+
+            .btn-cancel:hover {
+                background-color: #555555;
+            }
+
+        .btn-save {
+            padding: 0.5rem 1rem;
+            background-color: #C1FF00;
+            color: #000000;
+            border: none;
+            border-radius: 0.25rem;
+            cursor: pointer;
+        }
+
+            .btn-save:hover {
+                background-color: #a8db00;
+            }
+
+        /* Estilos para alertas */
+        .alert {
+            padding: 0.75rem 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.25rem;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+            .alert i {
+                margin-right: 0.5rem;
+            }
+
+        .alert-success {
+            background-color: rgba(0, 128, 0, 0.2);
+            border: 1px solid #008000;
+            color: #00ff00;
+        }
+
+        .alert-error {
+            background-color: rgba(255, 0, 0, 0.2);
+            border: 1px solid #ff0000;
+            color: #ff6666;
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 1.25rem;
+        }
+    </style>
+
+    <script>
+        // Funciones para el modal de Nuevo Rol
+        function openNewRolModal() {
+            document.getElementById('newRolModal').style.display = 'block';
+        }
+
+        function closeNewRolModal() {
+            document.getElementById('newRolModal').style.display = 'none';
+        }
+
+        // Funciones para el modal de Editar Rol
+        function openEditRolModal(rolId, rolNombre) {
+            document.getElementById('editRolId').value = rolId;
+            document.getElementById('editNombreRol').value = rolNombre;
+
+            // Cargar los permisos del rol
+            fetch(`?handler=ObtenerPermisosRol&rolId=${rolId}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Desmarcar todos los checkboxes primero
+                    const checkboxes = document.querySelectorAll('#editPermisosContainer input[type="checkbox"]');
+                    checkboxes.forEach(cb => cb.checked = false);
+
+                    // Marcar los checkboxes de los permisos que tiene el rol
+                    data.forEach(permisoId => {
+                        const checkbox = document.getElementById(`edit_permiso_${permisoId}`);
+                        if (checkbox) checkbox.checked = true;
+                    });
+
+                    document.getElementById('editRolModal').style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error al cargar permisos:', error);
+                    alert('Error al cargar los permisos del rol');
+                });
+        }
+
+        function closeEditRolModal() {
+            document.getElementById('editRolModal').style.display = 'none';
+        }
+
+        // Cerrar modales al hacer clic fuera de ellos
+        window.onclick = function(event) {
+            const newRolModal = document.getElementById('newRolModal');
+            const editRolModal = document.getElementById('editRolModal');
+
+            if (event.target === newRolModal) {
+                closeNewRolModal();
+            }
+
+            if (event.target === editRolModal) {
+                closeEditRolModal();
+            }
+        }
+
+        // Configurar el token antifalsificación para las solicitudes AJAX
+        const tokenElement = document.querySelector('input[name="__RequestVerificationToken"]');
+        const token = tokenElement ? tokenElement.value : '';
+
+        // Agregar el token a todas las solicitudes fetch
+        const originalFetch = window.fetch;
+        window.fetch = function(url, options = {}) {
+            if (!options.headers) {
+                options.headers = {};
+            }
+
+            if (token) {
+                options.headers['RequestVerificationToken'] = token;
+            }
+
+            return originalFetch(url, options);
+        };
+    </script>
+</body>
+</html>

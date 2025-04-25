@@ -1,0 +1,193 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+@{
+    var currentPath = Context.Request.Path.Value?.ToLower() ?? "";
+    bool esLogin = currentPath.Contains("/cliente/login");
+
+    var userId = Context.Session.GetInt32("UserId");
+    var isLoggedIn = userId.HasValue && userId.Value > 0;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Ticketicos</title>
+
+    <link rel="stylesheet" href="~/css/layout.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/layout-mobile.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/_Layout.cshtml.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+    @if (!esLogin)
+    {
+        <header>
+            <nav class="navbar">
+                <div class="navbar-left">
+                    <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="logo animate__animated animate__fadeIn">
+                        <a asp-page="/Index">
+                            <img src="~/images/logo.png" alt="Logo" />
+                        </a>
+                    </div>
+                    <ul class="menu" id="mobileMenu">
+                        <li class="nav-item-animated"><a asp-page="/Index">Inicio</a></li>
+                        <li class="dropdown nav-item-animated">
+                            <a href="#">Categorías de eventos</a>
+                            <ul class="dropdown-content">
+                                <li><a asp-page="/Index" asp-route-categoria="Concierto">Concierto</a></li>
+                                <li><a asp-page="/Index" asp-route-categoria="Teatro">Teatro</a></li>
+                                <li><a asp-page="/Index" asp-route-categoria="Deporte">Deporte</a></li>
+                                <li><a asp-page="/Index" asp-route-categoria="Cultura">Cultura</a></li>
+                                <li><a asp-page="/Index" asp-route-categoria="Familia">Familia</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item-animated">
+                            <div class="search-container">
+                                <form method="get" asp-page="/Index">
+                                    <input type="text" name="nombreEvento" placeholder="Buscar evento..." />
+                                    <button type="submit">Buscar</button>
+                                </form>
+                            </div>
+                        </li>
+                        <li class="nav-auth-buttons">
+                            @if (isLoggedIn)
+                            {
+                                <a href="/Perfil" class="profile-link animate__animated animate__fadeIn">
+                                    <i class="fas fa-user profile-icon"></i>
+                                    Mi Perfil
+                                </a>
+                                <a href="/Cliente/Logout" class="auth-button animate__animated animate__fadeIn">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    Cerrar Sesión
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="/Cliente/Login" class="auth-button animate__animated animate__fadeIn">
+                                    <i class="fas fa-sign-in-alt"></i>
+                                    Iniciar Sesión
+                                </a>
+                            }
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+    }
+
+    <main>
+        @RenderBody()
+    </main>
+
+    @if (!esLogin)
+    {
+        <footer>
+            <div class="container-footer-all">
+                <div class="container-body">
+                    <div class="colum1">
+                        <h1>Más información de la compañía</h1>
+                        <p>
+                            Somos una empresa especializada en la venta de tickets en línea...
+                        </p>
+                    </div>
+                    <div class="colum2">
+                        <h1>Redes Sociales</h1>
+                        <div class="row">
+                            <a href="https://facebook.com" class="social-btn" target="_blank">
+                                <i class="fab fa-facebook"></i>
+                                <span>Facebook</span>
+                            </a>
+                        </div>
+                        <div class="row">
+                            <a href="https://twitter.com" class="social-btn" target="_blank">
+                                <i class="fab fa-twitter"></i>
+                                <span>Twitter</span>
+                            </a>
+                        </div>
+                        <div class="row">
+                            <a href="https://instagram.com" class="social-btn" target="_blank">
+                                <i class="fab fa-instagram"></i>
+                                <span>Instagram</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="colum3">
+                        <h1>Información de Contacto</h1>
+                        <div class="row2">
+                            <i class="fas fa-home"></i>
+                            <label>Cartago, Barrio El Molino...</label>
+                        </div>
+                        <div class="row2">
+                            <i class="fas fa-phone-alt"></i>
+                            <label>(+506) 2555-555</label>
+                        </div>
+                        <div class="row2">
+                            <i class="fas fa-envelope"></i>
+                            <label>soportecliente@ticketicos.com</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-footer">
+                <div class="footer">
+                    <div class="copyright">
+                        © 2025 Todos los Derechos Reservados | <a href="">Ticketicos</a>
+                    </div>
+                    <div class="information">
+                        <a href="/Empresa/Info">Información Compañía</a> |
+                        <a href="/Politicas/Privacidad">Privacidad y Política</a> |
+                        <a href="/Terminos">Términos y Condiciones</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    }
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const categoria = urlParams.get('categoria');
+            const nombreEvento = urlParams.get('nombreEvento');
+
+            if (categoria) {
+                const categoriaLinks = document.querySelectorAll('.dropdown-content a');
+                categoriaLinks.forEach(link => {
+                    if (link.href.includes(`categoria=${categoria}`)) {
+                        link.style.fontWeight = 'bold';
+                    }
+                });
+            }
+
+            if (nombreEvento) {
+                const searchInput = document.querySelector('.search-container input');
+                if (searchInput) {
+                    searchInput.value = nombreEvento;
+                }
+            }
+        });
+
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (mobileMenu) {
+                mobileMenu.classList.toggle('active');
+            }
+        }
+    </script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

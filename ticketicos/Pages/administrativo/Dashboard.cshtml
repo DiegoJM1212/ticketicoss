@@ -1,0 +1,110 @@
+﻿@page
+@model ticketicos.Pages.Admin.DashboardModel
+@{
+    ViewData["Title"] = "Dashboard Administrativo";
+    Layout = null;
+}
+
+<div style="display: flex; min-height: 100vh; background-color: black;">
+    <!-- Menú Lateral -->
+    <div style="width: 250px; background-color: #333333; padding: 20px; color: white;">
+        <div style="text-align: center; margin-bottom: 30px;">
+            <div style="width: 70px; height: 70px; background-color: #C1FF00; display: inline-block; margin: 0 auto;">
+                <img src="/images/logo.png" alt="Logo" style="width: 100%; height: 100%; object-fit: contain;" />
+            </div>
+        </div>
+        <h3 style="color: #C1FF00; margin-bottom: 20px;">Menú Administrativo</h3>
+        <ul style="list-style: none; padding: 0;">
+
+            <li style="margin-bottom: 10px;">
+                <a href="/administrativo/AdminCodigosPromo" style="color: white; text-decoration: none; display: block; padding: 10px; background-color: #464646; border-radius: 3px;">
+                    <i class="fas fa-ticket-alt" style="margin-right: 10px;"></i> Códigos Promocionales
+                </a>
+            </li>
+            <li style="margin-bottom: 10px;">
+                <a href="/administrativo/AdminSoporte" style="color: white; text-decoration: none; display: block; padding: 10px; background-color: #464646; border-radius: 3px;">
+                    <i class="fas fa-star" style="margin-right: 10px;"></i> Soporte al Cliente
+                </a>
+            </li>
+            <li style="margin-bottom: 10px;">
+                <a href="/administrativo/AdminEventosDestacado" style="color: white; text-decoration: none; display: block; padding: 10px; background-color: #464646; border-radius: 3px;">
+                    <i class="fas fa-star" style="margin-right: 10px;"></i> Eventos Destacados
+                </a>
+            </li>
+            <li style="margin-bottom: 10px;">
+                <a href="/administrativo/AdminPreventa" style="color: white; text-decoration: none; display: block; padding: 10px; background-color: #464646; border-radius: 3px;">
+                    <i class="fas fa-calendar-alt" style="margin-right: 10px;"></i> Preventa
+                </a>
+            </li>
+            <li style="margin-bottom: 10px;">
+                <a href="/administrativo/AdminLugares" style="color: white; text-decoration: none; display: block; padding: 10px; background-color: #464646; border-radius: 3px;">
+                    <i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i> Lugares
+                </a>
+            </li>
+            <li style="margin-bottom: 10px;">
+                <a href="/administrativo/GestionClientes" style="color: white; text-decoration: none; display: block; padding: 10px; background-color: #464646; border-radius: 3px;">
+                    <i class="fas fa-users" style="margin-right: 10px;"></i> Gestión de Clientes
+                </a>
+            </li>
+            <li style="margin-bottom: 10px;">
+                <a href="/administrativo/GestionRoles" style="color: white; text-decoration: none; display: block; padding: 10px; background-color: #464646; border-radius: 3px;">
+                    <i class="fas fa-user-shield" style="margin-right: 10px;"></i> Gestión de Roles
+                </a>
+            </li>
+            <li style="margin-bottom: 10px;">
+                <a href="/administrativo/Chatbot" style="color: white; text-decoration: none; display: block; padding: 10px; background-color: #464646; border-radius: 3px;">
+                    <i class="fas fa-robot" style="margin-right: 10px;"></i> Gestión del Chatbot
+                </a>
+            </li>
+            <li style="margin-bottom: 10px;">
+                <a href="/administrativo/Newsletters" style="color: white; text-decoration: none; display: block; padding: 10px; background-color: #464646; border-radius: 3px;">
+                    <i class="fas fa-envelope" style="margin-right: 10px;"></i> Newsletters
+                </a>
+            </li>
+            <li style="margin-bottom: 10px;">
+                <a href="/administrativo/Configuraciones" style="color: white; text-decoration: none; display: block; padding: 10px; background-color: #464646; border-radius: 3px;">
+                    <i class="fas fa-cog" style="margin-right: 10px;"></i> Configuraciones
+                </a>
+            </li>
+            <li style="margin-bottom: 10px;">
+                <a href="/administrativo/FeedbackAdmin" style="color: white; text-decoration: none; display: block; padding: 10px; background-color: #F44336; border-radius: 3px;">
+                    <i class="fas fa-sign-out-alt" style="margin-right: 10px;"></i> Feedback
+                </a>
+            </li>
+            <li style="margin-bottom: 10px;">
+                <a href="/Index" style="color: white; text-decoration: none; display: block; padding: 10px; background-color: #F44336; border-radius: 3px;">
+                    <i class="fas fa-sign-out-alt" style="margin-right: 10px;"></i> Cerrar Sesión
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Contenido Principal -->
+    <div style="flex: 1; padding: 20px;">
+        <div style="background-color: #464646; padding: 20px; border-radius: 5px;">
+            <div style="background-color: #C1FF00; color: black; padding: 10px; text-align: center; font-weight: bold; font-size: 20px; margin-bottom: 20px;">
+                Dashboard Administrativo
+            </div>
+
+            <!-- Métricas -->
+            <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+                <div style="flex: 1; min-width: 200px; background-color: #3a3a3a; padding: 20px; border-radius: 5px; text-align: center;">
+                    <h3 style="color: white; font-size: 18px; margin-bottom: 10px;">Usuarios Activos</h3>
+                    <p style="color: #C1FF00; font-size: 24px; font-weight: bold;">@Model.UsuariosActivos</p>
+                </div>
+                <div style="flex: 1; min-width: 200px; background-color: #3a3a3a; padding: 20px; border-radius: 5px; text-align: center;">
+                    <h3 style="color: white; font-size: 18px; margin-bottom: 10px;">Eventos Activos</h3>
+                    <p style="color: #C1FF00; font-size: 24px; font-weight: bold;">@Model.EventosActivos</p>
+                </div>
+                <div style="flex: 1; min-width: 200px; background-color: #3a3a3a; padding: 20px; border-radius: 5px; text-align: center;">
+                    <h3 style="color: white; font-size: 18px; margin-bottom: 10px;">Compras Último Mes</h3>
+                    <p style="color: #C1FF00; font-size: 24px; font-weight: bold;">₡@Model.TotalComprasMes.ToString("N2")</p>
+                </div>
+                <div style="flex: 1; min-width: 200px; background-color: #3a3a3a; padding: 20px; border-radius: 5px; text-align: center;">
+                    <h3 style="color: white; font-size: 18px; margin-bottom: 10px;">Boletos Vendidos</h3>
+                    <p style="color: #C1FF00; font-size: 24px; font-weight: bold;">@Model.TotalBoletosVendidos</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

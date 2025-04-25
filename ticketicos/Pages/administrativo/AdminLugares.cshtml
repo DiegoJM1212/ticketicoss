@@ -1,0 +1,430 @@
+﻿@page
+@model ticketicos.Pages.Admin.AdminLugaresModel
+@{
+    ViewData["Title"] = "Tickicos - Gestión de Edificaciones";
+}
+
+<div class="container-fluid bg-black min-vh-100 py-4">
+    <div class="d-flex justify-content-center mb-3">
+        <div class="bg-neon d-flex align-items-center justify-content-center" style="width: 70px; height: 70px; border-radius: 10px;">
+            <span class="fw-bold text-black">TICKICOS</span>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-xl-10">
+            <div class="bg-panel rounded-4 shadow-lg overflow-hidden mb-4">
+                <div class="bg-neon p-3 text-center">
+                    <h4 class="fw-bold text-black mb-0">Gestión de Edificaciones</h4>
+                </div>
+
+                <div class="p-4">
+                    <!-- Mensaje de Error o Éxito -->
+                    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+                    {
+                        <div class="alert alert-danger mb-4">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>@Model.ErrorMessage
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.SuccessMessage))
+                    {
+                        <div class="alert alert-success mb-4">
+                            <i class="bi bi-check-circle-fill me-2"></i>@Model.SuccessMessage
+                        </div>
+                    }
+
+                    <!-- Gestión de Lugares -->
+                    <div class="card bg-dark text-white border-0 rounded-4 overflow-hidden mb-4">
+                        <div class="card-header bg-dark border-secondary">
+                            <h5 class="mb-0">Lugares</h5>
+                        </div>
+                        <div class="card-body">
+                            <form method="post" asp-page-handler="CrearLugar">
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <label class="form-label">Nombre del Lugar</label>
+                                        <input type="text" name="NombreLugar" class="form-control bg-dark text-white border-secondary" required />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Dirección</label>
+                                        <input type="text" name="DireccionLugar" class="form-control bg-dark text-white border-secondary" required />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Mapa Interactivo (URL)</label>
+                                        <input type="text" name="MapaInteractivo" class="form-control bg-dark text-white border-secondary" />
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-success">Crear Lugar</button>
+                            </form>
+
+                            <table class="table table-dark table-bordered mt-4">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nombre</th>
+                                        <th>Dirección</th>
+                                        <th>Mapa</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var lugar in Model.Lugares)
+                                    {
+                                        <tr>
+                                            <td>@lugar.Id</td>
+                                            <td>@lugar.Nombre</td>
+                                            <td>@lugar.Direccion</td>
+                                            <td>@(lugar.MapaInteractivo ?? "N/A")</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-warning" onclick="editarLugar(@lugar.Id, '@lugar.Nombre', '@lugar.Direccion', '@lugar.MapaInteractivo')">Editar</button>
+                                                <form method="post" asp-page-handler="EliminarLugar" class="d-inline">
+                                                    <input type="hidden" name="IdLugar" value="@lugar.Id" />
+                                                    <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Gestión de Bloques -->
+                    <div class="card bg-dark text-white border-0 rounded-4 overflow-hidden mb-4">
+                        <div class="card-header bg-dark border-secondary">
+                            <h5 class="mb-0">Bloques</h5>
+                        </div>
+                        <div class="card-body">
+                            <form method="post" asp-page-handler="CrearBloque">
+                                <div class="row mb-3">
+                                    <div class="col-md-3">
+                                        <label class="form-label">Lugar</label>
+                                        <select name="IdLugarBloque" class="form-select bg-dark text-white border-secondary" required>
+                                            <option value="">Seleccionar...</option>
+                                            @foreach (var lugar in Model.Lugares)
+                                            {
+                                                <option value="@lugar.Id">@lugar.Nombre</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label">Nombre del Bloque</label>
+                                        <input type="text" name="NombreBloque" class="form-control bg-dark text-white border-secondary" required />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label">Precio</label>
+                                        <input type="number" name="PrecioBloque" class="form-control bg-dark text-white border-secondary" step="0.01" required />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label">Habilitado</label>
+                                        <select name="HabilitadoBloque" class="form-select bg-dark text-white border-secondary">
+                                            <option value="1">Sí</option>
+                                            <option value="0">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-success">Crear Bloque</button>
+                            </form>
+
+                            <table class="table table-dark table-bordered mt-4">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Lugar</th>
+                                        <th>Nombre</th>
+                                        <th>Precio</th>
+                                        <th>Habilitado</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var bloque in Model.Bloques)
+                                    {
+                                        <tr>
+                                            <td>@bloque.Id</td>
+                                            <td>@bloque.LugarNombre</td>
+                                            <td>@bloque.Nombre</td>
+                                            <td>₡@bloque.Precio.ToString("N0")</td>
+                                            <td>@(bloque.Habilitado ? "Sí" : "No")</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-warning" onclick="editarBloque(@bloque.Id, @bloque.IdLugar, '@bloque.Nombre', @bloque.Precio, @bloque.Habilitado.ToString().ToLower())">Editar</button>
+                                                <form method="post" asp-page-handler="EliminarBloque" class="d-inline">
+                                                    <input type="hidden" name="IdBloque" value="@bloque.Id" />
+                                                    <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Gestión de Asientos -->
+                    <div class="card bg-dark text-white border-0 rounded-4 overflow-hidden mb-4">
+                        <div class="card-header bg-dark border-secondary">
+                            <h5 class="mb-0">Asientos</h5>
+                        </div>
+                        <div class="card-body">
+                            <form method="post" asp-page-handler="CrearAsiento">
+                                <div class="row mb-3">
+                                    <div class="col-md-3">
+                                        <label class="form-label">Bloque</label>
+                                        <select name="IdBloqueAsiento" class="form-select bg-dark text-white border-secondary" required>
+                                            <option value="">Seleccionar...</option>
+                                            @foreach (var bloque in Model.Bloques)
+                                            {
+                                                <option value="@bloque.Id">@bloque.Nombre (@bloque.LugarNombre)</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label">Número de Asiento</label>
+                                        <input type="text" name="NumeroAsiento" class="form-control bg-dark text-white border-secondary" placeholder="A1, B2, etc." required />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label">Es VIP</label>
+                                        <select name="EsVipAsiento" class="form-select bg-dark text-white border-secondary">
+                                            <option value="0">No</option>
+                                            <option value="1">Sí</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label">Habilitado</label>
+                                        <select name="HabilitadoAsiento" class="form-select bg-dark text-white border-secondary">
+                                            <option value="1">Sí</option>
+                                            <option value="0">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-success">Crear Asiento</button>
+                            </form>
+
+                            <table class="table table-dark table-bordered mt-4">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Bloque</th>
+                                        <th>Número</th>
+                                        <th>Es VIP</th>
+                                        <th>Habilitado</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var asiento in Model.Asientos)
+                                    {
+                                        <tr>
+                                            <td>@asiento.Id</td>
+                                            <td>@asiento.BloqueNombre</td>
+                                            <td>@asiento.Numero</td>
+                                            <td>@(asiento.EsVip ? "Sí" : "No")</td>
+                                            <td>@(asiento.Habilitado ? "Sí" : "No")</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-warning" onclick="editarAsiento(@asiento.Id, @asiento.IdBloque, '@asiento.Numero', @asiento.EsVip.ToString().ToLower(), @asiento.Habilitado.ToString().ToLower())">Editar</button>
+                                                <form method="post" asp-page-handler="EliminarAsiento" class="d-inline">
+                                                    <input type="hidden" name="IdAsiento" value="@asiento.Id" />
+                                                    <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Gestión de Zonas Comunes -->
+                    <div class="card bg-dark text-white border-0 rounded-4 overflow-hidden mb-4">
+                        <div class="card-header bg-dark border-secondary">
+                            <h5 class="mb-0">Zonas Comunes</h5>
+                        </div>
+                        <div class="card-body">
+                            <form method="post" asp-page-handler="CrearZonaComun">
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <label class="form-label">Lugar</label>
+                                        <select name="IdLugarZonaComun" class="form-select bg-dark text-white border-secondary" required>
+                                            <option value="">Seleccionar...</option>
+                                            @foreach (var lugar in Model.Lugares)
+                                            {
+                                                <option value="@lugar.Id">@lugar.Nombre</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Nombre de la Zona</label>
+                                        <input type="text" name="NombreZonaComun" class="form-control bg-dark text-white border-secondary" required />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Capacidad</label>
+                                        <input type="number" name="CapacidadZonaComun" class="form-control bg-dark text-white border-secondary" required />
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-success">Crear Zona Común</button>
+                            </form>
+
+                            <table class="table table-dark table-bordered mt-4">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Lugar</th>
+                                        <th>Nombre</th>
+                                        <th>Capacidad</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var zona in Model.ZonasComunes)
+                                    {
+                                        <tr>
+                                            <td>@zona.Id</td>
+                                            <td>@zona.LugarNombre</td>
+                                            <td>@zona.Nombre</td>
+                                            <td>@zona.Capacidad</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-warning" onclick="editarZonaComun(@zona.Id, @zona.IdLugar, '@zona.Nombre', @zona.Capacidad)">Editar</button>
+                                                <form method="post" asp-page-handler="EliminarZonaComun" class="d-inline">
+                                                    <input type="hidden" name="IdZonaComun" value="@zona.Id" />
+                                                    <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Gestión de Zonas Preferenciales -->
+                    <div class="card bg-dark text-white border-0 rounded-4 overflow-hidden">
+                        <div class="card-header bg-dark border-secondary">
+                            <h5 class="mb-0">Zonas Preferenciales</h5>
+                        </div>
+                        <div class="card-body">
+                            <form method="post" asp-page-handler="CrearZonaPreferencial">
+                                <div class="row mb-3">
+                                    <div class="col-md-3">
+                                        <label class="form-label">Lugar</label>
+                                        <select name="IdLugarZonaVip" class="form-select bg-dark text-white border-secondary" required>
+                                            <option value="">Seleccionar...</option>
+                                            @foreach (var lugar in Model.Lugares)
+                                            {
+                                                <option value="@lugar.Id">@lugar.Nombre</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label">Nombre de la Zona</label>
+                                        <input type="text" name="NombreZonaVip" class="form-control bg-dark text-white border-secondary" required />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label">Capacidad</label>
+                                        <input type="number" name="CapacidadZonaVip" class="form-control bg-dark text-white border-secondary" required />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label">Precio Adicional</label>
+                                        <input type="number" name="PrecioZonaVip" class="form-control bg-dark text-white border-secondary" step="0.01" required />
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-success">Crear Zona Preferencial</button>
+                            </form>
+
+                            <table class="table table-dark table-bordered mt-4">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Lugar</th>
+                                        <th>Nombre</th>
+                                        <th>Capacidad</th>
+                                        <th>Precio Adicional</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var zona in Model.ZonasVIP)
+                                    {
+                                        <tr>
+                                            <td>@zona.Id</td>
+                                            <td>@zona.LugarNombre</td>
+                                            <td>@zona.Nombre</td>
+                                            <td>@zona.Capacidad</td>
+                                            <td>₡@zona.Precio.ToString("N0")</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-warning" onclick="editarZonaVip(@zona.Id, @zona.IdLugar, '@zona.Nombre', @zona.Capacidad, @zona.Precio)">Editar</button>
+                                                <form method="post" asp-page-handler="EliminarZonaVip" class="d-inline">
+                                                    <input type="hidden" name="IdZonaVip" value="@zona.Id" />
+                                                    <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .bg-neon {
+        background-color: #c5ff00;
+        color: #000;
+    }
+
+    .bg-panel {
+        background-color: #1a1a1a;
+    }
+
+    .text-neon {
+        color: #c5ff00;
+    }
+</style>
+
+<script>
+    function editarLugar(id, nombre, direccion, mapa) {
+        document.querySelector('input[name="NombreLugar"]').value = nombre;
+        document.querySelector('input[name="DireccionLugar"]').value = direccion;
+        document.querySelector('input[name="MapaInteractivo"]').value = mapa || '';
+        document.querySelector('form[asp-page-handler="CrearLugar"]').setAttribute('asp-page-handler', 'ActualizarLugar');
+        document.querySelector('form[asp-page-handler="ActualizarLugar"]').innerHTML += `<input type="hidden" name="IdLugar" value="${id}" />`;
+    }
+
+    function editarBloque(id, idLugar, nombre, precio, habilitado) {
+        document.querySelector('select[name="IdLugarBloque"]').value = idLugar;
+        document.querySelector('input[name="NombreBloque"]').value = nombre;
+        document.querySelector('input[name="PrecioBloque"]').value = precio;
+        document.querySelector('select[name="HabilitadoBloque"]').value = habilitado ? 1 : 0;
+        document.querySelector('form[asp-page-handler="CrearBloque"]').setAttribute('asp-page-handler', 'ActualizarBloque');
+        document.querySelector('form[asp-page-handler="ActualizarBloque"]').innerHTML += `<input type="hidden" name="IdBloque" value="${id}" />`;
+    }
+
+    function editarAsiento(id, idBloque, numero, esVip, habilitado) {
+        document.querySelector('select[name="IdBloqueAsiento"]').value = idBloque;
+        document.querySelector('input[name="NumeroAsiento"]').value = numero;
+        document.querySelector('select[name="EsVipAsiento"]').value = esVip ? 1 : 0;
+        document.querySelector('select[name="HabilitadoAsiento"]').value = habilitado ? 1 : 0;
+        document.querySelector('form[asp-page-handler="CrearAsiento"]').setAttribute('asp-page-handler', 'ActualizarAsiento');
+        document.querySelector('form[asp-page-handler="ActualizarAsiento"]').innerHTML += `<input type="hidden" name="IdAsiento" value="${id}" />`;
+    }
+
+    function editarZonaComun(id, idLugar, nombre, capacidad) {
+        document.querySelector('select[name="IdLugarZonaComun"]').value = idLugar;
+        document.querySelector('input[name="NombreZonaComun"]').value = nombre;
+        document.querySelector('input[name="CapacidadZonaComun"]').value = capacidad;
+        document.querySelector('form[asp-page-handler="CrearZonaComun"]').setAttribute('asp-page-handler', 'ActualizarZonaComun');
+        document.querySelector('form[asp-page-handler="ActualizarZonaComun"]').innerHTML += `<input type="hidden" name="IdZonaComun" value="${id}" />`;
+    }
+
+    function editarZonaVip(id, idLugar, nombre, capacidad, precio) {
+        document.querySelector('select[name="IdLugarZonaVip"]').value = idLugar;
+        document.querySelector('input[name="NombreZonaVip"]').value = nombre;
+        document.querySelector('input[name="CapacidadZonaVip"]').value = capacidad;
+        document.querySelector('input[name="PrecioZonaVip"]').value = precio;
+        document.querySelector('form[asp-page-handler="CrearZonaPreferencial"]').setAttribute('asp-page-handler', 'ActualizarZonaVip');
+        document.querySelector('form[asp-page-handler="ActualizarZonaVip"]').innerHTML += `<input type="hidden" name="IdZonaVip" value="${id}" />`;
+    }
+</script>

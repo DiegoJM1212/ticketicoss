@@ -1,0 +1,317 @@
+﻿@page
+@model ticketicos.Pages.Cliente.BilleteraModel
+@{
+    ViewData["Title"] = "Billetera Virtual";
+}
+
+<style>
+    /* Estilos básicos */
+    body {
+        background-color: #000;
+        color: #fff;
+        font-family: Arial, sans-serif;
+    }
+
+    /* Encabezado de la billetera */
+    .billetera-header {
+        background-color: #C1FF00;
+        color: #000;
+        padding: 8px 15px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+    }
+
+    /* Descripción de la billetera */
+    .billetera-descripcion {
+        margin-bottom: 15px;
+        font-size: 14px;
+    }
+
+    /* Botones de acción */
+    .btn-accion {
+        background-color: #C1FF00;
+        color: #000;
+        border: none;
+        padding: 5px 10px;
+        margin-right: 5px;
+        margin-bottom: 10px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    /* Tarjetas */
+    .tarjeta-container {
+        display: inline-block;
+        width: 220px;
+        margin-right: 15px;
+        margin-bottom: 15px;
+        vertical-align: top;
+    }
+
+    .tarjeta {
+        background-color: #333;
+        border-radius: 10px;
+        padding: 15px;
+        position: relative;
+    }
+
+    .tarjeta-chip {
+        width: 30px;
+        height: 20px;
+        background-color: #ccc;
+        margin-bottom: 10px;
+        border-radius: 3px;
+    }
+
+    .tarjeta-tipo {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-weight: bold;
+    }
+
+    .tarjeta-numero {
+        font-size: 16px;
+        letter-spacing: 1px;
+        margin-bottom: 15px;
+    }
+
+    .tarjeta-vencimiento {
+        font-size: 12px;
+        margin-bottom: 5px;
+    }
+
+    .tarjeta-vencimiento-valor {
+        font-weight: bold;
+    }
+
+    .tarjeta-saldo {
+        margin-top: 10px;
+        font-weight: bold;
+    }
+
+    .btn-eliminar {
+        background-color: #555;
+        color: #fff;
+        border: none;
+        padding: 3px 8px;
+        margin-top: 10px;
+        cursor: pointer;
+        font-size: 12px;
+    }
+
+    /* Enlaces de navegación */
+    .enlaces-nav {
+        margin-top: 20px;
+    }
+
+    .enlace-nav {
+        color: #C1FF00;
+        text-decoration: none;
+        margin-right: 15px;
+    }
+
+    /* Formularios */
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 5px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+    }
+
+    .form-select {
+        width: 100%;
+        padding: 5px;
+    }
+
+    .form-text {
+        font-size: 12px;
+        color: #aaa;
+        margin-top: 3px;
+    }
+
+    .btn-form {
+        background-color: #C1FF00;
+        color: #000;
+        border: none;
+        padding: 5px 15px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-right: 10px;
+    }
+
+    .btn-cancelar {
+        background-color: #555;
+        color: #fff;
+    }
+</style>
+
+<!-- Encabezado de la billetera -->
+<div class="billetera-header">
+    Billetera Virtual
+</div>
+
+<!-- Descripción -->
+<div class="billetera-descripcion">
+    Billetera Virtual: Agrega tarjetas simuladas para realizar compras en el sistema. Las tarjetas American Express te dan acceso a preventas exclusivas.
+</div>
+
+<!-- Botones de acción -->
+<div>
+    <button class="btn-accion" onclick="mostrarFormularioRecarga()">Recargar Saldo</button>
+    <button class="btn-accion" onclick="mostrarFormularioTarjeta()">Agregar Tarjeta</button>
+</div>
+
+<!-- Tarjetas del usuario -->
+@if (Model.TarjetasUsuario.Any())
+{
+    foreach (var tarjeta in Model.TarjetasUsuario)
+    {
+        <div class="tarjeta-container">
+            <div class="tarjeta">
+                <div class="tarjeta-tipo">AMEX</div>
+                <div class="tarjeta-chip"></div>
+                <div class="tarjeta-numero">**** **** **** @tarjeta.NumeroTarjeta.Substring(Math.Max(0, tarjeta.NumeroTarjeta.Length - 4))</div>
+                <div class="tarjeta-vencimiento">
+                    Vencimiento
+                    <div class="tarjeta-vencimiento-valor">@tarjeta.Vencimiento</div>
+                </div>
+                <div class="tarjeta-saldo">Saldo: ₡@tarjeta.Saldo.ToString("N0")</div>
+                <form method="post" asp-page-handler="EliminarTarjeta">
+                    <input type="hidden" name="idTarjeta" value="@tarjeta.IdTarjeta" />
+                    <button type="submit" class="btn-eliminar">Eliminar</button>
+                </form>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <p>No tienes tarjetas en tu billetera virtual.</p>
+}
+
+<!-- Enlaces de navegación -->
+<div class="enlaces-nav">
+    <a href="/Cliente/Preventa" class="enlace-nav">Ver Preventas</a>
+    <a href="/Cliente/CodigosPromo" class="enlace-nav">Códigos Promocionales</a>
+    <a href="/Cliente/Index" class="enlace-nav">Ir al Inicio</a>
+</div>
+
+<!-- Formulario para agregar tarjeta (inicialmente oculto) -->
+<div id="formAgregarTarjeta" style="display: none; margin-top: 20px; background-color: #333; padding: 15px; border-radius: 5px;">
+    <h4>Agregar Tarjeta</h4>
+    <form method="post" asp-page-handler="AgregarTarjeta">
+        <div class="form-group">
+            <label class="form-label">Tipo de Tarjeta</label>
+            <select name="NuevaTarjeta.TipoTarjeta" class="form-select" required>
+                <option value="American Express">American Express</option>
+                <option value="Visa">Visa</option>
+                <option value="MasterCard">MasterCard</option>
+            </select>
+            <div class="form-text">Solo las tarjetas American Express tienen acceso a preventas exclusivas</div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Número de Tarjeta</label>
+            <input type="text" name="NuevaTarjeta.NumeroTarjeta" class="form-control" placeholder="XXXX XXXX XXXX XXXX" required maxlength="19" id="NumeroTarjeta">
+        </div>
+        <div style="display: flex; gap: 10px;">
+            <div class="form-group" style="flex: 1;">
+                <label class="form-label">Fecha de Vencimiento</label>
+                <input type="text" name="NuevaTarjeta.Vencimiento" class="form-control" placeholder="MM/YYYY" required id="Vencimiento">
+            </div>
+            <div class="form-group" style="flex: 1;">
+                <label class="form-label">CVV</label>
+                <input type="text" name="NuevaTarjeta.CVV" class="form-control" placeholder="XXX" required maxlength="4">
+            </div>
+        </div>
+        <div>
+            <button type="button" class="btn-form btn-cancelar" onclick="ocultarFormularioTarjeta()">Cancelar</button>
+            <button type="submit" class="btn-form">Agregar Tarjeta</button>
+        </div>
+    </form>
+</div>
+
+<!-- Formulario para recargar saldo (inicialmente oculto) -->
+<div id="formRecargarSaldo" style="display: none; margin-top: 20px; background-color: #333; padding: 15px; border-radius: 5px;">
+    <h4>Recargar Saldo</h4>
+    <form method="post" asp-page-handler="RecargarSaldo">
+        <div class="form-group">
+            <label class="form-label">Seleccionar Tarjeta</label>
+            <select name="RecargaSaldo.IdTarjeta" class="form-select" required>
+                @foreach (var tarjeta in Model.TarjetasUsuario)
+                {
+                    <option value="@tarjeta.IdTarjeta">@tarjeta.TipoTarjeta - **** @tarjeta.NumeroTarjeta.Substring(Math.Max(0, tarjeta.NumeroTarjeta.Length - 4))</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Monto a Recargar</label>
+            <input type="number" name="RecargaSaldo.Monto" class="form-control" min="1000" step="1000" value="10000" required>
+        </div>
+        <div>
+            <button type="button" class="btn-form btn-cancelar" onclick="ocultarFormularioRecarga()">Cancelar</button>
+            <button type="submit" class="btn-form">Recargar Saldo</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        // Funciones para mostrar/ocultar formularios
+        function mostrarFormularioTarjeta() {
+            document.getElementById('formAgregarTarjeta').style.display = 'block';
+            document.getElementById('formRecargarSaldo').style.display = 'none';
+        }
+
+        function ocultarFormularioTarjeta() {
+            document.getElementById('formAgregarTarjeta').style.display = 'none';
+        }
+
+        function mostrarFormularioRecarga() {
+            document.getElementById('formRecargarSaldo').style.display = 'block';
+            document.getElementById('formAgregarTarjeta').style.display = 'none';
+        }
+
+        function ocultarFormularioRecarga() {
+            document.getElementById('formRecargarSaldo').style.display = 'none';
+        }
+
+        // Formateo de número de tarjeta
+        document.addEventListener('DOMContentLoaded', function() {
+            const numeroTarjeta = document.getElementById('NumeroTarjeta');
+            if (numeroTarjeta) {
+                numeroTarjeta.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length > 0) {
+                        value = value.match(new RegExp('.{1,4}', 'g')).join(' ');
+                    }
+                    e.target.value = value;
+                });
+            }
+
+            // Formateo de fecha de vencimiento
+            const vencimiento = document.getElementById('Vencimiento');
+            if (vencimiento) {
+                vencimiento.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length > 2) {
+                        value = value.substring(0, 2) + '/' + value.substring(2, 6);
+                    }
+                    e.target.value = value;
+                });
+            }
+        });
+    </script>
+}
+

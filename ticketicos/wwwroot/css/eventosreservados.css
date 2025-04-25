@@ -1,0 +1,142 @@
+﻿/* Ajustes básicos */
+body {
+    background-color: #000;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Contenedor principal */
+.reservados-container {
+    max-width: 1200px;
+    margin: 120px auto 0 auto; /* Ajusta para evitar superposición con navbar fija */
+    padding: 20px;
+}
+
+    /* Título principal */
+    .reservados-container h1 {
+        text-align: center;
+        font-size: 2rem;
+        color: #9efc00; /* Color verde llamativo */
+        margin-bottom: 20px;
+    }
+
+/* Cabecera de columnas (Evento / Estado) */
+.columns-header {
+    display: flex;
+    background-color: #333;
+    padding: 10px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+    .columns-header div {
+        flex: 1;
+        text-align: center;
+    }
+
+/* Lista de eventos */
+.event-list {
+    background-color: #111;
+    padding: 20px;
+}
+
+/* Cada fila de evento */
+.event-row {
+    display: flex;
+    border-bottom: 1px solid #444;
+    padding: 10px 0;
+}
+
+    .event-row:last-child {
+        border-bottom: none;
+    }
+
+/* Columna de imagen */
+.event-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    .event-image img {
+        max-width: 180px;
+        border-radius: 4px;
+    }
+
+/* Columna de detalles */
+.event-details {
+    flex: 2;
+    padding: 0 20px;
+}
+
+    .event-details h3 {
+        margin: 0 0 5px;
+        color: #bff747;
+    }
+
+    .event-details p {
+        margin: 5px 0;
+        color: #ccc;
+    }
+
+/* Columna de acciones (Cambiar, Cancelar) */
+.event-actions {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.btn-action {
+    background-color: #9efc00;
+    border: none;
+    color: #000;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+    .btn-action:hover {
+        background-color: #c4ff5d;
+    }
+
+.btn-cancel {
+    background-color: red;
+    border: none;
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+    .btn-cancel:hover {
+        background-color: #ff7070;
+    }
+
+/* Botón de "Regresar" */
+.buttons-container {
+    text-align: right;
+    margin-top: 20px;
+}
+
+.btn-regresar {
+    background-color: #9efc00;
+    color: #000;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+    .btn-regresar:hover {
+        background-color: #c4ff5d;
+    }

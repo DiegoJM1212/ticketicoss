@@ -1,0 +1,490 @@
+﻿@page
+@model ticketicos.Pages.Cliente.AtencionClienteModel
+@{
+
+    ViewData["Title"] = "Tickicos - Atención al Cliente";
+}
+
+<style>
+    :root {
+        --color-neon: rgb(193, 255, 0);
+        --color-fondo: black;
+        --color-panel: rgb(80, 80, 80);
+        --color-tarjeta: rgb(70, 70, 70);
+    }
+
+    body {
+        background-color: var(--color-fondo);
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .logo-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .logo {
+        width: 70px;
+        height: 70px;
+        background-color: var(--color-neon);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .main-panel {
+        width: 1100px;
+        height: 650px;
+        margin: 30px auto;
+        background-color: var(--color-panel);
+        border-radius: 20px;
+        position: relative;
+    }
+
+    .title {
+        width: 100%;
+        height: 40px;
+        background-color: var(--color-neon);
+        color: black;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        line-height: 40px;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+    }
+
+    .content-panel {
+        display: flex;
+        height: 610px;
+    }
+
+    .left-panel {
+        width: 70%;
+        padding: 20px;
+    }
+
+    .right-panel {
+        width: 30%;
+        padding: 20px;
+        border-left: 1px solid #444;
+    }
+
+    .search-box {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .search-input {
+        width: 80%;
+        padding: 8px;
+        border: none;
+        background-color: #444;
+        color: white;
+    }
+
+    .search-button {
+        width: 18%;
+        padding: 8px;
+        border: none;
+        background-color: var(--color-neon);
+        color: black;
+        cursor: pointer;
+    }
+
+    .faq-section {
+        margin-bottom: 30px;
+    }
+
+    .faq-title {
+        color: var(--color-neon);
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+
+    .faq-item {
+        background-color: var(--color-tarjeta);
+        padding: 15px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+    }
+
+    .faq-question {
+        color: white;
+        font-weight: bold;
+        margin-bottom: 10px;
+        cursor: pointer;
+    }
+
+    .faq-answer {
+        color: #ddd;
+        display: none;
+        padding: 10px;
+        background-color: #555;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+
+    .chat-section {
+        margin-top: 30px;
+    }
+
+    .chat-title {
+        color: var(--color-neon);
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+
+    .chat-box {
+        height: 200px;
+        background-color: var(--color-tarjeta);
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        overflow-y: auto;
+    }
+
+    .chat-message {
+        margin-bottom: 10px;
+        padding: 8px;
+        border-radius: 5px;
+        max-width: 80%;
+    }
+
+    .chat-message.user {
+        background-color: #BFF747;
+        color: black;
+        margin-left: auto;
+    }
+
+    .chat-message.admin {
+        background-color: #555;
+        color: white;
+        margin-right: auto;
+    }
+
+    .chat-input {
+        width: 80%;
+        padding: 8px;
+        border: none;
+        background-color: #444;
+        color: white;
+    }
+
+    .chat-button {
+        width: 18%;
+        padding: 8px;
+        border: none;
+        background-color: var(--color-neon);
+        color: black;
+        cursor: pointer;
+    }
+
+    .tickets-title {
+        color: var(--color-neon);
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+
+    .tickets-list {
+        background-color: var(--color-tarjeta);
+        padding: 15px;
+        border-radius: 5px;
+        height: 500px;
+        overflow-y: auto;
+    }
+
+    .ticket-item {
+        padding: 10px;
+        border-bottom: 1px solid #555;
+        cursor: pointer;
+    }
+
+    .ticket-item:hover {
+        background-color: #555;
+    }
+
+    .ticket-message {
+        color: white;
+        font-size: 14px;
+        margin-bottom: 5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .ticket-date {
+        color: #aaa;
+        font-size: 12px;
+    }
+
+    .ticket-status {
+        display: inline-block;
+        padding: 3px 8px;
+        border-radius: 10px;
+        font-size: 12px;
+        margin-left: 10px;
+    }
+
+    .status-abierto {
+        background-color: green;
+        color: white;
+    }
+
+    .status-en-proceso {
+        background-color: orange;
+        color: black;
+    }
+
+    .status-cerrado {
+        background-color: red;
+        color: white;
+    }
+
+    .home-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: var(--color-neon);
+        color: black;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        font-weight: bold;
+        z-index: 100;
+    }
+
+    .error-message {
+        color: red;
+        padding: 10px;
+        margin: 10px 0;
+        background-color: #333;
+        border-radius: 5px;
+    }
+</style>
+
+@if (!string.IsNullOrEmpty(Model.MensajeError))
+{
+    <div class="error-message">@Model.MensajeError</div>
+}
+
+<div class="logo-container">
+    <div class="logo">
+        <img src="~/images/logo.png" alt="Tickicos Logo" />
+    </div>
+</div>
+
+<div class="main-panel">
+    <a href="~/Index" class="home-button">Inicio</a>
+    <div class="title">Atención al Cliente</div>
+    <div class="content-panel">
+        <div class="left-panel">
+            <form method="post" asp-page-handler="Buscar">
+                <div class="search-box">
+                    <input type="text" asp-for="TerminoBusqueda" class="search-input" placeholder="Buscar preguntas frecuentes...">
+                    <button type="submit" class="search-button">Buscar</button>
+                </div>
+            </form>
+
+            <div class="faq-section">
+                <div class="faq-title">Preguntas Frecuentes</div>
+                @if (Model.PreguntasFrecuentes != null && Model.PreguntasFrecuentes.Any())
+                {
+                    foreach (var pregunta in Model.PreguntasFrecuentes)
+                    {
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleAnswer(@pregunta.Id)">@pregunta.Pregunta</div>
+                            <div class="faq-answer" id="answer-@pregunta.Id">@pregunta.Respuesta</div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p style="color: white;">No hay preguntas frecuentes disponibles.</p>
+                }
+            </div>
+
+            <div class="chat-section">
+                <div class="chat-title">Chat en Vivo</div>
+                <partial name="_ChatBox" model="Model" />
+                <div>
+                    <input type="text" id="chatInput" class="chat-input" placeholder="Escribe tu mensaje...">
+                    <button id="sendButton" class="chat-button">Enviar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="tickets-title">Mis Tickets</div>
+            <div class="tickets-list">
+                @if (Model.TicketsUsuario != null && Model.TicketsUsuario.Any())
+                {
+                    foreach (var ticket in Model.TicketsUsuario)
+                    {
+                        <div class="ticket-item" onclick="selectTicket(@ticket.Id)">
+                            <div class="ticket-message">@ticket.Mensaje</div>
+                            <div class="ticket-date">
+                                @ticket.Fecha.ToString("dd/MM/yyyy HH:mm")
+                                <span class="ticket-status status-@ticket.Estado.ToLower()">@ticket.Estado</span>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p style="color: white;">No tienes tickets de soporte.</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.0/signalr.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const chatBox = document.getElementById('chatBox');
+            const chatInput = document.getElementById('chatInput');
+            const sendButton = document.getElementById('sendButton');
+
+            if (!chatBox || !chatInput || !sendButton) {
+                console.error('Elementos del DOM no encontrados: chatBox, chatInput o sendButton');
+                return;
+            }
+
+            // Conectar a SignalR
+            const connection = new signalR.HubConnectionBuilder()
+                .withUrl("/chatHub")
+                .build();
+
+            connection.on("ReceiveMessage", function (ticketId, message, sender, isAdmin) {
+                appendMessage(sender, message, isAdmin);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            });
+
+            connection.start().then(function () {
+                console.log("Conexión a SignalR establecida");
+                // Unirse al ticket seleccionado
+                const ticketId = @Model.IdTicketSeleccionado;
+                if (ticketId) {
+                    connection.invoke("JoinTicket", ticketId).catch(function (err) {
+                        console.error("Error al unirse al ticket:", err.toString());
+                    });
+                }
+            }).catch(function (err) {
+                console.error("Error al conectar con SignalR:", err.toString());
+            });
+
+            sendButton.addEventListener('click', sendMessage);
+            chatInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+
+            function sendMessage() {
+                const message = chatInput.value.trim();
+                if (!message) {
+                    appendMessage('Sistema', 'El mensaje no puede estar vacío.');
+                    return;
+                }
+
+                const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
+                if (!token) {
+                    appendMessage('Sistema', 'Error: Token antifalsificación no encontrado.');
+                    console.error('Token antifalsificación no encontrado');
+                    return;
+                }
+
+                fetch('/Cliente/AtencionCliente?handler=EnviarMensaje', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'RequestVerificationToken': token
+                    },
+                    body: JSON.stringify({ mensaje: message })
+                }).then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Error del servidor: ${response.status}`);
+                    }
+                    return response.json();
+                }).then(data => {
+                    if (data.success) {
+                        selectTicket(data.ticketId);
+                    } else {
+                        appendMessage('Sistema', `Error: ${data.message}`);
+                    }
+                }).catch(error => {
+                    appendMessage('Sistema', `Error al conectar con el servidor: ${error.message}`);
+                    console.error('Error:', error);
+                });
+            }
+
+            function selectTicket(ticketId) {
+                const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
+                if (!token) {
+                    appendMessage('Sistema', 'Error: Token antifalsificación no encontrado.');
+                    console.error('Token antifalsificación no encontrado');
+                    return;
+                }
+
+                // Salir del ticket actual
+                const currentTicketId = @Model.IdTicketSeleccionado;
+                if (currentTicketId) {
+                    connection.invoke("LeaveTicket", currentTicketId).catch(function (err) {
+                        console.error("Error al salir del ticket:", err.toString());
+                    });
+                }
+
+                // Unirse al nuevo ticket
+                connection.invoke("JoinTicket", ticketId).catch(function (err) {
+                    console.error("Error al unirse al ticket:", err.toString());
+                });
+
+                fetch(`/Cliente/AtencionCliente?handler=SeleccionarTicket&ticketId=${ticketId}`, {
+                    method: 'GET',
+                    headers: {
+                        'RequestVerificationToken': token
+                    }
+                }).then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Error del servidor: ${response.status}`);
+                    }
+                    return response.text();
+                }).then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const newChatBox = doc.querySelector('#chatBox');
+                    if (newChatBox) {
+                        chatBox.innerHTML = newChatBox.innerHTML;
+                        chatBox.scrollTop = chatBox.scrollHeight;
+                    } else {
+                        appendMessage('Sistema', 'Error al cargar el chat.');
+                    }
+                }).catch(error => {
+                    appendMessage('Sistema', `Error al cargar mensajes: ${error.message}`);
+                    console.error('Error en selectTicket:', error);
+                });
+            }
+
+            function appendMessage(sender, text, isAdmin) {
+                const messageElement = document.createElement('div');
+                messageElement.className = `chat-message ${isAdmin ? 'admin' : 'user'}`;
+                messageElement.innerHTML = `<strong>${sender}:</strong> ${text}<br /><small>${new Date().toLocaleString('es-ES')}</small>`;
+                chatBox.appendChild(messageElement);
+            }
+
+            function toggleAnswer(id) {
+                const answer = document.getElementById(`answer-${id}`);
+                if (answer) {
+                    answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+                }
+            }
+        });
+    </script>
+}
+
+@Html.AntiForgeryToken()

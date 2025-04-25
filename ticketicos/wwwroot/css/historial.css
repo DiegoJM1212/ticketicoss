@@ -1,0 +1,110 @@
+﻿/* Ajustes básicos */
+body {
+    background-color: #000;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.historial-container {
+    max-width: 1200px;
+    margin: 120px auto 0 auto; /* Separa el contenido del header fijo */
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
+
+/* Encabezados de columnas (Evento / Detalles) */
+.columns-header {
+    display: flex;
+    background-color: #333;
+    padding: 10px;
+    font-weight: bold;
+}
+
+    .columns-header div {
+        flex: 1;
+        text-align: center;
+    }
+
+/* Contenedor general de los eventos */
+.event-list {
+    background-color: #111;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+/* Cada fila (evento) */
+.event-row {
+    display: flex;
+    border-bottom: 1px solid #444;
+    padding: 10px 0;
+}
+
+    .event-row:last-child {
+        border-bottom: none; /* Quitar línea en el último */
+    }
+
+/* Columna de la imagen (Evento) */
+.event-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    .event-image img {
+        max-width: 200px;
+        border-radius: 4px;
+    }
+
+/* Columna de detalles (Descripción) */
+.event-details {
+    flex: 2;
+    padding: 0 20px;
+}
+
+    .event-details h3 {
+        margin: 0 0 5px;
+        color: #bff747; /* Un color amarillo/verde para resaltar */
+    }
+
+    .event-details p {
+        margin: 5px 0;
+        color: #ccc;
+    }
+
+/* Botones en la parte inferior */
+.buttons-container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.btn {
+    background-color: #9efc00;
+    color: #000;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+    .btn:hover {
+        background-color: #c4ff5d;
+    }
+
+/* Agrega esta regla al historial.css */
+.event-list p {
+    padding: 20px;
+    font-size: 1.1rem;
+    color: #ccc;
+}

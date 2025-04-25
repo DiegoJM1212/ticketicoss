@@ -1,0 +1,107 @@
+﻿@page
+@model ticketicos.Pages.Tiquetes.InformacionPersonalModel
+@{
+    ViewData["Title"] = "Información Personal";
+}
+
+<link rel="stylesheet" href="~/css/info-personal.css" />
+
+<div class="info-personal-container">
+    <div class="header-info">
+        <h1>Información Personal</h1>
+        <p>Gestiona tus datos personales</p>
+    </div>
+
+    @if (!Model.UsuarioAutenticado)
+    {
+        <div class="alert alert-warning">
+            <p>Debe iniciar sesión para ver su información personal.</p>
+            <a asp-page="/Cliente/Login" class="btn-login">Iniciar Sesión</a>
+        </div>
+    }
+    else
+    {
+        <div class="user-info-card">
+            <div class="user-avatar">
+                <i class="fas fa-user-circle"></i>
+            </div>
+
+            <form method="post" class="user-info-form">
+                <div class="form-group">
+                    <label>Nombre Completo</label>
+                    <input type="text" asp-for="Usuario.NombreCompleto" class="form-control" />
+                    <span asp-validation-for="Usuario.NombreCompleto" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>Correo Electrónico</label>
+                    <input type="email" asp-for="Usuario.Email" class="form-control" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label>Teléfono</label>
+                    <input type="tel" asp-for="Usuario.Telefono" class="form-control" />
+                    <span asp-validation-for="Usuario.Telefono" class="text-danger"></span>
+                </div>
+
+     
+    
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-guardar">
+                        <i class="fas fa-save"></i> Guardar Cambios
+                    </button>
+                </div>
+            </form>
+
+            <div class="change-password-section">
+                <h3>Cambiar Contraseña</h3>
+                <form method="post" asp-page-handler="CambiarPassword">
+                    <div class="form-group">
+                        <label>Contraseña Actual</label>
+                        <input type="password" asp-for="CambioPassword.PasswordActual" class="form-control" />
+                        <span asp-validation-for="CambioPassword.PasswordActual" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Nueva Contraseña</label>
+                        <input type="password" asp-for="CambioPassword.NuevaPassword" class="form-control" />
+                        <span asp-validation-for="CambioPassword.NuevaPassword" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Confirmar Nueva Contraseña</label>
+                        <input type="password" asp-for="CambioPassword.ConfirmarPassword" class="form-control" />
+                        <span asp-validation-for="CambioPassword.ConfirmarPassword" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-cambiar-password">
+                            <i class="fas fa-key"></i> Cambiar Contraseña
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        @if (Model.MensajeExito != null)
+        {
+            <div class="alert alert-success">
+                @Model.MensajeExito
+            </div>
+        }
+
+        @if (Model.MensajeError != null)
+        {
+            <div class="alert alert-danger">
+                @Model.MensajeError
+            </div>
+        }
+    }
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+}

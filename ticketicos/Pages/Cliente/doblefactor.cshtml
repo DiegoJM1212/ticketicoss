@@ -1,0 +1,243 @@
+﻿@page
+@model ticketicos.Pages.Cliente.TwoFactorAuthModel
+@{
+    ViewData["Title"] = "Verificación en Dos Pasos";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Tickicos</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <!-- Font Awesome para íconos (opcional, si quieres agregar íconos) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .bg-neon {
+            background-color: #C1FF00;
+            color: #000000;
+        }
+
+        .text-neon {
+            color: #BFF747;
+        }
+
+        .card {
+            background-color: #2a2a2a;
+            border: 1px solid #BFF747;
+            border-radius: 20px;
+            box-shadow: 0 0 90px rgba(193, 255, 0, 0.3);
+        }
+
+        .code-box {
+            width: 50px;
+            height: 50px;
+            margin: 5px;
+            font-size: 24px;
+            text-align: center;
+            background-color: #333;
+            color: white;
+            border: 1px solid #BFF747;
+            border-radius: 5px;
+            transition: all 0.2s;
+        }
+
+            .code-box:focus {
+                border-color: #C1FF00;
+                box-shadow: 0 0 10px rgba(193, 255, 0, 0.5);
+                outline: none;
+            }
+
+        .btn-neon {
+            background-color: #C1FF00;
+            color: #000000;
+            border: none;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+            .btn-neon:hover {
+                background-color: #BFF747;
+                box-shadow: 0 0 15px rgba(193, 255, 0, 0.7);
+            }
+
+        .btn-resend {
+            background-color: #6c757d;
+            color: #ffffff;
+            border: none;
+            font-weight: bold;
+        }
+
+            .btn-resend:hover {
+                background-color: #5a6268;
+            }
+
+        .alert {
+            border-radius: 10px;
+        }
+
+        .container {
+            max-width: 2000px;
+        }
+
+        .logo-container {
+            margin-bottom: 2rem;
+        }
+
+        .logo-box {
+            width: 100px;
+            height: 100px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-container text-center">
+        <div class="logo-box bg-neon">
+            <span>TICKICOS</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+                <div class="card p-4">
+                    <div class="card-body">
+                        <h2 class="text-center text-neon mb-4">Verificación en Dos Pasos</h2>
+                        <p class="text-center text-light mb-4">Ingresa el código de verificación enviado a tu correo electrónico</p>
+
+                        @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+                        {
+                            <div class="alert alert-danger">@Model.ErrorMessage</div>
+                        }
+
+                        @if (Model.SuccessMessage != null)
+                        {
+                            <div class="alert alert-success">@Model.SuccessMessage</div>
+                        }
+
+                        <form method="post">
+                            <div class="mb-4">
+                                <label for="FullVerificationCode" class="form-label text-light">Código de verificación (pegar completo)</label>
+                                <input type="text" class="form-control bg-dark text-light" id="FullVerificationCode" name="FullVerificationCode" maxlength="5" placeholder="Pega tu código aquí">
+                            </div>
+
+                            <p class="text-center text-light mb-3">O ingresa el código dígito por dígito:</p>
+
+                            <div class="mb-4 d-flex justify-content-center flex-wrap">
+                                @for (int i = 0; i < 5; i++)
+                                {
+                                    <input type="text" maxlength="1" class="form-control code-box" asp-for="VerificationCode[i]" />
+                                }
+                            </div>
+
+                            <p class="text-center text-light mb-3">¿No recibiste el código o ha expirado?</p>
+                            <button type="button" class="btn btn-resend w-100 mb-3" id="btnResend">Reenviar código</button>
+
+                            <button type="submit" class="btn btn-neon w-100">Verificar</button>
+                        </form>
+
+                        <div class="mt-3 text-center">
+                            <a asp-page="/Cliente/Login" class="text-neon text-decoration-none">Volver al inicio de sesión</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS y jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            // Manejar el enfoque automático entre cajas de código
+            $('.code-box').on('input', function () {
+                if ($(this).val().length === 1) {
+                    $(this).next('.code-box').focus();
+                }
+            });
+
+            // Manejar el retroceso para ir a la caja anterior
+            $('.code-box').on('keydown', function (e) {
+                if (e.keyCode === 8 && $(this).val().length === 0) {
+                    $(this).prev('.code-box').focus();
+                }
+            });
+
+            // Sincronizar el campo completo con los campos individuales
+            $('#FullVerificationCode').on('input', function () {
+                var code = $(this).val().replace(/[^0-9]/g, '').substring(0, 5);
+                $(this).val(code);
+                for (var i = 0; i < 5; i++) {
+                    if (i < code.length) {
+                        $('.code-box').eq(i).val(code[i]);
+                    } else {
+                        $('.code-box').eq(i).val('');
+                    }
+                }
+            });
+
+            // Sincronizar los campos individuales con el campo completo
+            $('.code-box').on('input', function () {
+                var code = '';
+                $('.code-box').each(function () {
+                    code += $(this).val();
+                });
+                $('#FullVerificationCode').val(code);
+            });
+
+            // Manejar el reenvío del código
+            $('#btnResend').click(function () {
+                $(this).prop('disabled', true);
+                $(this).text('Enviando...');
+
+                $.ajax({
+                    url: '?handler=ResendCode',
+                    type: 'POST',
+                    headers: {
+                        "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
+                    },
+                    success: function (result) {
+                        if (result.success) {
+                            alert(result.message);
+                        } else {
+                            alert(result.message || 'Error al reenviar el código');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert('Error al procesar la solicitud: ' + error);
+                    },
+                    complete: function () {
+                        $('#btnResend').prop('disabled', false);
+                        $('#btnResend').text('Reenviar código');
+                    }
+                });
+            });
+
+            // Enfocar el campo para pegar el código completo al cargar la página
+            $('#FullVerificationCode').focus();
+        });
+    </script>
+</body>
+</html>
+
+@Html.AntiForgeryToken()

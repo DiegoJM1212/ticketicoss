@@ -1,0 +1,508 @@
+﻿@page
+@model ticketicos.Pages.Cliente.PagoEntradasModel
+@{
+    ViewData["Title"] = "Tickicos - Compra tus Boletos";
+}
+
+<style>
+    :root {
+        --color-neon: rgb(193, 255, 0);
+        --color-fondo: black;
+        --color-panel: rgb(80, 80, 80);
+        --color-tarjeta: rgb(70, 70, 70);
+    }
+
+    body {
+        background-color: var(--color-fondo);
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .logo-container {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+    }
+
+    .logo {
+        width: 70px;
+        height: 70px;
+        background-color: var(--color-neon);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .logo-text {
+        font-weight: bold;
+        color: black;
+    }
+
+    .main-panel {
+        width: 800px;
+        margin: 30px auto;
+        background-color: var(--color-panel);
+        border-radius: 20px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .title {
+        width: 100%;
+        height: 40px;
+        background-color: var(--color-neon);
+        color: black;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        line-height: 40px;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+    }
+
+    .content {
+        padding: 20px;
+    }
+
+    .card-logos {
+        background-color: #333;
+        display: inline-block;
+        padding: 8px 15px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+
+        .card-logos span {
+            color: white;
+            font-size: 14px;
+        }
+
+    .summary-box {
+        background-color: #333;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+        .summary-box h5 {
+            color: white;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+    .summary-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+    }
+
+    .summary-label {
+        color: #ccc;
+        font-size: 14px;
+    }
+
+    .summary-value {
+        color: white;
+        font-size: 14px;
+    }
+
+        .summary-value.highlight {
+            color: var(--color-neon);
+            font-weight: bold;
+        }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-label {
+        display: block;
+        color: white;
+        margin-bottom: 5px;
+        font-size: 14px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        background-color: #3c3c3c;
+        border: 1px solid #555;
+        border-radius: 5px;
+        color: white;
+    }
+
+    .validation-message {
+        color: #ff6b6b;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+
+    .saved-cards {
+        margin-bottom: 20px;
+    }
+
+    .card-title {
+        color: white;
+        margin-bottom: 15px;
+        font-size: 16px;
+    }
+
+    .cards-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-bottom: 15px;
+    }
+
+    .card-item {
+        background: linear-gradient(135deg, #333 0%, #111 100%);
+        border-radius: 10px;
+        padding: 15px;
+        width: calc(50% - 8px);
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+    }
+
+        .card-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-item.selected {
+            border-color: var(--color-neon);
+        }
+
+        .card-item.visa {
+            background: linear-gradient(135deg, #0c4da2 0%, #16216a 100%);
+        }
+
+        .card-item.mastercard {
+            background: linear-gradient(135deg, #ff5f00 0%, #f79e1b 100%);
+        }
+
+        .card-item.amex {
+            background: linear-gradient(135deg, #016fd0 0%, #0057a0 100%);
+        }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+    .card-chip {
+        width: 30px;
+        height: 20px;
+        background: linear-gradient(135deg, #bbb 0%, #ddd 100%);
+        border-radius: 3px;
+    }
+
+    .card-brand {
+        color: white;
+        font-weight: bold;
+    }
+
+    .card-number {
+        color: white;
+        margin-bottom: 10px;
+    }
+
+    .card-details {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .card-detail-group {
+        color: white;
+    }
+
+    .card-detail-label {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    .card-detail-value {
+        font-size: 14px;
+    }
+
+    .separator {
+        text-align: center;
+        color: white;
+        margin: 20px 0;
+        position: relative;
+    }
+
+        .separator::before,
+        .separator::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 45%;
+            height: 1px;
+            background-color: #555;
+        }
+
+        .separator::before {
+            left: 0;
+        }
+
+        .separator::after {
+            right: 0;
+        }
+
+    .total-price {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .total-label {
+        color: white;
+        margin-right: 15px;
+    }
+
+    .total-value {
+        color: var(--color-neon);
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .btn-confirm {
+        background-color: #00b400;
+        color: white;
+    }
+
+        .btn-confirm:hover {
+            background-color: #009600;
+        }
+
+    .btn-cancel {
+        background-color: #666;
+        color: white;
+    }
+
+        .btn-cancel:hover {
+            background-color: #555;
+        }
+
+    .alert {
+        padding: 10px 15px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+    }
+
+    .alert-success {
+        background-color: rgba(0, 255, 0, 0.2);
+        border: 1px solid #00ff00;
+        color: #00ff00;
+    }
+
+    .alert-danger {
+        background-color: rgba(255, 107, 107, 0.2);
+        border: 1px solid #ff6b6b;
+        color: #ff6b6b;
+    }
+
+    .alert-icon {
+        margin-right: 10px;
+        font-size: 18px;
+    }
+</style>
+
+<div class="logo-container">
+    <div class="logo">
+        <span class="logo-text">TICKICOS</span>
+    </div>
+</div>
+
+<div class="main-panel">
+    <div class="title">Compra de Boletos</div>
+    <div class="content">
+        <div class="card-logos">
+            <span>Visa / Mastercard / American Express</span>
+        </div>
+
+        <div class="summary-box">
+            <h5>Resumen de la Compra</h5>
+            <div class="summary-row">
+                <span class="summary-label">Evento:</span>
+                <span class="summary-value">@Model.ResumenCompra.Evento</span>
+            </div>
+            <div class="summary-row">
+                <span class="summary-label">Tipo de Boleto:</span>
+                <span class="summary-value">@Model.ResumenCompra.TipoBoleto</span>
+            </div>
+            <div class="summary-row">
+                <span class="summary-label">Asiento/Zona:</span>
+                <span class="summary-value">@Model.ResumenCompra.AsientoZona</span>
+            </div>
+            <div class="summary-row">
+                <span class="summary-label">Cantidad:</span>
+                <span class="summary-value">@Model.DatosPago.CantidadBoletos</span>
+            </div>
+        </div>
+
+        @if (Model.MostrarMensajeExito)
+        {
+            <div class="alert alert-success">
+                <span class="alert-icon">✅</span>
+                Compra realizada con éxito
+            </div>
+        }
+
+        @if (!string.IsNullOrEmpty(Model.MensajeError))
+        {
+            <div class="alert alert-danger">
+                <span class="alert-icon">⚠️</span>
+                @Model.MensajeError
+            </div>
+        }
+
+        <form method="post">
+            <input type="hidden" name="EventoId" value="@Model.EventoId" />
+            <input type="hidden" name="BloqueId" value="@Model.BloqueId" />
+            <input type="hidden" name="AsientosSeleccionados" value="@Model.AsientosSeleccionados" />
+            <input type="hidden" name="Subtotal" value="@Model.Subtotal" />
+            <input type="hidden" name="Impuesto" value="@Model.Impuesto" />
+            <input type="hidden" name="Servicio" value="@Model.Servicio" />
+            <input type="hidden" name="Total" value="@Model.Total" />
+            <input type="hidden" name="PromoCode" value="@Model.PromoCode" />
+
+            <div class="form-group">
+                <label class="form-label" for="DatosPago_NombreCompleto">Nombre completo</label>
+                <input class="form-control" type="text" id="DatosPago_NombreCompleto" name="DatosPago.NombreCompleto" value="@Model.DatosPago.NombreCompleto" required />
+                <span class="validation-message" asp-validation-for="DatosPago.NombreCompleto"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="DatosPago_CorreoElectronico">Correo Electrónico</label>
+                <input class="form-control" type="email" id="DatosPago_CorreoElectronico" name="DatosPago.CorreoElectronico" value="@Model.DatosPago.CorreoElectronico" required />
+                <span class="validation-message" asp-validation-for="DatosPago.CorreoElectronico"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="DatosPago_CodigoDescuento">Código de descuento</label>
+                <input class="form-control" type="text" id="DatosPago_CodigoDescuento" name="DatosPago.CodigoDescuento" value="@Model.PromoCode" />
+                <span class="validation-message" asp-validation-for="DatosPago.CodigoDescuento"></span>
+            </div>
+
+            @if (Model.TarjetasGuardadas.Any())
+            {
+                <div class="saved-cards">
+                    <h5 class="card-title">Seleccionar tarjeta guardada</h5>
+                    <div class="cards-container">
+                        @foreach (var tarjeta in Model.TarjetasGuardadas)
+                        {
+                            string cardClass = tarjeta.TipoTarjeta.ToLower().Replace(" ", "");
+                            <div class="card-item @cardClass" data-tarjeta-id="@tarjeta.IdTarjeta" onclick="seleccionarTarjeta(this, @tarjeta.IdTarjeta)">
+                                <div class="card-header">
+                                    <div class="card-chip"></div>
+                                    <div class="card-brand">@tarjeta.TipoTarjeta</div>
+                                </div>
+                                <div class="card-number">**** **** **** @tarjeta.UltimosDigitos</div>
+                                <div class="card-details">
+                                    <div class="card-detail-group">
+                                        <div class="card-detail-label">Vencimiento</div>
+                                        <div class="card-detail-value">@tarjeta.Vencimiento</div>
+                                    </div>
+                                    <div class="card-detail-group">
+                                        <div class="card-detail-label">Saldo</div>
+                                        <div class="card-detail-value">₡@tarjeta.Saldo.ToString("N0")</div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <input type="hidden" id="TarjetaSeleccionadaId" name="DatosPago.TarjetaSeleccionadaId" />
+                </div>
+
+                <div class="separator">o</div>
+            }
+
+            <div id="nuevaTarjetaForm">
+                <h5 class="card-title">Usar nueva tarjeta</h5>
+                <div class="form-group">
+                    <label class="form-label" for="DatosPago_NumeroTarjeta">Número de tarjeta</label>
+                    <input class="form-control" type="text" id="DatosPago_NumeroTarjeta" name="DatosPago.NumeroTarjeta" placeholder="XXXX XXXX XXXX XXXX" />
+                    <span class="validation-message" asp-validation-for="DatosPago.NumeroTarjeta"></span>
+                </div>
+                <div style="display: flex; gap: 15px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label class="form-label" for="DatosPago_Vencimiento">Vencimiento</label>
+                        <input class="form-control" type="text" id="DatosPago_Vencimiento" name="DatosPago.Vencimiento" placeholder="MM/YY" />
+                        <span class="validation-message" asp-validation-for="DatosPago.Vencimiento"></span>
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label class="form-label" for="DatosPago_CVV">CVV</label>
+                        <input class="form-control" type="text" id="DatosPago_CVV" name="DatosPago.CVV" placeholder="XXX" />
+                        <span class="validation-message" asp-validation-for="DatosPago.CVV"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="total-price">
+                <span class="total-label">Precio total</span>
+                <span class="total-value">₡@Model.Total.ToString("N0")</span>
+            </div>
+
+            <div class="buttons">
+                <button type="submit" class="btn btn-confirm">Confirmar Compra</button>
+                <a asp-page="/Index" class="btn btn-cancel" onclick="return confirm('¿Está seguro que desea cancelar la compra?')">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function seleccionarTarjeta(element, tarjetaId) {
+            document.querySelectorAll('.card-item').forEach(el => {
+                el.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            document.getElementById('TarjetaSeleccionadaId').value = tarjetaId;
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const numeroTarjeta = document.getElementById('DatosPago_NumeroTarjeta');
+            if (numeroTarjeta) {
+                numeroTarjeta.addEventListener('input', function (e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length > 0) {
+                        value = value.match(new RegExp('.{1,4}', 'g')).join(' ');
+                    }
+                    e.target.value = value;
+                });
+            }
+
+            const vencimiento = document.getElementById('DatosPago_Vencimiento');
+            if (vencimiento) {
+                vencimiento.addEventListener('input', function (e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length > 2) {
+                        value = value.substring(0, 2) + '/' + value.substring(2, 4);
+                    }
+                    e.target.value = value;
+                });
+            }
+        });
+    </script>
+}

@@ -1,0 +1,522 @@
+﻿@page
+@model ticketicos.Pages.Cliente.FacturaModel
+@{
+    ViewData["Title"] = "Tickicos - Confirmación de Pago";
+}
+
+<style>
+    /* Estilos existentes se mantienen igual */
+    :root {
+        --color-neon: rgb(193, 255, 0);
+        --color-fondo: black;
+        --color-panel: rgb(80, 80, 80);
+        --color-tarjeta: rgb(70, 70, 70);
+    }
+
+    body {
+        background-color: var(--color-fondo);
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .logo-container {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+    }
+
+    .logo {
+        width: 70px;
+        height: 70px;
+        background-color: var(--color-neon);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .logo-text {
+        font-weight: bold;
+        color: black;
+    }
+
+    .main-panel {
+        width: 500px;
+        margin: 30px auto;
+        background-color: var(--color-panel);
+        border-radius: 20px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .title {
+        width: 100%;
+        height: 40px;
+        background-color: var(--color-neon);
+        color: black;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        line-height: 40px;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+    }
+
+    .content {
+        padding: 20px;
+        text-align: center;
+    }
+
+    .success-icon {
+        width: 60px;
+        height: 60px;
+        background-color: #28a745;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        color: white;
+        font-size: 30px;
+    }
+
+    .success-message {
+        color: white;
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+    .divider {
+        height: 1px;
+        background-color: var(--color-neon);
+        opacity: 0.5;
+        margin: 20px 0;
+    }
+
+    .invoice-details {
+        text-align: left;
+        margin-bottom: 20px;
+    }
+
+    .detail-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+    .detail-label {
+        color: #ccc;
+    }
+
+    .detail-value {
+        color: white;
+        text-align: right;
+    }
+
+    .total-row {
+        display: flex;
+        justify-content: space-between;
+        margin: 20px 0;
+    }
+
+    .total-label {
+        color: #ccc;
+        font-size: 18px;
+    }
+
+    .total-value {
+        color: var(--color-neon);
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .promo-code-box {
+        background-color: #333;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    .promo-code-label {
+        color: white;
+        margin-bottom: 10px;
+    }
+
+    .promo-code-value {
+        background-color: black;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid var(--color-neon);
+        color: var(--color-neon);
+        font-size: 20px;
+        font-weight: bold;
+        letter-spacing: 2px;
+        margin-bottom: 10px;
+    }
+
+    .promo-code-note {
+        color: #aaa;
+        font-size: 12px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        width: 100%;
+        margin-bottom: 10px;
+        position: relative;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        color: white;
+    }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+    }
+
+        .btn-primary:hover {
+            background-color: #0069d9;
+        }
+
+    .btn-loading::after {
+        content: "Preparando PDF...";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .modal-content {
+        background-color: var(--color-panel);
+        margin: 10% auto;
+        padding: 20px;
+        border-radius: 10px;
+        width: 80%;
+        max-width: 500px;
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .modal-title {
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .modal-close {
+        color: #aaa;
+        font-size: 24px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+        .modal-close:hover {
+            color: white;
+        }
+
+    .modal-body {
+        margin-bottom: 20px;
+    }
+
+    .qr-container {
+        background-color: white;
+        padding: 15px;
+        border-radius: 5px;
+        width: 200px;
+        height: 200px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .ticket-container {
+        background-color: white;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        color: black;
+        text-align: left;
+    }
+
+    .ticket-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        border-bottom: 1px dashed #ccc;
+        padding-bottom: 10px;
+    }
+
+    .ticket-title {
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    .ticket-number {
+        color: #666;
+    }
+
+    .ticket-details {
+        margin-bottom: 10px;
+    }
+
+    .ticket-detail-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px;
+    }
+
+    .ticket-detail-label {
+        color: #666;
+        font-size: 14px;
+    }
+
+    .ticket-detail-value {
+        font-size: 14px;
+    }
+
+    .ticket-footer {
+        font-size: 12px;
+        color: #666;
+        text-align: center;
+        margin-top: 10px;
+    }
+</style>
+
+<div class="logo-container">
+    <div class="logo">
+        <span class="logo-text">TICKICOS</span>
+    </div>
+</div>
+
+<div class="main-panel">
+    <div class="title">¡Pago Realizado con Éxito!</div>
+    <div class="content">
+        <div class="success-icon">✓</div>
+        <p class="success-message">Tu compra ha sido confirmada</p>
+        <div class="divider"></div>
+
+        <div class="invoice-details">
+            <div class="detail-row">
+                <span class="detail-label">Número de factura:</span>
+                <span class="detail-value">@Model.NumeroFactura</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Evento:</span>
+                <span class="detail-value">@Model.Evento</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Fecha y hora:</span>
+                <span class="detail-value">@Model.FechaHora</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Lugar:</span>
+                <span class="detail-value">@Model.Lugar</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Cantidad de boletos:</span>
+                <span class="detail-value">@Model.CantidadBoletos</span>
+            </div>
+            @if (!string.IsNullOrEmpty(Model.CodigoPromo))
+            {
+                <div class="detail-row">
+                    <span class="detail-label">Código Promocional:</span>
+                    <span class="detail-value">@Model.CodigoPromo</span>
+                </div>
+            }
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="total-row">
+            <span class="total-label">Total pagado:</span>
+            <span class="total-value">@Model.Total</span>
+        </div>
+
+        @if (Model.TipoCompra.Equals("codigos", StringComparison.OrdinalIgnoreCase) && !string.IsNullOrEmpty(Model.CodigoPromo))
+        {
+            <div class="promo-code-box">
+                <p class="promo-code-label">Tu código promocional:</p>
+                <div class="promo-code-value">@Model.CodigoPromo</div>
+                <p class="promo-code-note">Este código ha sido enviado a tu correo electrónico</p>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="mostrarQRCodigo()">Ver Código QR</button>
+            <button type="button" class="btn btn-primary" onclick="descargarPDFCodigo()" id="btnDescargarPDFCodigo">Descargar PDF</button>
+        }
+
+        @if (Model.TipoCompra.Equals("entradas", StringComparison.OrdinalIgnoreCase))
+        {
+            <button type="button" class="btn btn-primary" onclick="mostrarEntradas()">Ver Entradas</button>
+            <button type="button" class="btn btn-primary" onclick="descargarPDFEntradas()" id="btnDescargarPDFEntradas">Descargar PDF</button>
+        }
+
+        <a href="/" class="btn btn-success">Volver al Inicio</a>
+    </div>
+</div>
+
+<div id="modalQRCodigo" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">Código Promocional QR</h3>
+            <span class="modal-close" onclick="cerrarModal('modalQRCodigo')">×</span>
+        </div>
+        <div class="modal-body">
+            <div class="qr-container" id="qrCodigoContainer">
+                <!-- El QR se generará aquí -->
+            </div>
+            <p style="color: white; text-align: center; margin-top: 15px;">
+                Código: <strong style="color: var(--color-neon);">@Model.CodigoPromo</strong>
+            </p>
+        </div>
+        <button type="button" class="btn btn-success" onclick="descargarPDFCodigo()">Descargar PDF</button>
+    </div>
+</div>
+
+<div id="modalEntradas" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">Tus Entradas</h3>
+            <span class="modal-close" onclick="cerrarModal('modalEntradas')">×</span>
+        </div>
+        <div class="modal-body">
+            @for (int i = 1; i <= Model.CantidadBoletos; i++)
+            {
+                var ticketId = $"{Model.NumeroFactura}-{i:D2}";
+                <div class="ticket-container">
+                    <div class="ticket-header">
+                        <span class="ticket-title">Entrada</span>
+                        <span class="ticket-number">Boleto #@i de @Model.CantidadBoletos</span>
+                    </div>
+                    <div class="ticket-details">
+                        <div class="ticket-detail-row">
+                            <span class="ticket-detail-label">Evento:</span>
+                            <span class="ticket-detail-value">@Model.Evento</span>
+                        </div>
+                        <div class="ticket-detail-row">
+                            <span class="ticket-detail-label">Fecha:</span>
+                            <span class="ticket-detail-value">@Model.FechaHora</span>
+                        </div>
+                        <div class="ticket-detail-row">
+                            <span class="ticket-detail-label">Lugar:</span>
+                            <span class="ticket-detail-value">@Model.Lugar</span>
+                        </div>
+                        <div class="ticket-detail-row">
+                            <span class="ticket-detail-label">ID de Boleto:</span>
+                            <span class="ticket-detail-value">@ticketId</span>
+                        </div>
+                        @if (!string.IsNullOrEmpty(Model.CodigoPromo))
+                        {
+                            <div class="ticket-detail-row">
+                                <span class="ticket-detail-label">Código Promocional:</span>
+                                <span class="ticket-detail-value">@Model.CodigoPromo</span>
+                            </div>
+                        }
+                        <div class="ticket-detail-row">
+                            <span class="ticket-detail-label">QR:</span>
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?data=@Uri.EscapeDataString(ticketId)&size=100x100" alt="QR Code" style="width: 100px; height: 100px;" />
+                        </div>
+                    </div>
+                    <div class="ticket-footer">
+                        Presenta este boleto impreso o en tu dispositivo móvil para acceder al evento.
+                    </div>
+                </div>
+            }
+        </div>
+        <button type="button" class="btn btn-success" onclick="descargarPDFEntradas()">Descargar PDF</button>
+    </div>
+</div>
+
+<!-- Formularios ocultos para la descarga de PDF -->
+<form id="formDescargarPDFCodigo" method="post" action="/Cliente/Factura" style="display: none;">
+    <input type="hidden" name="handler" value="DescargarPDFCodigo" />
+    <input type="hidden" name="id" value="@Model.FacturaId" />
+    @Html.AntiForgeryToken()
+</form>
+
+<form id="formDescargarPDFEntradas" method="post" action="/Cliente/Factura" style="display: none;">
+    <input type="hidden" name="handler" value="DescargarPDFEntradas" />
+    <input type="hidden" name="id" value="@Model.FacturaId" />
+    @Html.AntiForgeryToken()
+</form>
+
+<script>
+    function mostrarQRCodigo() {
+        document.getElementById("modalQRCodigo").style.display = "block";
+        var qrContainer = document.getElementById("qrCodigoContainer");
+        qrContainer.innerHTML = "<img src='https://api.qrserver.com/v1/create-qr-code/?data=" + encodeURIComponent("@Model.CodigoPromo") + "&size=150x150' />";
+    }
+
+    function mostrarEntradas() {
+        document.getElementById("modalEntradas").style.display = "block";
+    }
+
+    function cerrarModal(modalId) {
+        document.getElementById(modalId).style.display = "none";
+    }
+
+    function descargarPDFCodigo() {
+        var btn = document.getElementById("btnDescargarPDFCodigo");
+        if (btn) btn.classList.add("btn-loading");
+
+        // Crear un iframe oculto para descargar el archivo sin cambiar de página
+        var iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.src = '/Cliente/Factura?handler=DescargarPDFCodigo&id=@Model.FacturaId';
+        document.body.appendChild(iframe);
+
+        // Quitar el indicador de carga después de un tiempo
+        setTimeout(function() {
+            if (btn) btn.classList.remove("btn-loading");
+            document.body.removeChild(iframe);
+        }, 2000);
+    }
+
+    function descargarPDFEntradas() {
+        var btn = document.getElementById("btnDescargarPDFEntradas");
+        if (btn) btn.classList.add("btn-loading");
+
+        // Crear un iframe oculto para descargar el archivo sin cambiar de página
+        var iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.src = '/Cliente/Factura?handler=DescargarPDFEntradas&id=@Model.FacturaId';
+        document.body.appendChild(iframe);
+
+        // Quitar el indicador de carga después de un tiempo
+        setTimeout(function() {
+            if (btn) btn.classList.remove("btn-loading");
+            document.body.removeChild(iframe);
+        }, 2000);
+    }
+</script>
