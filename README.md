@@ -1,5 +1,3 @@
-# 🎟️ Ticketicos
-Plataforma web simulada para la compra de boletos de eventos como conciertos y partidos.  
-Proyecto universitario grupal que permite seleccionar asientos en un mapa de estadio y realizar compras con una cartera virtual.  
-Incluye sistema de descuentos y simulación de tarjetas dentro de la plataforma.  
-No maneja dinero real, ya que es una simulación académica.
+ Sistema de Venta de Entradas (Ticketicos)
+
+Aplicación web desarrollada en equipo que simula una plataforma de venta de entradas para eventos. Incluye funcionalidades como registro e inicio de sesión de usuarios, sistema de preventa, compra de entradas, generación de facturas, códigos de descuento y envío de correos electrónicos mediante Mailgun. Participé en el desarrollo de la lógica de preventa, pagos, facturación, descuentos, autenticación de usuarios y notificaciones por correo.
